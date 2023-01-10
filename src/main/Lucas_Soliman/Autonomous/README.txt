@@ -1,0 +1,2 @@
+Java classes in the Autonomous package interface with java classes within the Teleoperated package.
+The Autonomous package does calculations and runs algorithms to determine inputs for classes within the Teleoperated package.
