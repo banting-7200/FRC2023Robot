@@ -1,4 +1,4 @@
-package Lucas_Soliman;
+package frc.robot.Lucas_Soliman;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,7 +22,7 @@ public class RobotDrive {
         CANSparkMax bl = new CANSparkMax(bottomLeft, MotorType.kBrushless);
 
         //Create instances of right motors
-        CANSparkMax tr = new CanSparkMax(topRight, MotorType.kBrushless);
+        CANSparkMax tr = new CANSparkMax(topRight, MotorType.kBrushless);
         CANSparkMax br = new CANSparkMax(bottomRight, MotorType.kBrushless);
 
         //Group the left and right motors
