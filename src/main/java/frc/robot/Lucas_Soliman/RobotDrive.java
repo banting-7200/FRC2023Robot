@@ -1,5 +1,6 @@
 package frc.robot.Lucas_Soliman;
 
+import static frc.robot.Utility.*;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -14,8 +15,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
  */
 public class RobotDrive {
     private DifferentialDrive driveInstance;
-    private float currentSpeed;
-    
+    private double currentSpeed;
+
     public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
         //Create instances of left motors
         CANSparkMax tl = new CANSparkMax(topLeft, MotorType.kBrushless);
@@ -31,6 +32,14 @@ public class RobotDrive {
 
         //Create new DifferentialDrive instance with motor groups.
         driveInstance = new DifferentialDrive(leftGroup, rightGroup);
+        currentSpeed = DRIVE_NORMALSPEED;
+    }
+
+    //Run this function in teleopPeriodic
+    public void robotDriveTeleop() {
+        double xInput = INPUT.applyDeadZone(INPUT.getAxis(JOYSTICK_X)) * currentSpeed;
+        double yInput = INPUT.applyDeadZone(INPUT.getAxis(JOYSTICK_Y)) * currentSpeed;
+        DriveRobot(yInput, xInput);
     }
 
     public void DriveRobot(double motorPower, double zRotation) {
