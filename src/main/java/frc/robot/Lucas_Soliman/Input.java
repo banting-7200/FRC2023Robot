@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * I dislike Long-lineitis
  */
 public class Input {
-    private final double JOYSTICK_DEADZONE = 0.1;
+    private final double JOYSTICK_DEADZONE = 0.25;
     private Joystick joystickInstance;
 
     public Input(int joystickPort) {
@@ -39,13 +39,20 @@ public class Input {
         return joystickInstance.getRawButton(btn);
     }
 
-    //Abbreviation for getRawAxis();
-    public double getAxis(int axis) {
-        return joystickInstance.getRawAxis(axis);
+    public double stickX() {
+        return joystickInstance.getX();
     }
 
+    public double stickY() {
+        return joystickInstance.getY();
+    }
+
+    //Takes in an input value that will be rounded to 0 if below defined deadzone.
     public double applyDeadZone(double value) {
-        if(value <= JOYSTICK_DEADZONE) return 0;
+        if(Math.abs(value) <= JOYSTICK_DEADZONE){
+            return 0;
+        }
+
         return value;
     }
 }
