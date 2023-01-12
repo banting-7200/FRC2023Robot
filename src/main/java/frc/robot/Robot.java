@@ -2,9 +2,14 @@ package frc.robot;
 
 import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import frc.robot.Lucas_Soliman.*;
 
+/*
+ * Author: WPILib Project-Generator
+ * Date Created: January 9, 2023
+ * 
+ * The main robot class where all initialisation, and periodic functions are called.
+ */
 public class Robot extends TimedRobot {
   private RobotDrive driveInstance;
 
@@ -23,9 +28,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {}
 
   @Override
-  public void autonomousPeriodic() {
-
-  }
+  public void autonomousPeriodic() {}
 
   @Override
   public void teleopInit() {

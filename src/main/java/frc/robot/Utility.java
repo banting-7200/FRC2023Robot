@@ -25,6 +25,9 @@ public class Utility {
     public static final int CTRLS_FLIPBTN = 2;
 
     /* SPEED VALUES */
+    //The value that the joystick x/y must surpass in order to register.
+    public static final double JOYSTICK_DEADZONE = 0.25;
+
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1.0;

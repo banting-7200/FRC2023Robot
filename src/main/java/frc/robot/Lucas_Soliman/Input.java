@@ -1,5 +1,6 @@
 package frc.robot.Lucas_Soliman;
 
+import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.Joystick;
 
 /*
@@ -12,9 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * I dislike Long-lineitis
  */
 public class Input {
-    private final double JOYSTICK_DEADZONE = 0.25;
     private Joystick joystickInstance;
-
     public Input(int joystickPort) {
         joystickInstance = new Joystick(joystickPort);
     }
@@ -39,20 +38,19 @@ public class Input {
         return joystickInstance.getRawButton(btn);
     }
 
+    //Abbreviation for joystickInstance.getX();
     public double stickX() {
         return joystickInstance.getX();
     }
 
+    //Abbreviation for joystickInstance.getX();
     public double stickY() {
         return joystickInstance.getY();
     }
 
     //Takes in an input value that will be rounded to 0 if below defined deadzone.
     public double applyDeadZone(double value) {
-        if(Math.abs(value) <= JOYSTICK_DEADZONE){
-            return 0;
-        }
-
+        if(Math.abs(value) <= JOYSTICK_DEADZONE) { return 0; }
         return value;
     }
 }

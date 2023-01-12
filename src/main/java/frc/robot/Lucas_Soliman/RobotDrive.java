@@ -2,16 +2,9 @@ package frc.robot.Lucas_Soliman;
 
 import static frc.robot.Utility.*;
 
-import javax.xml.crypto.dsig.XMLSignatureException;
-
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 
 /*
  * Author: Lucas Soliman
@@ -49,11 +42,14 @@ public class RobotDrive {
 
     //Run this function in teleopPeriodic
     public void robotDriveTeleop() {
+
+        // If the driver is pressing the "creep button", use creepdrive speed. Otherwise, use normal speed.
+        // If the driver pressed the "flip button" this periodic cycle, invert speed multiplier.
         currentSpeed = INPUT.getBtn(CTRLS_CREEPBTN) ? DRIVE_CREEPSPEED : DRIVE_NORMALSPEED;
         if(INPUT.getBtnPress(CTRLS_FLIPBTN)) { speedMultiplier *= -1; }
         
         double xInput = INPUT.applyDeadZone(INPUT.stickX()) * currentSpeed * speedMultiplier;
-        double yInput = INPUT.applyDeadZone(INPUT.stickY()) * currentSpeed * speedMultiplier;
+        double yInput = INPUT.applyDeadZone(INPUT.stickY()) * currentSpeed * -speedMultiplier;
         DriveRobot(xInput, yInput);
     }
 
