@@ -19,6 +19,8 @@ public class Robot extends TimedRobot {
       MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
       MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT
     );
+
+    RIO_GYRO.calibrate();
   }
 
   @Override
@@ -31,9 +33,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {
-    driveInstance.robotDriveTeleopInit();
-  }
+  public void teleopInit() {}
 
   @Override
   public void teleopPeriodic() {

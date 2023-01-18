@@ -1,2 +1,5 @@
 Here is a flowchart visually linking java classes together:
 https://lucid.app/lucidchart/040a1476-e46d-4202-98b6-ce1597f9f5ea/edit?viewport_loc=165%2C28%2C2164%2C1081%2C0_0&invitationId=inv_82a64544-d3c7-4fa4-bee0-4a51b058397c
+
+For the lift speed function:
+https://www.desmos.com/calculator/aaqyomhimz

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * 
  * This class will contain utility functions related to joystick input.
  * Most are shortened versions of functions for code readability and length.
+ * Initialised in Utility.java
  * 
  * I dislike Long-lineitis
  */
