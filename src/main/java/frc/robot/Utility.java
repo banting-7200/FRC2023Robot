@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.simulation.ADXRS450_GyroSim;
 import frc.robot.Lucas_Soliman.*;
 
 /*
@@ -34,6 +32,7 @@ public class Utility {
     /* PORTS */
     // Integers storing ports that external drive devices are connected to on computer (USB)
     public static final int PORT_JOYSTICK = 0;
+    public static final int PORT_COJOYSTICK = 1;
 
     // Integers storing ports that drive motors are connected to on RoboRIO
     public static final int MOTOR_DRIVEFWDLEFT = 0;
@@ -49,7 +48,7 @@ public class Utility {
     public static final int CTRLS_LIFTDOWN = 3;
 
     /* CONSTANT PARAMETERS */
-    public static final double BALANCEDRIVE_ANGLETHRESHOLD = 12; //Degrees
+    public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
 
     /* SPEED VALUES */
     //The value that the joystick x/y must surpass in order to register.
@@ -69,9 +68,5 @@ public class Utility {
     // Mainly contains components that are sensors. (Motor references must stay in their own java declared class)
     // Initialise Input class with joystick port (default 0)
     public static final Input INPUT = new Input(PORT_JOYSTICK);
-    public static final ADXRS450_Gyro RIO_GYRO = new ADXRS450_Gyro(Port.kOnboardCS0);
-
-    //Place objects that will be removed in deployment phase here:
-    /* TODELETE */
-    public static final ADXRS450_GyroSim SIM_GYRO = new ADXRS450_GyroSim(RIO_GYRO);
+    public static final ADXRS450_Gyro RIO_GYRO = new ADXRS450_Gyro();
 }

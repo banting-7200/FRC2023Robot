@@ -18,6 +18,7 @@ public class ManualDrive implements DriveMode {
     public ManualDrive(RobotDrive baseDrive) {
         System.out.println("Init ManualDrive...");
         BaseInstance = baseDrive;
+        speedMultiplier = 1;
     }
 
     @Override
@@ -29,6 +30,6 @@ public class ManualDrive implements DriveMode {
         
         double xInput = INPUT.applyDeadZone(INPUT.stickX()) * currentSpeed * speedMultiplier;
         double yInput = INPUT.applyDeadZone(INPUT.stickY()) * currentSpeed * -speedMultiplier;
-        BaseInstance.DriveRobot(xInput, yInput);
+        BaseInstance.DriveRobot(xInput, -yInput);
     }
 }

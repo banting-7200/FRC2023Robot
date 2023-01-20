@@ -2,6 +2,7 @@ package frc.robot;
 
 import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.*;
 
 /*
@@ -17,7 +18,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     driveInstance = new RobotDrive(
       MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
-      MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT
+      MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT,
+      PORT_JOYSTICK
     );
 
     RIO_GYRO.calibrate();
@@ -32,9 +34,11 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {}
 
+
   @Override
   public void teleopInit() {}
 
+  int delayTime = 10;
   @Override
   public void teleopPeriodic() {
     driveInstance.robotDriveTeleop();

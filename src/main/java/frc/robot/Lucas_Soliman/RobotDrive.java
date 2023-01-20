@@ -18,8 +18,11 @@ import frc.robot.Lucas_Soliman.DriveModes.*;
 public class RobotDrive {
     private HashMap<Integer, DriveMode> DriveModes;
     private DifferentialDrive driveInstance;
+    private Input inputInstance;
 
-    public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
+    public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight, int joyStickID) {
+        inputInstance = new Input(joyStickID);
+
         //Initialise all Drive Modes
         DriveModes = new HashMap<Integer, DriveMode>();
         DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(this));
@@ -48,7 +51,7 @@ public class RobotDrive {
         // Checks if the joystick is being pressed at the given drive mode
         // Sets the mode if required button is pressed, and prints the current drive mode.
         for(int mode : DRIVEMODE_MODEARRAY) {
-            if(INPUT.getBtnPress(mode)) {
+            if(inputInstance.getBtnPress(mode)) {
                 CurrentDriveMode = mode;
             }
         }
