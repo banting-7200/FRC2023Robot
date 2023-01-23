@@ -14,6 +14,7 @@ public class BalanceDrive implements DriveMode {
 
     public BalanceDrive(RobotDrive driveInstance) {
         System.out.println("Init BalanceDrive...");
+        RIO_GYRO.calibrate();
         baseInstance = driveInstance;
     }
 
