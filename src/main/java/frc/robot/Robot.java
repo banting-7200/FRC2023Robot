@@ -38,7 +38,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopInit() {}
 
-  int delayTime = 10;
   @Override
   public void teleopPeriodic() {
     driveInstance.robotDriveTeleop();
