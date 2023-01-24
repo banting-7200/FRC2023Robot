@@ -12,7 +12,7 @@ import frc.robot.Lucas_Soliman.*;
  */
 public class Utility {
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
-        return ((x - a1) / (b1 - a1)) * (b2 - a2);
+        return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
 
     //Integers that resemble different states for classes
