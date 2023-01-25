@@ -9,26 +9,28 @@ import frc.robot.Lucas_Soliman.*;
  * 
  * Stores constants that will be used project wide.
  * Will be updated by everyone working on project.
+ * 
+ * Variables/Functions in PascalCase are variables that are read/write
+ * Variables in ALL_CAPS_SNAKE_CASE are variables that are read only
+ * 
+ * For further information, refer to comments above and around variables.
  */
 public class Utility {
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
 
-    //Integers that resemble different states for classes
-    /* STATES */
-    public static int CurrentDriveMode = 7;
+    public static double Clamp(double x, double min, double max) {
+        double val = x;
+        if(val < min) {
+            val = min;
+        } else if(val > max) {
+            val = max;
+        }
 
-    //The below values are also button mappings on the joystick
-    public static final int DRIVEMODE_MANUAL = 7;
-    public static final int DRIVEMODE_AUTOBALANCE = 8;
-    public static final int DRIVEMODE_PIXYALIGN = 9;
-    public static final int[] DRIVEMODE_MODEARRAY = new int[] {
-        DRIVEMODE_MANUAL,
-        DRIVEMODE_AUTOBALANCE,
-        DRIVEMODE_PIXYALIGN
-    };
-    
+        return val;
+    }
+
     /* PORTS */
     // Integers storing ports that external drive devices are connected to on computer (USB)
     public static final int PORT_JOYSTICK = 0;
@@ -40,6 +42,21 @@ public class Utility {
     public static final int MOTOR_DRIVEFWDRIGHT = 2;
     public static final int MOTOR_DRIVEBACKRIGHT = 3;
 
+    //Integers that resemble different states for classes
+    /* STATES */
+    public static int CurrentDriveMode = 7;
+
+    //The below values are also button mappings on the joystick
+    //TODO: Separate Modes and Button mappings for less confusion.
+    public static final int DRIVEMODE_MANUAL = 7;
+    public static final int DRIVEMODE_AUTOBALANCE = 8;
+    public static final int DRIVEMODE_PIXYALIGN = 9;
+    public static final int[] DRIVEMODE_MODEARRAY = new int[] {
+        DRIVEMODE_MANUAL,
+        DRIVEMODE_AUTOBALANCE,
+        DRIVEMODE_PIXYALIGN
+    };
+    
     /*  CONTROLS */
     public static final int CTRLS_CREEPBTN = 1;
     public static final int CTRLS_FLIPBTN = 2;
@@ -56,7 +73,7 @@ public class Utility {
 
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
-    public static final double DRIVE_NORMALSPEED = 0.6;
+    public static final double DRIVE_NORMALSPEED = 0.8;
     public static final double DRIVE_CREEPSPEED = 0.5;
 
     // Armspeed referring to the speed at which the arm would rotate

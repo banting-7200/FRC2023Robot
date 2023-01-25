@@ -27,7 +27,7 @@ public class RobotDrive {
         DriveModes = new HashMap<Integer, DriveMode>();
         DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(this));
         DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(this));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, new ManualDrive(this));
+        DriveModes.put(DRIVEMODE_PIXYALIGN, new ManualDrive(this)); // PIXYALIGN being a manualDrive is temporary.
 
         //Create instances of left motors
         PWMSparkMax tl = new PWMSparkMax(topLeft);

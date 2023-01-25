@@ -2,11 +2,10 @@ package frc.robot;
 
 import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.*;
 
 /*
- * Author: WPILib Project-Generator
+ * Author: WPILib Project-Generator, Lucas Soliman
  * Date Created: January 9, 2023
  * 
  * The main robot class where all initialisation, and periodic functions are called.
@@ -21,8 +20,6 @@ public class Robot extends TimedRobot {
       MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT,
       PORT_JOYSTICK
     );
-
-    RIO_GYRO.calibrate();
   }
 
   @Override
@@ -33,7 +30,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {}
-
 
   @Override
   public void teleopInit() {}

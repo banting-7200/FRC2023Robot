@@ -5,14 +5,10 @@ For the lift speed function:
 https://www.desmos.com/calculator/aaqyomhimz
 
 For Balance Drive speed function:
-https://www.desmos.com/calculator/k2eb2szj0w
+https://www.desmos.com/calculator/vshsur2ba8
 
 To make a new driving mode, 
  - Create a new java class under frc.robot.Lucas_Soliman.DriveModes, name the class corresponding to the mode you are creating
  - Implement the DriveMode Interface which is contained in the DriveMode.java file
  - Create a constructor that takes in an instance of RobotDrive.java
  - From there you can create code that will interface with the DifferentialDrive instance in the RobotDrive
-
-
- if angle is > 0, drive forward
- if angle is < 0, drive backward
