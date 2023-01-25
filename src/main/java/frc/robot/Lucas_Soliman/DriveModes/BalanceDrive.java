@@ -28,14 +28,16 @@ public class BalanceDrive implements DriveMode {
     public void DriveModePeriodic() {
         double angle = RIO_GYRO.getAngle();
         angle = Clamp(angle, -30, 30);
-        if(angle < 1 && angle > -1) {
+
+        if(angle > -1 && angle < 1) {
             angle = 0;
         }
 
         // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
         // Use the mapped angle in the evaluateSpeed function.
         double absoluteSpeed = MapValue(Math.abs(angle), 0, 30, 0, 1);
-        double speed = evaluateSpeed(absoluteSpeed);
+        double speed = evaluateSpeed(absoluteSpeed) * -Math.signum(angle);
+        speed = Clamp(speed, -0.7, 0.7);
 
         //Finally drive robot with speed.
         baseInstance.DriveRobot(0.0, speed);
@@ -51,6 +53,6 @@ public class BalanceDrive implements DriveMode {
         double x = Clamp(evalPointX, 0, 1.0);
         double eExpNegTwoX = Math.pow(Math.E, -2.0 * x);
         double xSquared = Math.pow(x, 2.0);
-        return ((12.5 * xSquared) * (1.0 - eExpNegTwoX)) / ((1.0 + eExpNegTwoX) * (25.0 * xSquared + 1.0)) + 0.5;
+        return ((5.0 * xSquared) * (1.0 - eExpNegTwoX)) / ((1.0 + eExpNegTwoX) * (25.0 * xSquared + 1.0)) + 0.5;
     }
 }
