@@ -2,6 +2,7 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import frc.robot.Lucas_Soliman.*;
+import frc.robot.Lucas_Soliman.Arduino.I2C_Interface;
 
 /*
  * Author: Lucas Soliman
@@ -65,6 +66,7 @@ public class Utility {
     public static final int CTRLS_LIFTDOWN = 3;
 
     /* CONSTANT PARAMETERS */
+    public static final int I2C_MAXBYTESREAD = 2;
     public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
 
     /* SPEED VALUES */
@@ -86,4 +88,5 @@ public class Utility {
     // Initialise Input class with joystick port (default 0)
     public static final Input INPUT = new Input(PORT_JOYSTICK);
     public static final ADXRS450_Gyro RIO_GYRO = new ADXRS450_Gyro();
+    public static final I2C_Interface I2C_INTERFACE = new I2C_Interface(1);
 }
