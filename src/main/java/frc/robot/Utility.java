@@ -16,7 +16,7 @@ import frc.robot.Lucas_Soliman.Arduino.I2C_Interface;
  * 
  * For further information, refer to comments above and around variables.
  */
-public class Utility {
+public final class Utility {
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
@@ -85,8 +85,6 @@ public class Utility {
 
     /* OBJECTS */
     // Mainly contains components that are sensors. (Motor references must stay in their own java declared class)
-    // Initialise Input class with joystick port (default 0)
-    public static final Input INPUT = new Input(PORT_JOYSTICK);
     public static final ADXRS450_Gyro RIO_GYRO = new ADXRS450_Gyro();
     public static final I2C_Interface I2C_INTERFACE = new I2C_Interface(1);
 }

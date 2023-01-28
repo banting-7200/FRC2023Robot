@@ -5,13 +5,16 @@ import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 /*
  * Author: Lucas Soliman
  * Date Created: January 17, 2023
  * 
  * Uses a single-axis gyro to drive the robot to a balanced state.
+ * This drive mode is autonomous
  */
-public class BalanceDrive implements DriveMode {
+public final class BalanceDrive implements DriveMode {
     private RobotDrive baseInstance;
 
     public BalanceDrive(RobotDrive driveInstance) {
@@ -20,15 +23,14 @@ public class BalanceDrive implements DriveMode {
         RIO_GYRO.calibrate();
     }
 
-    /*
-     * January 25, 2023
-     * TODO: Test speed function implementation
-    */
+    @Override
+    public void DriveModeInit() {
+        SmartDashboard.putString("DB/String 0", "Balance Mode");
+    }
+
     @Override
     public void DriveModePeriodic() {
-        double angle = RIO_GYRO.getAngle();
-        angle = Clamp(angle, -30, 30);
-
+        double angle = Clamp(RIO_GYRO.getAngle(), -30, 30);
         if(angle > -1 && angle < 1) {
             angle = 0;
         }
@@ -41,10 +43,6 @@ public class BalanceDrive implements DriveMode {
 
         //Finally drive robot with speed.
         baseInstance.DriveRobot(0.0, speed);
-
-        //Apply string debug values to robot dashboard
-        SmartDashboard.putString("DB/String 1", "Auto-Speed: " + String.format("%.2f", speed));
-        SmartDashboard.putString("DB/String 0", "Gyro-Angle: " + String.format("%.2f", angle));
     }
 
     //Sole purpose of this function is to smooth the speed values appropriately based on different angles.

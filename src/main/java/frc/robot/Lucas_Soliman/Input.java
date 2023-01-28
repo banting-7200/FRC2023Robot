@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj.Joystick;
  * Most are shortened versions of functions for code readability and length.
  * Initialised in Utility.java
  * 
- * I dislike Long-lineitis
+ * I try to avoid long-lineitis as much as I can for readability.
  */
-public class Input {
+public final class Input {
     private Joystick joystickInstance;
     public Input(int joystickPort) {
         joystickInstance = new Joystick(joystickPort);

@@ -14,21 +14,15 @@ import frc.robot.Lucas_Soliman.DriveModes.*;
  * Date Created: January 9, 2023
  * 
  * The class responsible for driving/moving the robot using motor references.
+ * This class ticks a drivemode assigned in teleopPeriodic.
+ * 
+ * This class depends on DriveModeSetter.java
  */
-public class RobotDrive {
-    private HashMap<Integer, DriveMode> DriveModes;
+public final class RobotDrive {
     private DifferentialDrive driveInstance;
-    private Input inputInstance;
+    private DriveMode currentDriveMode;
 
     public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight, int joyStickID) {
-        inputInstance = new Input(joyStickID);
-
-        //Initialise all Drive Modes
-        DriveModes = new HashMap<Integer, DriveMode>();
-        DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(this));
-        DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(this));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, new ManualDrive(this)); // PIXYALIGN being a manualDrive is temporary.
-
         //Create instances of left motors
         PWMSparkMax tl = new PWMSparkMax(topLeft);
         PWMSparkMax bl = new PWMSparkMax(bottomLeft);
@@ -47,17 +41,17 @@ public class RobotDrive {
 
     //Run this function in teleopPeriodic
     public void robotDriveTeleop() {
-        // Iterates over each drive mode that is in array form
-        // Checks if the joystick is being pressed at the given drive mode
-        // Sets the mode if required button is pressed, and prints the current drive mode.
-        for(int mode : DRIVEMODE_MODEARRAY) {
-            if(inputInstance.getBtnPress(mode)) {
-                CurrentDriveMode = mode;
-            }
+        if(currentDriveMode == null) {
+            System.out.println("No DriveMode being run!");
+            return;
         }
 
-        //Run the current mode's periodic function.
-        DriveModes.get(CurrentDriveMode).DriveModePeriodic();
+        currentDriveMode.DriveModePeriodic();
+    }
+
+    // A function called by DriveModeSetter.java to make this class tick specific drive modes.
+    public void setDriveMode(DriveMode mode) {
+        currentDriveMode = mode;
     }
 
     // A function for drive modes to interface with DifferentialDrive instance.

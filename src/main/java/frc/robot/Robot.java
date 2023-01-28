@@ -12,6 +12,7 @@ import frc.robot.Lucas_Soliman.*;
  * The main robot class where all initialisation, and periodic functions are called.
  */
 public class Robot extends TimedRobot {
+  private DriveModeSetter driverModeSetter;
   private RobotDrive driveInstance;
 
   @Override
@@ -20,6 +21,10 @@ public class Robot extends TimedRobot {
       MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
       MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT,
       PORT_JOYSTICK
+    );
+
+    driverModeSetter = new DriveModeSetter(
+      driveInstance, PORT_JOYSTICK
     );
   }
 
@@ -37,6 +42,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
+    driverModeSetter.driveModeSetterTeleop();
     driveInstance.robotDriveTeleop();
   }
 

@@ -8,5 +8,6 @@ package frc.robot.Lucas_Soliman.DriveModes;
  * must contain a constructor that takes in a RobotDrive Instance.
  */
 public interface DriveMode {
+    public void DriveModeInit();
     public void DriveModePeriodic();
 }
