@@ -1,6 +1,9 @@
-package frc.robot.Lucas_Soliman.Arduino;
+package frc.robot.Lucas_Soliman.ExternalIO;
 
 import static frc.robot.Utility.*;
+
+import java.nio.charset.StandardCharsets;
+
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.I2C.Port;
 
@@ -27,7 +30,17 @@ public class I2C_Interface {
     }
 
     public byte[] readI2C() {
-		Wire.read(deviceAddress, I2C_MAXBYTESREAD, dataBuffer);
+		boolean aborted = Wire.read(deviceAddress, I2C_MAXBYTESREAD, dataBuffer);
+        if(aborted) {
+            System.out.println("I2C Read Aborted...");
+            return null;
+        }
+
         return dataBuffer;
+    }
+
+    public String readI2CString() {
+        byte[] data = readI2C();
+        return data == null ? null : new String(dataBuffer, StandardCharsets.UTF_8);
     }
 }

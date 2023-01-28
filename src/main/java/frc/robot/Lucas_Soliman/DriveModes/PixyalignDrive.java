@@ -1,6 +1,8 @@
 package frc.robot.Lucas_Soliman.DriveModes;
 
 import static frc.robot.Utility.*;
+
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
 
 /*
@@ -14,13 +16,18 @@ public class PixyalignDrive implements DriveMode{
     private RobotDrive baseDriveInstance;
 
     public PixyalignDrive(RobotDrive baseInstance) {
+        baseInstance = baseDriveInstance;
+    }
 
+    @Override
+    public void DriveModeInit() {
+        SmartDashboard.putString("DB/String 0", "Pixyalign Mode");
     }
 
     @Override
     public void DriveModePeriodic() {
-        //Read data from I2C port
-        //[0] = turnDirection
-        byte[] dataRead = I2C_INTERFACE.readI2C();
+        //Data returned is a string form of average X-Position of game pieces
+        String data = I2C_INTERFACE.readI2CString();
+        int avgX = Integer.parseInt(data);
     }
 }

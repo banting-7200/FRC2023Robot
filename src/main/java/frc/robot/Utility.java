@@ -1,8 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import frc.robot.Lucas_Soliman.*;
-import frc.robot.Lucas_Soliman.Arduino.I2C_Interface;
+import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
 
 /*
  * Author: Lucas Soliman

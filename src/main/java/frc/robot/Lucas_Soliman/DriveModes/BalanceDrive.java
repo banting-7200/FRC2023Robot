@@ -5,8 +5,6 @@ import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 /*
  * Author: Lucas Soliman
  * Date Created: January 17, 2023
@@ -28,12 +26,10 @@ public final class BalanceDrive implements DriveMode {
         SmartDashboard.putString("DB/String 0", "Balance Mode");
     }
 
+    //TODO: Implement Drift detection system so Gyro can be reset automatically
     @Override
     public void DriveModePeriodic() {
         double angle = Clamp(RIO_GYRO.getAngle(), -30, 30);
-        if(angle > -1 && angle < 1) {
-            angle = 0;
-        }
 
         // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
         // Use the mapped angle in the evaluateSpeed function.

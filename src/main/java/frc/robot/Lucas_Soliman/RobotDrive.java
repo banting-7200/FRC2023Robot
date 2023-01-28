@@ -1,9 +1,5 @@
 package frc.robot.Lucas_Soliman;
 
-import static frc.robot.Utility.*;
-
-import java.util.HashMap;
-
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
