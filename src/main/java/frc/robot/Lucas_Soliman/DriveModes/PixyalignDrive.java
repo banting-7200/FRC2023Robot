@@ -4,6 +4,7 @@ import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
+import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
 
 /*
  * This mode of driving is semi-autonomous
@@ -27,7 +28,11 @@ public class PixyalignDrive implements DriveMode{
     @Override
     public void DriveModePeriodic() {
         //Data returned is a string form of average X-Position of game pieces
-        String data = I2C_INTERFACE.readI2CString();
-        int avgX = Integer.parseInt(data);
+        byte[] data = I2C_INTERFACE.readI2C(1);
+        int direction = data[0];
+
+        //Simple debug string. 
+        //TODO: Test PixyI2C.ino file included with project files
+        SmartDashboard.putString("DB/String 1", String.valueOf(direction));
     }
 }

@@ -2,9 +2,7 @@ package frc.robot.Lucas_Soliman;
 
 import java.util.HashMap;
 
-import frc.robot.Lucas_Soliman.DriveModes.BalanceDrive;
-import frc.robot.Lucas_Soliman.DriveModes.DriveMode;
-import frc.robot.Lucas_Soliman.DriveModes.ManualDrive;
+import frc.robot.Lucas_Soliman.DriveModes.*;
 
 import static frc.robot.Utility.*;
 
@@ -28,7 +26,7 @@ public final class DriveModeSetter {
         DriveModes = new HashMap<Integer, DriveMode>();
         DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance, input));
         DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, new ManualDrive(driveInstance, input)); // PIXYALIGN being a manualDrive is temporary.
+        DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary.
 
         //Set the drive mode to manual by default.
         CurrentDriveMode = DRIVEMODE_MANUAL;

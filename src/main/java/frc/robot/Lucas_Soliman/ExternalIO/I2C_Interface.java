@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.I2C.Port;
 /*
  * Author: Lucas Soliman
  * Date Created: January 26, 2023
- * Code source: https://github.com/FRC5188/ArduinoPixyAndRoboRIO/blob/master/src/main/M_I2C.java
+ * Primary Source: https://github.com/FRC5188/ArduinoPixyAndRoboRIO/blob/master/src/main/M_I2C.java
  * 
  * This class allows for the roboRIO to communicate via the onboard I2C port.
  * There are known issues with 'system lockups' when using the I2C hence the ability to only read.
@@ -27,6 +27,17 @@ public class I2C_Interface {
     public I2C_Interface(int deviceAddress) {
         Wire = new I2C(Port.kOnboard, deviceAddress);
         dataBuffer = new byte[I2C_MAXBYTESREAD];
+    }
+
+    public byte[] readI2C(int bytesToRead) {
+        byte[] buffer = new byte[bytesToRead];
+		boolean aborted = Wire.read(deviceAddress, bytesToRead, buffer);
+        if(aborted) {
+            System.out.println("I2C Read Aborted...");
+            return null;
+        }
+
+        return buffer;
     }
 
     public byte[] readI2C() {
