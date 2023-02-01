@@ -27,6 +27,7 @@ public class I2C_Interface {
     public I2C_Interface(int deviceAddress) {
         Wire = new I2C(Port.kOnboard, deviceAddress);
         dataBuffer = new byte[I2C_MAXBYTESREAD];
+        
     }
 
     public byte[] readI2C(int bytesToRead) {
