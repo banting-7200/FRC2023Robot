@@ -1,2 +1,3 @@
- - Balance Driving (Almost Accomplished)
+ - Balance Driving (Accomplished)
  - Pixycam tracking/recognition (Work on data transfer from arduino to roboRIO)
+ - Implement CTRE Falcon 500 Motor Functionality (Setup in progress)
