@@ -8,6 +8,7 @@ Pixy2 camera;
 void setup() {
   Wire.begin(1);
   camera.init();
+  camera.onRequest(onRequest);
 }
 
 void loop() {
@@ -23,7 +24,5 @@ void loop() {
 }
 
 void onRequest() {  
-  Wire.beginTransmission(1);
   Wire.write(directionToWrite);
-  Wire.endTransmission(1);
 }
