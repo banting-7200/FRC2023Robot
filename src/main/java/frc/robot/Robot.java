@@ -24,7 +24,7 @@ public class Robot extends TimedRobot {
     );
 
     driverModeSetter = new DriveModeSetter(
-      driveInstance, PORT_JOYSTICK
+      driveInstance, PORT_COJOYSTICK, PORT_JOYSTICK
     );
   }
 
