@@ -26,7 +26,7 @@ public final class BalanceDrive implements DriveMode {
         SmartDashboard.putString("DB/String 0", "Balance Mode");
     }
 
-    //TODO: Implement Drift detection system so Gyro can be reset automatically
+    // TODO: Implement Drift detection system so Gyro can be reset automatically
     @Override
     public void DriveModePeriodic() {
         double angle = Clamp(RIO_GYRO.getAngle(), -30, 30);
@@ -37,12 +37,12 @@ public final class BalanceDrive implements DriveMode {
         double speed = evaluateSpeed(absoluteSpeed) * -Math.signum(angle);
         speed = Clamp(speed, -0.7, 0.7);
 
-        //Finally drive robot with speed.
+        // Finally drive robot with speed.
         baseInstance.DriveRobot(0.0, speed);
     }
 
-    //Sole purpose of this function is to smooth the speed values appropriately based on different angles.
-    //Refer to project notes for desmos representation of function.
+    // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
+    // Refer to project notes for desmos representation of function.
     private double evaluateSpeed(double evalPointX) {
         double x = Clamp(evalPointX, 0, 1.0);
         double eExpNegTwoX = Math.pow(Math.E, -2.0 * x);

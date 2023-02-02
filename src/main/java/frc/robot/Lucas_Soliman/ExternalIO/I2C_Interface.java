@@ -19,7 +19,6 @@ import edu.wpi.first.wpilibj.I2C.Port;
  * For now, all data processing must occur on slave device and be sent to roboRIO.
  */
 public class I2C_Interface {
-
     private I2C Wire;
     private int deviceAddress;
     private byte[] dataBuffer;

@@ -3,8 +3,7 @@ package frc.robot.Lucas_Soliman.DriveModes;
 import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Lucas_Soliman.RobotDrive;
-import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
+import frc.robot.Lucas_Soliman.*;
 
 /*
  * This mode of driving is semi-autonomous
@@ -15,9 +14,11 @@ import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
  */
 public class PixyalignDrive implements DriveMode{
     private RobotDrive baseDriveInstance;
+    private Input inputDevice;
 
-    public PixyalignDrive(RobotDrive baseInstance) {
-        baseInstance = baseDriveInstance;
+    public PixyalignDrive(RobotDrive baseInstance, Input driveStick) {
+        baseDriveInstance = baseInstance;
+        inputDevice = driveStick;
     }
 
     @Override
@@ -29,10 +30,14 @@ public class PixyalignDrive implements DriveMode{
     public void DriveModePeriodic() {
         //Data returned is a string form of average X-Position of game pieces
         byte[] data = I2C_INTERFACE.readI2C(1);
-        int direction = data[0];
+        byte direction = data[0];
 
-        //Simple debug string. 
-        //TODO: Test PixyI2C.ino file included with project files
-        SmartDashboard.putString("DB/String 1", String.valueOf(direction));
+        //The below calculations are partially derived from ManualDrive.java
+        double fwdInput = inputDevice.stickY();
+        boolean creepEnabled = inputDevice.getBtn(CTRLS_CREEPBTN);
+        double finalFwdSpeed = fwdInput * (creepEnabled ? 0.6 : 1);
+
+        //Apply the automated rotation of the pixycam, and the manual input for forward and back
+        baseDriveInstance.DriveRobot(direction * 0.6, finalFwdSpeed);
     }
 }
