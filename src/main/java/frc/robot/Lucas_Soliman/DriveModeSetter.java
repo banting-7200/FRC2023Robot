@@ -18,17 +18,18 @@ public final class DriveModeSetter {
     private RobotDrive driveInstance;
     private Input input;
 
-    public DriveModeSetter(RobotDrive driveInstance, int joystickPort) {
+    public DriveModeSetter(RobotDrive driveInstance, int joystickPort, int mainJoystickPort) {
         this.driveInstance = driveInstance;
         input = new Input(joystickPort);
+        Input mainInput = new Input(mainJoystickPort);
 
-        //Initialise all Drive Modes
+        // Initialise all Drive Modes
         DriveModes = new HashMap<Integer, DriveMode>();
         DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance, input));
         DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary.
+        DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance, mainInput)); // PIXYALIGN being a manualDrive is temporary.
 
-        //Set the drive mode to manual by default.
+        // Set the drive mode to manual by default.
         CurrentDriveMode = DRIVEMODE_MANUAL;
     }
 
@@ -42,7 +43,7 @@ public final class DriveModeSetter {
             }
         }
 
-        //Run the current mode's periodic function.
+        // Run the current mode's periodic function.
         driveInstance.setDriveMode(DriveModes.get(CurrentDriveMode));
     }
 }
