@@ -44,7 +44,7 @@ public final class Utility {
 
     //Integers that resemble different states for classes
     /* STATES */
-    public static int CurrentDriveMode = 7;
+    public static int CurrentDriveMode = 6;
 
     //The below values are also button mappings on the joystick
     //TODO: Separate Modes and Button mappings for less confusion.

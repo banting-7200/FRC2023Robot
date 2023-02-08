@@ -30,14 +30,16 @@ void loop() {
   for(int i = 0; i < camera.ccc.numBlocks; i++) {
     avgX += camera.ccc.blocks[i].m_x;
   }
+}
 
+int calculateDirection(int numBlocks, double avgX) {
   //Calculate the midregion where the robot will not rotate.
   int midPoint = 320 / 2;
   int leftError = midPoint - MID_ERROR;
   int rightError = midPoint + MID_ERROR;
 
   //Calculate the average x position of recognized objects
-  int avgPoint = (int)(avgX / (double)camera.ccc.numBlocks);
+  int avgPoint = (int)(avgX / (double));
 
   //Detect whether or not the object position is
   if(avgPoint > leftError && avgPoint < rightError) {

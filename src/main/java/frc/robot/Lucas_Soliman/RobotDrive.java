@@ -4,7 +4,6 @@ import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.Lucas_Soliman.Arm.*;
 import frc.robot.Lucas_Soliman.DriveModes.*;
 
 /*
