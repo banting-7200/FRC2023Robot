@@ -1,7 +1,8 @@
 package frc.robot.Lucas_Soliman.DriveModes;
 
-import frc.robot.Lucas_Soliman.Input;
 import frc.robot.Lucas_Soliman.RobotDrive;
+import frc.robot.Lucas_Soliman.InputDevices.Input;
+
 import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

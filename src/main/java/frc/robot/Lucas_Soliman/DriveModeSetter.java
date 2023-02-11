@@ -3,6 +3,7 @@ package frc.robot.Lucas_Soliman;
 import java.util.HashMap;
 
 import frc.robot.Lucas_Soliman.DriveModes.*;
+import frc.robot.Lucas_Soliman.InputDevices.Input;
 
 import static frc.robot.Utility.*;
 

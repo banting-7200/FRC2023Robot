@@ -4,6 +4,7 @@ import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.*;
+import frc.robot.Lucas_Soliman.InputDevices.Input;
 
 /*
  * This mode of driving is semi-autonomous
