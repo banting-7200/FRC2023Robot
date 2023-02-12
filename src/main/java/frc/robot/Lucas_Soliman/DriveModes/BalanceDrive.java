@@ -1,8 +1,6 @@
 package frc.robot.Lucas_Soliman.DriveModes;
 
 import static frc.robot.Utility.*;
-
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
 
@@ -31,7 +29,7 @@ public final class BalanceDrive implements DriveMode {
     @Override
     public void DriveModePeriodic() {
         double angle = Clamp(RIO_GYRO.getAngle(), -30, 30);
-
+        if(Math.abs(angle) < 0.05) {angle = 0;}
         // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
         // Use the mapped angle in the evaluateSpeed function.
         double absoluteSpeed = MapValue(Math.abs(angle), 0, 30, 0, 1);
@@ -39,7 +37,8 @@ public final class BalanceDrive implements DriveMode {
         speed = Clamp(speed, -0.7, 0.7);
 
         // Finally drive robot with speed.
-        baseInstance.DriveRobot(0.0, speed);
+        baseInstance.DriveRobot(0.0, -speed);
+        SmartDashboard.putString("DB/String 1", String.format("%.2f", angle));
     }
 
     // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
@@ -48,6 +47,6 @@ public final class BalanceDrive implements DriveMode {
         double x = Clamp(evalPointX, 0, 1.0);
         double eExpNegTwoX = Math.pow(Math.E, -2.0 * x);
         double xSquared = Math.pow(x, 2.0);
-        return ((5.0 * xSquared) * (1.0 - eExpNegTwoX)) / ((1.0 + eExpNegTwoX) * (25.0 * xSquared + 1.0)) + 0.5;
+        return ((6.0 * xSquared) * (1.0 - eExpNegTwoX)) / ((1.0 + eExpNegTwoX) * (25.0 * xSquared + 1.0)) + 0.5;
     }
 }
