@@ -2,9 +2,8 @@ package frc.robot.Lucas_Soliman;
 
 import java.util.HashMap;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Lucas_Soliman.DriveModes.*;
+import frc.robot.Lucas_Soliman.InputDevices.Input;
 
 import static frc.robot.Utility.*;
 
@@ -16,28 +15,23 @@ import static frc.robot.Utility.*;
  * This class depends on RobotDrive.java
  */
 public final class DriveModeSetter {
-    public static final DriveMode[] defaultModes = new DriveMode[] {
-        new Lift(new Joystick(PORT_JOYSTICK)),
-        new Wrist(5, new Joystick(PORT_JOYSTICK)),
-        new shoulder(new Joystick(PORT_JOYSTICK))
-    };
-
     private HashMap<Integer, DriveMode> DriveModes;
     private RobotDrive driveInstance;
-    private Joystick input;
+    private Input input;
 
-    public DriveModeSetter(RobotDrive driveInstance, Joystick coPilotDevice, XboxController mainPilotDevice) {
+    public DriveModeSetter(RobotDrive driveInstance, int joystickPort, int mainJoystickPort) {
         this.driveInstance = driveInstance;
+        input = new Input(joystickPort);
+        Input mainInput = new Input(mainJoystickPort);
 
         // Initialise all Drive Modes
         DriveModes = new HashMap<Integer, DriveMode>();
-        DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance, mainPilotDevice));
+        DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance, input));
         DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance, mainPilotDevice)); // PIXYALIGN being a manualDrive is temporary.
+        DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance, mainInput)); // PIXYALIGN being a manualDrive is temporary.
 
         // Set the drive mode to manual by default.
         CurrentDriveMode = DRIVEMODE_MANUAL;
-        input = coPilotDevice;
     }
 
     public void driveModeSetterTeleop() {
@@ -45,7 +39,7 @@ public final class DriveModeSetter {
         // Checks if the joystick is being pressed at the given drive mode
         // Sets the mode if required button is pressed, and prints the current drive mode.
         for(int mode : DRIVEMODE_MODEARRAY) {
-            if(input.getRawButtonPressed(mode)) {
+            if(input.getBtnPress(mode)) {
                 CurrentDriveMode = mode;
             }
         }

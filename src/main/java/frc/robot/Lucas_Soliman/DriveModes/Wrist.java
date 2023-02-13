@@ -1,7 +1,11 @@
 package frc.robot.Lucas_Soliman.DriveModes;
 
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Lucas_Soliman.Input;
 
 public class Wrist implements DriveMode {
     private boolean canRotate;
@@ -9,10 +13,9 @@ public class Wrist implements DriveMode {
     //private Input inputDevice;
     private double cyclesComplete = 0;
     private Joystick stick;
-
-    public Wrist(int pwmPort, Joystick coPilotInputDevice) {
+    public Wrist(int pwmPort, int joystickPort) {
         wristMotorController = new PWMSparkMax(pwmPort);
-        stick = coPilotInputDevice;
+        stick = new Joystick(joystickPort);
     }
 
     @Override

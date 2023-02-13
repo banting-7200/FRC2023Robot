@@ -1,11 +1,10 @@
 package frc.robot.Lucas_Soliman.DriveModes;
 
 import frc.robot.Lucas_Soliman.RobotDrive;
+import frc.robot.Lucas_Soliman.InputDevices.Input;
 
 import static frc.robot.Utility.*;
 
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
@@ -21,13 +20,13 @@ public final class ManualDrive implements DriveMode {
     private RobotDrive BaseInstance;
     private double speedMultiplier;
     private double currentSpeed;
-    private XboxController input;
+    private Input input;
 
-    public ManualDrive(RobotDrive baseDrive, XboxController inputInstance) {
+    public ManualDrive(RobotDrive baseDrive, Input inputInstance) {
         System.out.println("Init ManualDrive...");
         BaseInstance = baseDrive;
-        input = inputInstance;
         speedMultiplier = 1;
+        input = inputInstance;
     }
 
     @Override
@@ -39,17 +38,11 @@ public final class ManualDrive implements DriveMode {
     public void DriveModePeriodic() {
         // If the driver is pressing the "creep button", use creepdrive speed. Otherwise, use normal speed.
         // If the driver pressed the "flip button" this periodic cycle, invert speed multiplier.
-        currentSpeed = input.getLeftTriggerAxis() > 0.5 ? DRIVE_CREEPSPEED : DRIVE_NORMALSPEED;
-        if(input.getStartButtonPressed()) { speedMultiplier *= -1; }
+        currentSpeed = input.getBtn(CTRLS_CREEPBTN) ? DRIVE_CREEPSPEED : DRIVE_NORMALSPEED;
+        if(input.getBtnPress(CTRLS_FLIPBTN)) { speedMultiplier *= -1; }
         
-        /*
         double xInput = input.applyDeadZone(input.stickX()) * currentSpeed * speedMultiplier;
         double yInput = input.applyDeadZone(input.stickY()) * currentSpeed * -speedMultiplier;
         BaseInstance.DriveRobot(xInput, -yInput);
-        */
-
-        double leftInput = input.getLeftY() * currentSpeed * speedMultiplier;
-        double rightInput = input.getRightY() * currentSpeed * speedMultiplier;
-        BaseInstance.driveInstance.tankDrive(-leftInput, rightInput);
     }
 }
