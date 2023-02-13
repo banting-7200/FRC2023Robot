@@ -18,8 +18,8 @@ import static frc.robot.Utility.*;
 public final class DriveModeSetter {
     public static final DriveMode[] defaultModes = new DriveMode[] {
         new Lift(new Joystick(PORT_JOYSTICK)),
-        new Wrist(5, new Joystick(PORT_JOYSTICK)),
-        new shoulder(new Joystick(PORT_JOYSTICK))
+        //new Wrist(5, new Joystick(PORT_JOYSTICK)),
+        //new shoulder(new Joystick(PORT_JOYSTICK))
     };
 
     private HashMap<Integer, DriveMode> DriveModes;

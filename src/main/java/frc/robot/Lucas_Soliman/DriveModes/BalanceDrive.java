@@ -17,7 +17,7 @@ public final class BalanceDrive implements DriveMode {
     public BalanceDrive(RobotDrive driveInstance) {
         System.out.println("Init BalanceDrive...");
         baseInstance = driveInstance;
-        RIO_GYRO.calibrate();
+        //RIO_GYRO.calibrate();
     }
 
     @Override
