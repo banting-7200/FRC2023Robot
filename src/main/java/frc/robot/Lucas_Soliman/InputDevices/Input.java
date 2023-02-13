@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman;
+package frc.robot.Lucas_Soliman.InputDevices;
 
 import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.Joystick;
