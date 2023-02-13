@@ -1,8 +1,6 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
 import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
 
 /*
@@ -18,48 +16,6 @@ import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
  * For further information, refer to comments above and around variables.
  */
 public final class Utility {
-    public class InputMaps {
-        private XboxController XboxDevice;
-        private Joystick joystickController;
-
-        public InputMaps(Joystick coPilotDevice, XboxController PilotDevice) {
-
-        }
-
-        public double[] getY(boolean xbox) {
-            return xbox ? new double[] { 
-                joystickController.getY() 
-            } : new double[] { 
-                XboxDevice.getLeftY(), 
-                XboxDevice.getRightY() 
-            };
-        }
-
-        public double[] getX(boolean xbox) {
-            return xbox ? new double[] { 
-                joystickController.getY() 
-            } : new double[] { 
-                XboxDevice.getLeftY(), 
-                XboxDevice.getRightY() 
-            };
-        }
-
-        public boolean getButtonPressed(int btnID) {
-            if(btnID >= 3 && btnID <= 12) {
-                return joystickController.getRawButtonPressed(btnID);
-            }
-
-            switch(btnID) {
-                case 13: return XboxDevice.getAButtonPressed();
-                case 14: return XboxDevice.getBButtonPressed();
-                case 15: return XboxDevice.getXButtonPressed();
-                case 16: return XboxDevice.getYButtonPressed();
-            }
-
-            return false;
-        }
-    }
-
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
@@ -74,8 +30,6 @@ public final class Utility {
 
         return val;
     }
-
-
 
     /* PORTS */
     // Integers storing ports that external drive devices are connected to on computer (USB)
@@ -130,6 +84,6 @@ public final class Utility {
 
     /* OBJECTS */
     // Mainly contains components that are sensors. (Motor references must stay in their own java declared class)
-    public static final ADXRS450_Gyro RIO_GYRO = null; //new ADXRS450_Gyro();
-    //public static final I2C_Interface I2C_INTERFACE = new I2C_Interface(1);
+    public static final ADXRS450_Gyro RIO_GYRO = new ADXRS450_Gyro();
+    public static final I2C_Interface I2C_INTERFACE = new I2C_Interface(1);
 }

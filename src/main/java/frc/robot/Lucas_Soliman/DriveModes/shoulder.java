@@ -1,5 +1,7 @@
 package frc.robot.Lucas_Soliman.DriveModes;
 
+import java.util.function.IntPredicate;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
