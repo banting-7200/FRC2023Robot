@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.Lucas_Soliman.DriveModes.*;
+import frc.robot.Lucas_Soliman.DriveModes.DefaultModes.*;
 
 /*
  * Author: Lucas Soliman
@@ -16,14 +17,11 @@ import frc.robot.Lucas_Soliman.DriveModes.*;
  * This class depends on DriveModeSetter.java
  */
 public final class RobotDrive {
-    private final DriveMode[] defaultModes = new DriveMode[] {
-        new Wrist(PORT_JOYSTICK, 0)
-    };
-
     private DifferentialDrive driveInstance;
+    private DriveModeSetter modeSetter;
     private DriveMode currentDriveMode;
 
-    public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight, int joyStickID) {
+    public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
         //Create instances of left motors
         PWMSparkMax tl = new PWMSparkMax(topLeft);
         PWMSparkMax bl = new PWMSparkMax(bottomLeft);
@@ -38,15 +36,16 @@ public final class RobotDrive {
 
         //Create new DifferentialDrive instance with motor groups.
         driveInstance = new DifferentialDrive(leftGroup, rightGroup);
-
-        for(DriveMode mode : defaultModes) {
-            mode.DriveModeInit();
-        }
     }
 
     //Run this function in teleopPeriodic
     public void robotDriveTeleop() {
-        for(DriveMode mode : defaultModes) {
+        if(modeSetter == null) {
+            System.out.println("RobotDrive: No DriveModeSetter instance attached...");
+            return;
+        }
+        
+        for(DriveMode mode : modeSetter.defaultModes) {
             mode.DriveModePeriodic();
         }
 
@@ -68,5 +67,11 @@ public final class RobotDrive {
     // All parameters are in deltas, and not a set positikon/rotation.
     public void DriveRobot(double motorPower, double zRotation) {
         driveInstance.arcadeDrive(motorPower, zRotation);
+    }
+
+    // Allow for the RobotDrive to retain a DriveModeSetter instance.
+    // This is mainly to allow for this class to access the default drive modes.
+    public void attachModeSetter(DriveModeSetter instance) {
+        modeSetter = instance;
     }
 }

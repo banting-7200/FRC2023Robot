@@ -36,7 +36,11 @@ public final class Utility {
     public static final int PORT_JOYSTICK = 0;
     public static final int PORT_COJOYSTICK = 0;
 
+    public static final int CAN_LIFTMOTORID = 1;
+    public static final int CAN_SHOULDERMOTORID = 2;
+
     // Integers storing ports that drive motors are connected to on RoboRIO
+    public static final int MOTOR_WRIST = 6;
     public static final int MOTOR_DRIVEFWDLEFT = 0;
     public static final int MOTOR_DRIVEBACKLEFT = 1;
     public static final int MOTOR_DRIVEFWDRIGHT = 2;

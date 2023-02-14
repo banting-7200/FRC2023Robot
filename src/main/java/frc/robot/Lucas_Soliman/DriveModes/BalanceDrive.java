@@ -2,7 +2,6 @@ package frc.robot.Lucas_Soliman.DriveModes;
 
 import static frc.robot.Utility.*;
 
-import edu.wpi.first.wpilibj.PWM;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
 
@@ -31,6 +30,9 @@ public final class BalanceDrive implements DriveMode {
     @Override
     public void DriveModePeriodic() {
         double angle = Clamp(RIO_GYRO.getAngle(), -30, 30);
+        if(Math.abs(angle) < 0.5) {
+            angle = 0;
+        }
 
         // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
         // Use the mapped angle in the evaluateSpeed function.
