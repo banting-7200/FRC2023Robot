@@ -1,8 +1,5 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
-
 /*
  * Author: Lucas Soliman
  * Date Created: January 10, 2023
@@ -16,6 +13,7 @@ import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
  * For further information, refer to comments above and around variables.
  */
 public final class Utility {
+    /* Utility functions */
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
@@ -44,10 +42,9 @@ public final class Utility {
 
     //Integers that resemble different states for classes
     /* STATES */
-    public static int CurrentDriveMode = 6;
+    public static int STATE_CURRDRIVEMODE = 7;
 
     //The below values are also button mappings on the joystick
-    //TODO: Separate Modes and Button mappings for less confusion.
     public static final int DRIVEMODE_MANUAL = 7;
     public static final int DRIVEMODE_AUTOBALANCE = 8;
     public static final int DRIVEMODE_PIXYALIGN = 9;
@@ -57,13 +54,6 @@ public final class Utility {
         DRIVEMODE_PIXYALIGN
     };
     
-    /*  CONTROLS */
-    public static final int CTRLS_CREEPBTN = 1;
-    public static final int CTRLS_FLIPBTN = 2;
-
-    public static final int CTRLS_LIFTUP = 4;
-    public static final int CTRLS_LIFTDOWN = 3;
-
     /* CONSTANT PARAMETERS */
     public static final int I2C_MAXBYTESREAD = 2;
     public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
@@ -74,16 +64,11 @@ public final class Utility {
 
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
-    public static final double DRIVE_NORMALSPEED = 0.8;
+    public static final double DRIVE_NORMALSPEED = 1;
     public static final double DRIVE_CREEPSPEED = 0.5;
 
     // Armspeed referring to the speed at which the arm would rotate
     // Creepspeed referring to a slower speed for finer arm adjustments.
     public static final double ARM_SPEED = 0.8;
     public static final double ARM_CREEPSPEED = 0.5;
-
-    /* OBJECTS */
-    // Mainly contains components that are sensors. (Motor references must stay in their own java declared class)
-    public static final ADXRS450_Gyro RIO_GYRO = new ADXRS450_Gyro();
-    public static final I2C_Interface I2C_INTERFACE = new I2C_Interface(1);
 }

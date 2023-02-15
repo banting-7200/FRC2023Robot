@@ -1,10 +1,12 @@
-package frc.robot.Lucas_Soliman.DriveModes;
+package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours;
 
 import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.*;
+import frc.robot.Lucas_Soliman.ExternalIO.I2C_Interface;
 import frc.robot.Lucas_Soliman.InputDevices.Input;
+import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
 
 /*
  * This mode of driving is semi-autonomous
@@ -13,29 +15,33 @@ import frc.robot.Lucas_Soliman.InputDevices.Input;
  * 
  * Meant to align with closest game piece to center (cone/cube)
  */
-public class PixyalignDrive implements DriveMode{
-    private RobotDrive baseDriveInstance;
-    private Input inputDevice;
+public class PixyalignDrive implements RobotBehaviour{
+    private final I2C_Interface ARDUINO_INTERFACE = new I2C_Interface(1);
 
-    public PixyalignDrive(RobotDrive baseInstance, Input driveStick) {
+    private final Input INPUT_DEVICE = new Input(PORT_JOYSTICK);
+    private final double PIXY_FWDAXIS = INPUT_DEVICE.applyDeadZone(INPUT_DEVICE.stickY());
+    private final boolean PIXY_CREEP = INPUT_DEVICE.getBtn(3);
+    private RobotDrive baseDriveInstance;
+
+    public PixyalignDrive(RobotDrive baseInstance) {
+        System.out.println("Init PixyalignDrive...");
         baseDriveInstance = baseInstance;
-        inputDevice = driveStick;
     }
 
     @Override
-    public void DriveModeInit() {
+    public void BehaviourInit() {
         SmartDashboard.putString("DB/String 0", "Pixyalign Mode");
     }
 
     @Override
-    public void DriveModePeriodic() {
+    public void BehaviourPeriodic() {
         //Data returned is a string form of average X-Position of game pieces
-        byte[] data = I2C_INTERFACE.readI2C(1);
+        byte[] data = ARDUINO_INTERFACE.readI2C(1);
         byte direction = data[0];
 
         //The below calculations are partially derived from ManualDrive.java
-        double fwdInput = inputDevice.stickY();
-        boolean creepEnabled = inputDevice.getBtn(CTRLS_CREEPBTN);
+        double fwdInput = PIXY_FWDAXIS;
+        boolean creepEnabled = PIXY_CREEP;
         double finalFwdSpeed = fwdInput * (creepEnabled ? 0.6 : 1);
 
         //Apply the automated rotation of the pixycam, and the manual input for forward and back

@@ -1,10 +1,11 @@
-package frc.robot.Lucas_Soliman.DriveModes;
+package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours;
 
 import static frc.robot.Utility.*;
 
-import edu.wpi.first.wpilibj.PWM;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Lucas_Soliman.RobotDrive;
+import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
 
 /*
  * Author: Lucas Soliman
@@ -13,24 +14,29 @@ import frc.robot.Lucas_Soliman.RobotDrive;
  * Uses a single-axis gyro to drive the robot to a balanced state.
  * This drive mode is autonomous
  */
-public final class BalanceDrive implements DriveMode {
+public final class BalanceDrive implements RobotBehaviour {
+    private final ADXRS450_Gyro GYRO = new ADXRS450_Gyro();
     private RobotDrive baseInstance;
 
     public BalanceDrive(RobotDrive driveInstance) {
         System.out.println("Init BalanceDrive...");
         baseInstance = driveInstance;
-        RIO_GYRO.calibrate();
+        GYRO.calibrate();
     }
 
     @Override
-    public void DriveModeInit() {
+    public void BehaviourInit() {
         SmartDashboard.putString("DB/String 0", "Balance Mode");
     }
 
-    // TODO: Implement Drift detection system so Gyro can be reset automatically
     @Override
-    public void DriveModePeriodic() {
-        double angle = Clamp(RIO_GYRO.getAngle(), -30, 30);
+    public void BehaviourPeriodic() {
+        if(!GYRO.isConnected()) {
+            System.out.println("BalanceDrive: No gyro connected");
+            return;
+        }
+
+        double angle = Clamp(GYRO.getAngle(), -30, 30);
 
         // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
         // Use the mapped angle in the evaluateSpeed function.
@@ -48,6 +54,6 @@ public final class BalanceDrive implements DriveMode {
         double x = Clamp(evalPointX, 0, 1.0);
         double eExpNegTwoX = Math.pow(Math.E, -2.0 * x);
         double xSquared = Math.pow(x, 2.0);
-        return ((5.0 * xSquared) * (1.0 - eExpNegTwoX)) / ((1.0 + eExpNegTwoX) * (25.0 * xSquared + 1.0)) + 0.5;
+        return ((16.0 * xSquared) * (1.0 - eExpNegTwoX)) / ((1.0 + eExpNegTwoX) * (25.0 * xSquared + 1.0)) + 0.5;
     }
 }

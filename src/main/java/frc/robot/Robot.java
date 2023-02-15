@@ -1,12 +1,8 @@
 package frc.robot;
 
 import static frc.robot.Utility.*;
-
-import com.ctre.phoenix.motorcontrol.can.TalonFX;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Lucas_Soliman.*;
-import frc.robot.Lucas_Soliman.DriveModes.Wrist;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman
@@ -15,26 +11,19 @@ import frc.robot.Lucas_Soliman.DriveModes.Wrist;
  * The main robot class where all initialisation, and periodic functions are called.
  */
 public class Robot extends TimedRobot {
-  // private DriveModeSetter driverModeSetter;
-  // private RobotDrive driveInstance;
-  private Wrist tempWrist;
+  private final RobotDrive driveInstance = new RobotDrive(
+    MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
+    MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT
+  );
+
+  private final DriveModeSetter driverModeSetter = new DriveModeSetter(
+    driveInstance,
+    new int[] { DRIVEMODE_AUTOBALANCE },
+    new int[] {DRIVEMODE_MANUAL, DRIVEMODE_PIXYALIGN }
+  );
 
   @Override
-  public void robotInit() {
-    tempWrist = new Wrist(7, PORT_JOYSTICK);
-
-    /*
-    driveInstance = new RobotDrive(
-      MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
-      MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT,
-      PORT_JOYSTICK
-    );
-
-    driverModeSetter = new DriveModeSetter(
-      driveInstance, PORT_COJOYSTICK, PORT_JOYSTICK
-    );
-    */
-  }
+  public void robotInit() {}
 
   @Override
   public void robotPeriodic() {}
@@ -46,26 +35,8 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {}
 
   @Override
-  public void teleopInit() {}
-
-  @Override
   public void teleopPeriodic() {
-    tempWrist.DriveModePeriodic();
-    /*
     driverModeSetter.driveModeSetterTeleop();
     driveInstance.robotDriveTeleop();
-    */
   }
-
-  @Override
-  public void disabledInit() {}
-
-  @Override
-  public void disabledPeriodic() {}
-
-  @Override
-  public void testInit() {}
-
-  @Override
-  public void testPeriodic() {}
 }

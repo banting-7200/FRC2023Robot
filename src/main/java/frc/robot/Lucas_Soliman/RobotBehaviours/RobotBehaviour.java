@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.DriveModes;
+package frc.robot.Lucas_Soliman.RobotBehaviours;
 
 /*
  * Author: Lucas Soliman
@@ -7,7 +7,7 @@ package frc.robot.Lucas_Soliman.DriveModes;
  * Aside from the Periodic function, all drive mode classes inheriting this interface
  * must contain a constructor that takes in a RobotDrive Instance.
  */
-public interface DriveMode {
-    public void DriveModeInit();
-    public void DriveModePeriodic();
+public interface RobotBehaviour {
+    public void BehaviourInit();
+    public void BehaviourPeriodic();
 }

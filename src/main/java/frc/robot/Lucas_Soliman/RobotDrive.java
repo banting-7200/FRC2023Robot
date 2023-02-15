@@ -1,10 +1,12 @@
 package frc.robot.Lucas_Soliman;
 
-import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.Lucas_Soliman.DriveModes.*;
+import frc.robot.Lucas_Soliman.RobotBehaviours.*;
+import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
+import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.Shoulder;
+import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.Wrist;
 
 /*
  * Author: Lucas Soliman
@@ -16,14 +18,16 @@ import frc.robot.Lucas_Soliman.DriveModes.*;
  * This class depends on DriveModeSetter.java
  */
 public final class RobotDrive {
-    private final DriveMode[] defaultModes = new DriveMode[] {
-        new Wrist(PORT_JOYSTICK, 0)
+    private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
+        new Shoulder(), // Mainpilot controlled
+        new Wrist(), // Mainpilot controlled
+        new Lift() // Copilot controlled
     };
 
     private DifferentialDrive driveInstance;
-    private DriveMode currentDriveMode;
+    private RobotBehaviour currentDriveMode;
 
-    public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight, int joyStickID) {
+    public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
         //Create instances of left motors
         PWMSparkMax tl = new PWMSparkMax(topLeft);
         PWMSparkMax bl = new PWMSparkMax(bottomLeft);
@@ -39,29 +43,27 @@ public final class RobotDrive {
         //Create new DifferentialDrive instance with motor groups.
         driveInstance = new DifferentialDrive(leftGroup, rightGroup);
 
-        for(DriveMode mode : defaultModes) {
-            mode.DriveModeInit();
+        for(RobotBehaviour mode : defaultModes) {
+            mode.BehaviourInit();
         }
     }
 
     //Run this function in teleopPeriodic
     public void robotDriveTeleop() {
-        for(DriveMode mode : defaultModes) {
-            mode.DriveModePeriodic();
+        for(RobotBehaviour mode : defaultModes) {
+            mode.BehaviourPeriodic();
         }
 
-        if(currentDriveMode == null) {
-            System.out.println("No DriveMode being run!");
+        if(currentDriveMode != null) {
+            currentDriveMode.BehaviourPeriodic();
             return;
         }
-
-        currentDriveMode.DriveModePeriodic();
     }
 
     // A function called by DriveModeSetter.java to make this class tick specific drive modes.
-    public void setDriveMode(DriveMode mode) {
+    public void setDriveMode(RobotBehaviour mode) {
         currentDriveMode = mode;
-        mode.DriveModeInit();
+        mode.BehaviourInit();
     }
 
     // A function for drive modes to interface with DifferentialDrive instance.
