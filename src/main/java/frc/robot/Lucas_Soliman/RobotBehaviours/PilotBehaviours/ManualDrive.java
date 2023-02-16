@@ -37,7 +37,7 @@ public final class ManualDrive implements RobotBehaviour {
     }
 
     @Override
-    public void BehaviourInit() {
+    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         SmartDashboard.putString("DB/String 0", "Manual Mode");
     }
 

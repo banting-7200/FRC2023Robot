@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.Lucas_Soliman.RobotBehaviours.*;
-import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
 import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
+import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
 
 /*
  * Author: Lucas Soliman
@@ -18,8 +18,6 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
  */
 public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
-        //new Shoulder(), // Mainpilot controlled
-        //new Wrist(), // Mainpilot controlled
         new Lift() // Copilot controlled
     };
 
@@ -30,6 +28,11 @@ public final class RobotDrive {
 
     public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
         isDefaultOnly = defaultOnly;
+
+        for(RobotBehaviour mode : defaultModes) {
+            mode.BehaviourInit(defaultModes);
+        }
+
         if(isDefaultOnly) {
             return;
         }
@@ -48,10 +51,6 @@ public final class RobotDrive {
 
         //Create new DifferentialDrive instance with motor groups.
         driveInstance = new DifferentialDrive(leftGroup, rightGroup);
-
-        for(RobotBehaviour mode : defaultModes) {
-            mode.BehaviourInit();
-        }
     }
 
     //Run this function in teleopPeriodic
@@ -60,7 +59,7 @@ public final class RobotDrive {
             mode.BehaviourPeriodic();
         }
 
-        if(currentDriveMode != null && isDefaultOnly) {
+        if(currentDriveMode != null && !isDefaultOnly) {
             currentDriveMode.BehaviourPeriodic();
             return;
         }
@@ -69,7 +68,7 @@ public final class RobotDrive {
     // A function called by DriveModeSetter.java to make this class tick specific drive modes.
     public void setDriveMode(RobotBehaviour mode) {
         currentDriveMode = mode;
-        mode.BehaviourInit();
+        mode.BehaviourInit(defaultModes);
     }
 
     // A function for drive modes to interface with DifferentialDrive instance.

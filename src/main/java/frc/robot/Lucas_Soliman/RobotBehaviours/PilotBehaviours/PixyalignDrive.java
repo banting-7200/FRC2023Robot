@@ -29,7 +29,7 @@ public class PixyalignDrive implements RobotBehaviour{
     }
 
     @Override
-    public void BehaviourInit() {
+    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         SmartDashboard.putString("DB/String 0", "Pixyalign Mode");
     }
 

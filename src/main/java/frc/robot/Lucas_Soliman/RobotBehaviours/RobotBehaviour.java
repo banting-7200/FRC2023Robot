@@ -8,6 +8,6 @@ package frc.robot.Lucas_Soliman.RobotBehaviours;
  * must contain a constructor that takes in a RobotDrive Instance.
  */
 public interface RobotBehaviour {
-    public void BehaviourInit();
+    public void BehaviourInit(RobotBehaviour[] defaultBehaviours);
     public void BehaviourPeriodic();
 }

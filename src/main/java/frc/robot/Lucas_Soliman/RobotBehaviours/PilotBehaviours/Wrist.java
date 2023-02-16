@@ -18,7 +18,7 @@ public class Wrist implements RobotBehaviour {
     private final boolean WRIST_CTRCLOCKWISE = inputDevice.getRawButton(5);
 
     @Override
-    public void BehaviourInit() {
+    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         System.out.println("Wrist Init...");
     }
 

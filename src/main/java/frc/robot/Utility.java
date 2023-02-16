@@ -32,7 +32,7 @@ public final class Utility {
     /* PORTS */
     // Integers storing ports that external drive devices are connected to on computer (USB)
     public static final int PORT_JOYSTICK = 0;
-    public static final int PORT_COJOYSTICK = 0;
+    public static final int PORT_COJOYSTICK = 1;
 
     // Integers storing ports that drive motors are connected to on RoboRIO
     public static final int MOTOR_DRIVEFWDLEFT = 4;
