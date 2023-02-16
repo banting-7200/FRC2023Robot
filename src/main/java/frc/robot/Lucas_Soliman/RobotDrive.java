@@ -5,8 +5,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.Lucas_Soliman.RobotBehaviours.*;
 import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
-import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.Shoulder;
-import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.Wrist;
+import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
 
 /*
  * Author: Lucas Soliman
@@ -19,15 +18,22 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.Wrist;
  */
 public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
-        new Shoulder(), // Mainpilot controlled
-        new Wrist(), // Mainpilot controlled
+        //new Shoulder(), // Mainpilot controlled
+        //new Wrist(), // Mainpilot controlled
         new Lift() // Copilot controlled
     };
 
+    private final boolean defaultOnly = true;
+    private boolean isDefaultOnly;
     private DifferentialDrive driveInstance;
     private RobotBehaviour currentDriveMode;
 
     public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
+        isDefaultOnly = defaultOnly;
+        if(isDefaultOnly) {
+            return;
+        }
+
         //Create instances of left motors
         PWMSparkMax tl = new PWMSparkMax(topLeft);
         PWMSparkMax bl = new PWMSparkMax(bottomLeft);
@@ -54,7 +60,7 @@ public final class RobotDrive {
             mode.BehaviourPeriodic();
         }
 
-        if(currentDriveMode != null) {
+        if(currentDriveMode != null && isDefaultOnly) {
             currentDriveMode.BehaviourPeriodic();
             return;
         }
@@ -69,6 +75,8 @@ public final class RobotDrive {
     // A function for drive modes to interface with DifferentialDrive instance.
     // All parameters are in deltas, and not a set positikon/rotation.
     public void DriveRobot(double motorPower, double zRotation) {
-        driveInstance.arcadeDrive(motorPower, zRotation);
+        if(!isDefaultOnly) {
+            driveInstance.arcadeDrive(motorPower, zRotation);
+        }
     }
 }

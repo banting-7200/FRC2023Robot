@@ -19,7 +19,7 @@ public class Robot extends TimedRobot {
   private final DriveModeSetter driverModeSetter = new DriveModeSetter(
     driveInstance,
     new int[] { DRIVEMODE_AUTOBALANCE },
-    new int[] {DRIVEMODE_MANUAL, DRIVEMODE_PIXYALIGN }
+    new int[] { DRIVEMODE_MANUAL, DRIVEMODE_PIXYALIGN }
   );
 
   @Override
