@@ -21,7 +21,6 @@ public class TalonMotor {
 
     public TalonMotor(int canID) {
         talonMotor = new TalonFX(canID);
-        talonMotor.configFactoryDefault();
         talonMotor.config_kF(0, 0);
         talonMotor.config_kP(0, 0.1);
         talonMotor.config_kI(0, 0.0025);

@@ -1,4 +1,9 @@
+Button 1 - Enables creepmode for robotLift
+
+Button 3 - Lift starting layer position bind
+Button 4 - Lift mid layer position bind
+
+Button 6 - Lift top layer position bind
 Button 7 - Switches robot mode to BalanceDrive
 
-Button 1 - Enables creepmode for robotLift
 Joystick Y - Manually Moves robotLift up and down

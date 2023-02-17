@@ -4,8 +4,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.Lucas_Soliman.RobotBehaviours.*;
-import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
 import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
+import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.Shoulder;
 
 /*
  * Author: Lucas Soliman
@@ -18,6 +18,7 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
  */
 public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
+        new Shoulder(), // Pilot Controlled
         new Lift() // Copilot controlled
     };
 
