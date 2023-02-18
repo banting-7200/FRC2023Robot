@@ -26,13 +26,18 @@ private int lightsMode= 0;
 
     @Override
     public void BehaviourPeriodic() {
-       if (INPUTDEVICE.getRawButtonPressed(10)){
+      if (INPUTDEVICE.getRawButtonPressed(10)){
         lightsMode++;
         if(lightsMode >= 3){
-            lightsMode = 0;
+          lightsMode = 0;
         }
-       }
-       
+      }
+
+      switch(lightsMode) {
+        case 0: lightsOff(); break;
+        case 1: redLights(); break;
+        case 2: blueLights(); break;
+      }
     }
 
     private void redLights() {

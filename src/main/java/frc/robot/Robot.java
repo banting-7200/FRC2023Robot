@@ -25,8 +25,7 @@ public class Robot extends TimedRobot {
   );
 
   @Override
-  public void robotInit() {
-  }
+  public void robotInit() {}
 
   @Override
   public void robotPeriodic() {}
@@ -36,7 +35,6 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousPeriodic() {}
-  final Joystick js = new Joystick(0);
 
   @Override
   public void teleopPeriodic() {
