@@ -14,7 +14,7 @@ import edu.wpi.first.wpilibj.Joystick;
  * I try to avoid long-lineitis as much as I can for readability.
  */
 public final class Input {
-    private Joystick joystickInstance;
+    public Joystick joystickInstance;
     public Input(int joystickPort) {
         joystickInstance = new Joystick(joystickPort);
     }

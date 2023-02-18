@@ -18,11 +18,11 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
  */
 public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
-        new Lift(), // Copilot controlled
-        new Kicker(), // Copilot controlled
+        //new Lift(), // Copilot controlled
+        new Kicker() // Copilot controlled
 
-        new Shoulder(), // Pilot Controlled
-        new Wrist()
+        //new Shoulder(), // Pilot Controlled
+        //new Wrist()
     };
 
     private final boolean defaultOnly = true;

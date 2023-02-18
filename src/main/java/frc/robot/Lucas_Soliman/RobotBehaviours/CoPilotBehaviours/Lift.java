@@ -47,7 +47,6 @@ public class Lift implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         double input = INPUT_DEVICE.stickY();
-        input *= INPUT_DEVICE.getBtn(1) ? 0.6 : 1.0;
 
         /* Some code to replace the code beneath
          * for(int bind = CTRLS_LIFT_STARTINGPOSITION; bind <= CTRLS_LIFT_TOPLAYERPOSITION; bind++) {

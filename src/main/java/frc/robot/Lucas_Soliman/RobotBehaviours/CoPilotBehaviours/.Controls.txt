@@ -1,5 +1,3 @@
-Button 1 - Enables creepmode for robotLift (Hold)
-
 Button 3 - Lift starting layer position bind (Hold)
 Button 4 - Lift mid layer position bind (Hold)
 Button 6 - Lift top layer position bind (Hold)

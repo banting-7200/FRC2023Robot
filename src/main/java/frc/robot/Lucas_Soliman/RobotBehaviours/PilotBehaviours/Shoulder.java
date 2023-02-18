@@ -3,8 +3,6 @@ package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours;
 import static frc.robot.Utility.*;
 
 import java.util.HashMap;
-
-import com.ctre.phoenix.ParamEnum;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -31,14 +29,13 @@ public class Shoulder implements RobotBehaviour {
         put(CTRLS_SCOREPOSPOV, SHOULDER_MOTOR_SCOREPOS);
     }};
 
-    private final int SHOULDER_CREEP = 1;
     private final int SHOULDER_DOWN = 4;
     private final int SHOULDER_UP = 6;
     private Lift liftInstance;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        System.out.println("Init Shoulder...");
+        System.out.println("Shoulder Init...");
         for(RobotBehaviour b : defaultBehaviours) {
             if(b instanceof Lift) {
                 liftInstance = (Lift)b;
@@ -71,7 +68,7 @@ public class Shoulder implements RobotBehaviour {
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = INPUT_DEVICE.getBtn(SHOULDER_UP) ? 1.0 : INPUT_DEVICE.getBtn(SHOULDER_DOWN) ? -1.0 : 0.0;
-        input *= INPUT_DEVICE.getBtn(SHOULDER_CREEP) ? 0.1 : 0.3;
+        input *= (INPUT_DEVICE.joystickInstance.getRawAxis(3) * -1 + 1) / 2.0;
 
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
