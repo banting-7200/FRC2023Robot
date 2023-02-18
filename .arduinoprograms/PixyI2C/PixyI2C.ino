@@ -17,6 +17,7 @@ void setup() {
   Wire.begin(1);
   camera.init();
   Wire.onRequest(onRequest);
+  Serial.begin(9600);
 }
 
 void loop() {
@@ -30,6 +31,9 @@ void loop() {
   for(int i = 0; i < camera.ccc.numBlocks; i++) {
     avgX += camera.ccc.blocks[i].m_x;
   }
+
+Serial.println(avgX);
+delay(250);
 }
 
 int calculateDirection(int numBlocks, double avgX) {
@@ -39,7 +43,7 @@ int calculateDirection(int numBlocks, double avgX) {
   int rightError = midPoint + MID_ERROR;
 
   //Calculate the average x position of recognized objects
-  int avgPoint = (int)(avgX / (double));
+  int avgPoint = (int)(avgX / (camera.ccc.numBlocks));
 
   //Detect whether or not the object position is
   if(avgPoint > leftError && avgPoint < rightError) {

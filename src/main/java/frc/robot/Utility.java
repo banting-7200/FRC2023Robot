@@ -1,5 +1,8 @@
 package frc.robot;
 
+import edu.wpi.first.wpilibj.AddressableLED;
+import edu.wpi.first.wpilibj.AddressableLEDBuffer;
+
 /*
  * Author: Lucas Soliman
  * Date Created: January 10, 2023
@@ -71,4 +74,14 @@ public final class Utility {
     // Creepspeed referring to a slower speed for finer arm adjustments.
     public static final double ARM_SPEED = 0.8;
     public static final double ARM_CREEPSPEED = 0.5;
+
+    public void LightsConfig(){
+        AddressableLED m_led = new AddressableLED(9);
+        AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 LED = 1 instance
+
+        m_led.setLength(m_ledBuffer.getLength());
+        m_led.start();
+
+        m_led.setData(m_ledBuffer);
+    }
 }
