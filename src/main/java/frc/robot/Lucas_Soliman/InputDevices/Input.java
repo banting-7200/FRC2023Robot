@@ -19,6 +19,10 @@ public final class Input {
         joystickInstance = new Joystick(joystickPort);
     }
 
+    public int pov() {
+        return joystickInstance.getPOV();
+    }
+
     // Uses two buttons to represent a 1D axis. (btnPositive returns +, btnNegative return -)
     public double getBtnAxis(int btnPositive, int btnNegative) {
         return getBtn(btnPositive) ? 1.0 : (getBtn(btnNegative) ? -1.0 : 0);

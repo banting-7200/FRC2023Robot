@@ -1,6 +1,7 @@
 package frc.robot;
 
 import static frc.robot.Utility.*;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Lucas_Soliman.*;
 
@@ -23,7 +24,8 @@ public class Robot extends TimedRobot {
   );
 
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+  }
 
   @Override
   public void robotPeriodic() {}

@@ -1,14 +1,14 @@
 joystick XY drives robot
  - PixyAlign mode restricts to only fwd/back control
 
-Button 1 - Hold this to slow down robot for precise movement
-Button 2 - Flips the direction of robot movement
+Button 1 - slow down robot for precise movement (Hold)
+Button 2 - Flips the direction of robot movement (Tap)
 
-Button 3 - Rotates robot wrist counter-clockwise
-Button 5 - Rotates robot wrist clockwise
+Button 3 - Rotates robot wrist counter-clockwise (Hold)
+Button 5 - Rotates robot wrist clockwise (Hold)
 
-Button 4 - Rotates Shoulder down
-Button 6 - Rotates Shoulder up
+Button 4 - Rotates Shoulder down (Hold)
+Button 6 - Rotates Shoulder up (Hold)
 
-Button 7 - Switches mode to ManualDrive
-Button 8 - Switches mode to PixyalignDrive
+Button 7 - Switches mode to ManualDrive (Tap)
+Button 8 - Switches mode to PixyalignDrive (Tap)

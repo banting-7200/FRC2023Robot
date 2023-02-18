@@ -14,7 +14,7 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
 public class Wrist implements RobotBehaviour {
     private final PWMSparkMax WRIST_MOTOR = new PWMSparkMax(6);
     private final Joystick inputDevice = new Joystick(PORT_JOYSTICK);
-    private final boolean WRIST_CLOCKWISE = inputDevice.getRawButton(6);
+    private final boolean WRIST_CLOCKWISE = inputDevice.getRawButton(3);
     private final boolean WRIST_CTRCLOCKWISE = inputDevice.getRawButton(5);
 
     @Override

@@ -1,9 +1,11 @@
-Button 1 - Enables creepmode for robotLift
+Button 1 - Enables creepmode for robotLift (Hold)
 
-Button 3 - Lift starting layer position bind
-Button 4 - Lift mid layer position bind
+Button 3 - Lift starting layer position bind (Hold)
+Button 4 - Lift mid layer position bind (Hold)
+Button 6 - Lift top layer position bind (Hold)
 
-Button 6 - Lift top layer position bind
-Button 7 - Switches robot mode to BalanceDrive
+Button 7 - Switches robot mode to BalanceDrive (Tap)
+
+Button 9 - Toggle Kicker solenoids (Hold)
 
 Joystick Y - Manually Moves robotLift up and down

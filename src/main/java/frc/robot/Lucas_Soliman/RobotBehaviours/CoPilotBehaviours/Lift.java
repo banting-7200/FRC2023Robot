@@ -19,16 +19,14 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
  * Uses inputs to change lift of robot
  */
 public class Lift implements RobotBehaviour {
-
-    // -362739.000000 (Absolute-Lower arm limit)
-    // -565492.000000 (Lower arm limit)
-    // -566254.000000 (Top pole position?)
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
     private final Input INPUT_DEVICE = new Input(PORT_COJOYSTICK);
     private final int CTRLS_LIFT_STARTINGPOSITION = 3;
     private final int CTRLS_LIFT_MIDLAYERPOSITION = 4;
     private final int CTRLS_LIFT_TOPLAYERPOSITION = 6;
 
+
+    //TODO: Get motor positions for each state
     private final double LIFT_ABSOLUTELOWESTLIMIT = 34000; //This is rounded to two numeric values > 0 for safety
     private final double LIFT_ABSOLUTEHIGHESTLIMIT = -970000; //This is rounded to two numeric values > 0 for safety
     private final double LIFT_STARTINGPOSITION = 0;
@@ -60,6 +58,7 @@ public class Lift implements RobotBehaviour {
          * }
          */
 
+        /*
         if(INPUT_DEVICE.getBtn(CTRLS_LIFT_STARTINGPOSITION)) {
             LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CTRLS_LIFT_STARTINGPOSITION));
             return;
@@ -74,6 +73,7 @@ public class Lift implements RobotBehaviour {
             LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CTRLS_LIFT_TOPLAYERPOSITION));
             return;
         }
+        */
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
