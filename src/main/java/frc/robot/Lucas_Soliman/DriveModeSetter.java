@@ -25,11 +25,11 @@ public final class DriveModeSetter {
 
     //Key represents the ID of Drivemode, value represents button on joystick to select mode.
     private final HashMap<Integer, Integer> DriveModeBinds = new HashMap<>() {{
-        //MainPilot modes
+        //MainPilot modes (Buttons on pilot joystick)
         put(DRIVEMODE_MANUAL, 7);
         put(DRIVEMODE_PIXYALIGN, 8);
 
-        //Copilot modes
+        //Copilot modes (Buttons on copilot joystick)
         put(DRIVEMODE_AUTOBALANCE, 7);
     }};
 

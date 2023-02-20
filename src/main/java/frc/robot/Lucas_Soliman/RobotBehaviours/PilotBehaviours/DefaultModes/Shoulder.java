@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours;
+package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.DefaultModes;
 
 import static frc.robot.Utility.*;
 
@@ -23,7 +23,7 @@ public class Shoulder implements RobotBehaviour {
     private final int CTRLS_STARTPOSPOV = 90;
     private final int CTRLS_PICKUPPOSPOV = 180;
     private final int CTRLS_SCOREPOSPOV = 270;
-    
+
     private final HashMap<Integer, Double> SHOULDER_POSITIONS = new HashMap<>() {{
         put(CTRLS_STARTPOSPOV, SHOULDER_MOTOR_STARTPOS);
         put(CTRLS_PICKUPPOSPOV, SHOULDER_MOTOR_PICKUPPOS);

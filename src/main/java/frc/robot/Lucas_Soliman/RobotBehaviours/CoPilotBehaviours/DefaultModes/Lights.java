@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours;
+package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import static frc.robot.Utility.*;
 
@@ -7,13 +7,19 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Joystick;
 
+/*
+ * Author: Jonathon
+ * Date Created: February 17, 2023
+ * 
+ * Used for control of LEDs behind the kickerplate
+ */
 public final class Lights implements RobotBehaviour {
 
-private final Joystick INPUTDEVICE = new Joystick(1);
+  private final Joystick INPUTDEVICE = new Joystick(1);
 
-//lights (move these later im just cracked out rn)
-int lightToggle = 5;
-private int lightsMode= 0;
+  //lights (move these later im just cracked out rn)
+  int lightToggle = 5;
+  private int lightsMode= 0;
 
   AddressableLED m_led = new AddressableLED(9);
   AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 LED = 1 instance

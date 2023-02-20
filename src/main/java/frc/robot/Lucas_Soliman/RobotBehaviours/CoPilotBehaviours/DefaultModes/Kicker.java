@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours;
+package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.Joystick;

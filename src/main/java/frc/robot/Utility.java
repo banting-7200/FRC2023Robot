@@ -40,6 +40,7 @@ public final class Utility {
     public static final int MOTOR_DRIVEBACKLEFT = 3;
     public static final int MOTOR_DRIVEFWDRIGHT = 2;
     public static final int MOTOR_DRIVEBACKRIGHT = 1;
+    public static final int MOTOR_WRISTMOTOR = 5;
 
     //Integers that resemble different states for classes
     /* STATES */
@@ -66,7 +67,6 @@ public final class Utility {
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1;
-    public static final double DRIVE_CREEPSPEED = 0.5;
 
     // Armspeed referring to the speed at which the arm would rotate
     // Creepspeed referring to a slower speed for finer arm adjustments.

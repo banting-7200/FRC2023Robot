@@ -44,7 +44,7 @@ public final class ManualDrive implements RobotBehaviour {
     public void BehaviourPeriodic() {
         // If the driver is pressing the "creep button", use creepdrive speed. Otherwise, use normal speed.
         // If the driver pressed the "flip button" this periodic cycle, invert speed multiplier.
-        currentSpeed = (INPUT_DEVICE.joystickInstance.getRawAxis(3) * -1 + 1) / 2.0;
+        currentSpeed = (-INPUT_DEVICE.joystickInstance.getRawAxis(3) + 1) / 2.0;
         if(MANUAL_FLIP) { speedMultiplier *= -1; }
         
         double xInput = MANUAL_STICKX * currentSpeed;

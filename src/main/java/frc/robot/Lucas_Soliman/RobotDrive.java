@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.Lucas_Soliman.RobotBehaviours.*;
 import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.*;
+import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
 import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
 
 /*
