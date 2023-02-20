@@ -2,7 +2,6 @@ package frc.robot;
 
 import static frc.robot.Utility.*;
 
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.Lucas_Soliman.*;
 
