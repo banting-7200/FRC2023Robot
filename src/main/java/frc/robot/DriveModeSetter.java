@@ -1,12 +1,12 @@
-package frc.robot.Lucas_Soliman;
+package frc.robot;
 
 import java.util.HashMap;
 
-import frc.robot.Lucas_Soliman.InputDevices.Input;
-import frc.robot.Lucas_Soliman.RobotBehaviours.*;
-import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.BalanceDrive;
-import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.ManualDrive;
-import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.PixyalignDrive;
+import frc.robot.InputDevices.Input;
+import frc.robot.RobotBehaviours.*;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.BalanceDrive;
+import frc.robot.RobotBehaviours.PilotBehaviours.ManualDrive;
+import frc.robot.RobotBehaviours.PilotBehaviours.PixyalignDrive;
 
 import static frc.robot.Utility.*;
 

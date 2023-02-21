@@ -5,5 +5,7 @@ Button 6 - Lift top layer position bind (Hold)
 Button 7 - Switches robot mode to BalanceDrive (Tap)
 
 Button 9 - Toggle Kicker solenoids (Hold)
-
+Button 10 - Switch Lights (Tap)
+Button 11 - Toggle Claw 1 (Tap)
+Button 12 - Toggle Claw 2 (Tap)
 Joystick Y - Manually Moves robotLift up and down

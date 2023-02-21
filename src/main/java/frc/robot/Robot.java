@@ -3,7 +3,6 @@ package frc.robot;
 import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import frc.robot.Lucas_Soliman.*;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman

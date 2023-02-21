@@ -1,9 +1,9 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.DefaultModes;
+package frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes;
 
 import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
+import frc.robot.RobotBehaviours.RobotBehaviour;
 
 /*
  * Author: Lucas Soliman
@@ -14,6 +14,7 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
 public class Wrist implements RobotBehaviour {
     private final PWMSparkMax WRIST_MOTOR = new PWMSparkMax(MOTOR_WRISTMOTOR);
     private final Joystick inputDevice = new Joystick(PORT_JOYSTICK);
+    
     private final boolean WRIST_CLOCKWISE = inputDevice.getRawButton(3);
     private final boolean WRIST_CTRCLOCKWISE = inputDevice.getRawButton(5);
 

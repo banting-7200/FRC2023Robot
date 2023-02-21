@@ -1,8 +1,6 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.DefaultModes;
+package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
-import static frc.robot.Utility.*;
-
-import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
+import frc.robot.RobotBehaviours.RobotBehaviour;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Joystick;
@@ -14,7 +12,6 @@ import edu.wpi.first.wpilibj.Joystick;
  * Used for control of LEDs behind the kickerplate
  */
 public final class Lights implements RobotBehaviour {
-
   private final Joystick INPUTDEVICE = new Joystick(1);
 
   //lights (move these later im just cracked out rn)
@@ -24,14 +21,14 @@ public final class Lights implements RobotBehaviour {
   AddressableLED m_led = new AddressableLED(9);
   AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 LED = 1 instance
 
-    @Override
-    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        m_led.setLength(m_ledBuffer.getLength());
-        m_led.start();
-    }
+  @Override
+  public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
+    m_led.setLength(m_ledBuffer.getLength());
+    m_led.start();
+  }
 
-    @Override
-    public void BehaviourPeriodic() {
+  @Override
+  public void BehaviourPeriodic() {
       if (INPUTDEVICE.getRawButtonPressed(10)){
         lightsMode++;
         if(lightsMode >= 3){
@@ -71,5 +68,4 @@ public final class Lights implements RobotBehaviour {
        
        m_led.setData(m_ledBuffer);
     }
-
 }

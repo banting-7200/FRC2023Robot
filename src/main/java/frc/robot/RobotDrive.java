@@ -1,12 +1,12 @@
-package frc.robot.Lucas_Soliman;
+package frc.robot;
 
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.Lucas_Soliman.RobotBehaviours.*;
-import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.*;
-import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
-import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
+import frc.robot.RobotBehaviours.*;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.*;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
+import frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes.*;
 
 /*
  * Author: Lucas Soliman
@@ -19,17 +19,24 @@ import frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.*;
  */
 public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
-        //new Lift(), // Copilot controlled
-        new Kicker() // Copilot controlled
+        //TalonFX Motor Systems
+        new Lift(), // Copilot controlled
+        new Shoulder(), // Pilot Controlled
 
-        //new Shoulder(), // Pilot Controlled
-        //new Wrist()
+        //Pneumatic Systems
+        new Kicker(), // Copilot controlled
+        new Claw(), // Copilot Controlled
+
+        //PWM Systems
+        new Wrist(), // Pilot Controlled
+        new Lights() // Copilot controlled
     };
 
     private final boolean defaultOnly = true;
-    private boolean isDefaultOnly;
+
     private DifferentialDrive driveInstance;
     private RobotBehaviour currentDriveMode;
+    private boolean isDefaultOnly;
 
     public RobotDrive(int topLeft, int bottomLeft, int topRight, int bottomRight) {
         isDefaultOnly = defaultOnly;

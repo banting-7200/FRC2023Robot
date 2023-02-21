@@ -1,11 +1,11 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours;
+package frc.robot.RobotBehaviours.CoPilotBehaviours;
 
 import static frc.robot.Utility.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Lucas_Soliman.RobotDrive;
-import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
+import frc.robot.RobotDrive;
+import frc.robot.RobotBehaviours.RobotBehaviour;
 
 /*
  * Author: Lucas Soliman

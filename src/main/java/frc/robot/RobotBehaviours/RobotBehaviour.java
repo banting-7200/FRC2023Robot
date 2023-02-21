@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours;
+package frc.robot.RobotBehaviours;
 
 /*
  * Author: Lucas Soliman

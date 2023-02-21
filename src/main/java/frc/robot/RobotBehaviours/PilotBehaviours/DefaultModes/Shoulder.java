@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours.DefaultModes;
+package frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes;
 
 import static frc.robot.Utility.*;
 
@@ -6,10 +6,10 @@ import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Lucas_Soliman.CTRE.TalonMotor;
-import frc.robot.Lucas_Soliman.InputDevices.Input;
-import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
-import frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours.Lift;
+import frc.robot.CTRE.TalonMotor;
+import frc.robot.InputDevices.Input;
+import frc.robot.RobotBehaviours.RobotBehaviour;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.Lift;
 
 public class Shoulder implements RobotBehaviour {
     private final TalonMotor SHOULDER_MOTOR = new TalonMotor(1);
@@ -70,8 +70,8 @@ public class Shoulder implements RobotBehaviour {
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = INPUT_DEVICE.getBtn(SHOULDER_UP) ? 1.0 : INPUT_DEVICE.getBtn(SHOULDER_DOWN) ? -1.0 : 0.0;
         input *= (INPUT_DEVICE.joystickInstance.getRawAxis(3) * -1 + 1) / 2.0;
-
+        
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
-        SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
+        SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input * 0.2);
     }
 }

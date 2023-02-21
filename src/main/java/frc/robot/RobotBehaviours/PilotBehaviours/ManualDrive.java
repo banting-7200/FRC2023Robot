@@ -1,8 +1,8 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.PilotBehaviours;
+package frc.robot.RobotBehaviours.PilotBehaviours;
 
-import frc.robot.Lucas_Soliman.RobotDrive;
-import frc.robot.Lucas_Soliman.InputDevices.Input;
-import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
+import frc.robot.RobotDrive;
+import frc.robot.InputDevices.Input;
+import frc.robot.RobotBehaviours.RobotBehaviour;
 
 import static frc.robot.Utility.*;
 

@@ -1,4 +1,4 @@
-package frc.robot.Lucas_Soliman.RobotBehaviours.CoPilotBehaviours;
+package frc.robot.RobotBehaviours.CoPilotBehaviours;
 
 import static frc.robot.Utility.*;
 
@@ -7,9 +7,9 @@ import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Lucas_Soliman.CTRE.TalonMotor;
-import frc.robot.Lucas_Soliman.InputDevices.Input;
-import frc.robot.Lucas_Soliman.RobotBehaviours.RobotBehaviour;
+import frc.robot.CTRE.TalonMotor;
+import frc.robot.InputDevices.Input;
+import frc.robot.RobotBehaviours.RobotBehaviour;
 
 /*
  * Author: Lucas Soliman
@@ -47,8 +47,8 @@ public class Lift implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         double input = INPUT_DEVICE.stickY();
-
-        /* Some code to replace the code beneath
+        /* 
+         * Some code to replace the code beneath
          * for(int bind = CTRLS_LIFT_STARTINGPOSITION; bind <= CTRLS_LIFT_TOPLAYERPOSITION; bind++) {
          *  if(INPUT_DEVICE.getBtn(bind)) {
          *   LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(bind));
