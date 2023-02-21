@@ -27,6 +27,10 @@ public class TalonMotor {
         talonMotor.config_kD(0, 0);
     }
 
+    public void resetMotorPosition() {
+        talonMotor.setSelectedSensorPosition(0);
+    }
+
     public void set(ControlMode mode, double arg) {
         talonMotor.set(mode, arg);
     }
