@@ -4,7 +4,7 @@ import static frc.robot.Utility.*;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
-import frc.robot.RobotBehaviours.RobotBehaviour;
+import frc.robot.Interfaces.RobotBehaviour;
 
 public class Claw implements RobotBehaviour{
     private final Joystick INPUT_DEVICE = new Joystick(PORT_COJOYSTICK);
@@ -15,8 +15,6 @@ public class Claw implements RobotBehaviour{
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        CLAW_SOLENOID1.set(false);
-        CLAW_SOLENOID2.set(true);
     }
 
     @Override

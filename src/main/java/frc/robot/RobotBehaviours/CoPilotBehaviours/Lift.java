@@ -3,13 +3,14 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours;
 import static frc.robot.Utility.*;
 
 import java.util.HashMap;
+import java.util.function.Function;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CTRE.TalonMotor;
 import frc.robot.InputDevices.Input;
-import frc.robot.RobotBehaviours.RobotBehaviour;
+import frc.robot.Interfaces.RobotBehaviour;
 
 /*
  * Author: Lucas Soliman
@@ -39,6 +40,8 @@ public class Lift implements RobotBehaviour {
         put(CTRLS_LIFT_TOPLAYERPOSITION, LIFT_ABSOLUTEHIGHESTLIMIT);
     }};
 
+    private double nextOverrideInput;
+
     @Override
     public void BehaviourInit(RobotBehaviour[] behaviours) {
         System.out.println("Init Lift...");
@@ -47,6 +50,11 @@ public class Lift implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         double input = INPUT_DEVICE.stickY();
+
+        if(nextOverrideInput != 0) {
+            input = nextOverrideInput;
+        }
+
         /* 
          * Some code to replace the code beneath
          * for(int bind = CTRLS_LIFT_STARTINGPOSITION; bind <= CTRLS_LIFT_TOPLAYERPOSITION; bind++) {
@@ -79,6 +87,26 @@ public class Lift implements RobotBehaviour {
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
+
+        nextOverrideInput = 0;
+        input = 0;
+    }
+
+    public boolean setInput(double i) {
+        nextOverrideInput = i;
+
+        double motorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+        if(motorPosition >= LIFT_ABSOLUTELOWESTLIMIT && nextOverrideInput > 0) {
+            nextOverrideInput = 0;
+            return false;
+        }
+
+        if(motorPosition <= LIFT_ABSOLUTEHIGHESTLIMIT && nextOverrideInput < 0) {
+            nextOverrideInput = 0;
+            return false;
+        }
+
+        return true;
     }
 
     public double getLiftPosition() {

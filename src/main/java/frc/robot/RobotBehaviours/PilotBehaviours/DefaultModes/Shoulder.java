@@ -8,7 +8,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.CTRE.TalonMotor;
 import frc.robot.InputDevices.Input;
-import frc.robot.RobotBehaviours.RobotBehaviour;
+import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.Lift;
 
 public class Shoulder implements RobotBehaviour {
