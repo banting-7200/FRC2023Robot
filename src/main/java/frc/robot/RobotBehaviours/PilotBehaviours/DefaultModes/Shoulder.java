@@ -36,6 +36,7 @@ public class Shoulder implements RobotBehaviour {
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
+        SmartDashboard.putNumber("Target Shoulder Position", SHOULDER_MOTOR.getMotor().getSelectedSensorPosition());
         System.out.println("Shoulder Init...");
         for(RobotBehaviour b : defaultBehaviours) {
             if(b instanceof Lift) {
@@ -73,5 +74,10 @@ public class Shoulder implements RobotBehaviour {
         
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input * 0.2);
+
+        if(input == 0) {
+            double newPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
+            SHOULDER_MOTOR.getMotor().set(ControlMode.Position, newPosition);
+        }
     }
 }

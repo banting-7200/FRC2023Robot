@@ -20,10 +20,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public final class ManualDrive implements RobotBehaviour {
 
     private final Input INPUT_DEVICE = new Input(PORT_JOYSTICK);
-    private final double MANUAL_STICKX = INPUT_DEVICE.applyDeadZone(INPUT_DEVICE.stickX());
-    private final double MANUAL_STICKY = INPUT_DEVICE.applyDeadZone(INPUT_DEVICE.stickY());
-
-    private final boolean MANUAL_FLIP = INPUT_DEVICE.getBtnPress(2);
+    private final double MANUAL_STICKX = INPUT_DEVICE.stickX();
+    private final double MANUAL_STICKY = INPUT_DEVICE.stickY();
 
     private RobotDrive BaseInstance;
     private double speedMultiplier;
@@ -37,7 +35,7 @@ public final class ManualDrive implements RobotBehaviour {
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        SmartDashboard.putString("DB/String 0", "Manual Mode");
+        SmartDashboard.putString("Current Mode: ", "Manual Mode");
     }
 
     @Override
@@ -45,10 +43,10 @@ public final class ManualDrive implements RobotBehaviour {
         // If the driver is pressing the "creep button", use creepdrive speed. Otherwise, use normal speed.
         // If the driver pressed the "flip button" this periodic cycle, invert speed multiplier.
         currentSpeed = (-INPUT_DEVICE.joystickInstance.getRawAxis(3) + 1) / 2.0;
-        if(MANUAL_FLIP) { speedMultiplier *= -1; }
+        if(INPUT_DEVICE.getBtnPress(2)) { speedMultiplier *= -1; }
         
-        double xInput = MANUAL_STICKX * currentSpeed;
-        double yInput = MANUAL_STICKY * currentSpeed * speedMultiplier;
+        double xInput = INPUT_DEVICE.stickX() * currentSpeed;
+        double yInput = INPUT_DEVICE.stickY() * currentSpeed * speedMultiplier;
         BaseInstance.DriveRobot(xInput, -yInput);
     }
 }

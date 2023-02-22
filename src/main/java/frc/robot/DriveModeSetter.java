@@ -21,7 +21,7 @@ public final class DriveModeSetter {
     private final Input MAIN_INPUT = new Input(PORT_JOYSTICK);
     private final Input CO_INPUT = new Input(PORT_COJOYSTICK);
 
-    private HashMap<Integer, RobotBehaviour> DriveModes = new HashMap<>();
+    private HashMap<Integer, RobotBehaviour> DriveModes;
 
     //Key represents the ID of Drivemode, value represents button on joystick to select mode.
     private final HashMap<Integer, Integer> DriveModeBinds = new HashMap<>() {{
@@ -33,7 +33,7 @@ public final class DriveModeSetter {
         put(DRIVEMODE_AUTOBALANCE, 7);
     }};
 
-
+    private int currDriveMode;
     private RobotDrive driveInstance;
     private int[] mainPilotModes;
     private int[] coPilotModes;
@@ -49,6 +49,7 @@ public final class DriveModeSetter {
 
         this.mainPilotModes = mainPilotModes;
         this.coPilotModes = coPilotModes;
+        currDriveMode = 7;
     }
 
     public void driveModeSetterTeleop() {
@@ -57,17 +58,17 @@ public final class DriveModeSetter {
         // Sets the mode if required button is pressed, and prints the current drive mode.
         for(int mode : mainPilotModes) {
             if(MAIN_INPUT.getBtnPress(DriveModeBinds.get(mode))) {
-                STATE_CURRDRIVEMODE = mode;
+                currDriveMode = mode;
             }
         }
 
         for(int mode : coPilotModes) {
             if(CO_INPUT.getBtnPress(DriveModeBinds.get(mode))) {
-                STATE_CURRDRIVEMODE = mode;
+                currDriveMode = mode;
             }
         }
 
         // Run the current mode's periodic function.
-        driveInstance.setDriveMode(DriveModes.get(STATE_CURRDRIVEMODE));
+        driveInstance.setDriveMode(DriveModes.get(currDriveMode));
     }
 }

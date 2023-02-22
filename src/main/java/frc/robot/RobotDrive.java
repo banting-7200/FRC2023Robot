@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.RobotBehaviours.*;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.*;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
+import frc.robot.RobotBehaviours.PilotBehaviours.ManualDrive;
 import frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes.*;
 
 /*
@@ -21,18 +22,18 @@ public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
         //TalonFX Motor Systems
         new Lift(), // Copilot controlled
-        new Shoulder(), // Pilot Controlled
+        //new Shoulder(), // Pilot Controlled
 
         //Pneumatic Systems
-        new Kicker(), // Copilot controlled
-        new Claw(), // Copilot Controlled
+        //new Kicker(), // Copilot controlled
+        //new Claw(), // Copilot Controlled
 
         //PWM Systems
         new Wrist(), // Pilot Controlled
         new Lights() // Copilot controlled
     };
 
-    private final boolean defaultOnly = true;
+    private final boolean defaultOnly = false;
 
     private DifferentialDrive driveInstance;
     private RobotBehaviour currentDriveMode;
@@ -71,16 +72,14 @@ public final class RobotDrive {
             mode.BehaviourPeriodic();
         }
 
-        if(currentDriveMode != null && !isDefaultOnly) {
+        if(currentDriveMode != null && isDefaultOnly == false) {
             currentDriveMode.BehaviourPeriodic();
-            return;
         }
     }
 
     // A function called by DriveModeSetter.java to make this class tick specific drive modes.
     public void setDriveMode(RobotBehaviour mode) {
         currentDriveMode = mode;
-        mode.BehaviourInit(defaultModes);
     }
 
     // A function for drive modes to interface with DifferentialDrive instance.

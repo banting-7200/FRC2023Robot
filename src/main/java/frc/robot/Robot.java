@@ -2,7 +2,9 @@ package frc.robot;
 
 import static frc.robot.Utility.*;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman
@@ -23,7 +25,9 @@ public class Robot extends TimedRobot {
   );
 
   @Override
-  public void robotInit() {}
+  public void robotInit() {
+    CameraServer.startAutomaticCapture();
+  }
 
   @Override
   public void robotPeriodic() {}

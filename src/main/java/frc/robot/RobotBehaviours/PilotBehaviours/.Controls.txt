@@ -1,10 +1,9 @@
+MAIN PILOT
+
 joystick XY drives robot
  - PixyAlign mode restricts to only fwd/back control
 
 Button 2 - Flips the direction of robot movement (Tap)
-
-Button 3 - Rotates robot wrist counter-clockwise (Hold)
-Button 5 - Rotates robot wrist clockwise (Hold)
 
 Button 4 - Rotates Shoulder down (Hold)
 Button 6 - Rotates Shoulder up (Hold)

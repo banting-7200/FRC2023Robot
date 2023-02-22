@@ -10,29 +10,27 @@ public class Claw implements RobotBehaviour{
     private final Joystick INPUT_DEVICE = new Joystick(PORT_COJOYSTICK);
     private final Solenoid CLAW_SOLENOID1 = new Solenoid(PneumaticsModuleType.CTREPCM, 0);
     private final Solenoid CLAW_SOLENOID2 = new Solenoid(PneumaticsModuleType.CTREPCM, 1);
-    private final int CTRLS_OPENCLAW = 11;
-    private final int CTRLS_CLOSECLAW = 12;
+    private final int CTRLS_CLAWTOGGLE = 1;
+    private boolean open = false;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        CLAW_SOLENOID1.set(true);
-        CLAW_SOLENOID2.set(false);
+        CLAW_SOLENOID1.set(false);
+        CLAW_SOLENOID2.set(true);
     }
 
     @Override
     public void BehaviourPeriodic() {
-        boolean buttonState = INPUT_DEVICE.getRawButtonPressed(CTRLS_OPENCLAW);
-        boolean buttonState2 = INPUT_DEVICE.getRawButtonPressed(CTRLS_CLOSECLAW);
+        if(INPUT_DEVICE.getRawButtonPressed(CTRLS_CLAWTOGGLE)) {
+            open = !open;
+        }  
 
-        if(buttonState) {
-            CLAW_SOLENOID1.set(true);
-            CLAW_SOLENOID2.set(false);
-            return;
-        }
-
-        if(buttonState2) {
+        if(open) {
             CLAW_SOLENOID1.set(false);
             CLAW_SOLENOID2.set(true);
+        } else {
+            CLAW_SOLENOID1.set(true);
+            CLAW_SOLENOID2.set(false);
         }
     }
 }

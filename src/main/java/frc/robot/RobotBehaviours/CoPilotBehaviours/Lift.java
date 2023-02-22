@@ -23,20 +23,20 @@ public class Lift implements RobotBehaviour {
     private final Input INPUT_DEVICE = new Input(PORT_COJOYSTICK);
     private final int CTRLS_LIFT_STARTINGPOSITION = 3;
     private final int CTRLS_LIFT_MIDLAYERPOSITION = 4;
-    private final int CTRLS_LIFT_TOPLAYERPOSITION = 6;
+    private final int CTRLS_LIFT_TOPLAYERPOSITION = 5;
 
 
     //TODO: Get motor positions for each state
-    private final double LIFT_ABSOLUTELOWESTLIMIT = 34000; //This is rounded to two numeric values > 0 for safety
-    private final double LIFT_ABSOLUTEHIGHESTLIMIT = -970000; //This is rounded to two numeric values > 0 for safety
+    private final double LIFT_ABSOLUTELOWESTLIMIT = 499398; //This is rounded to two numeric values > 0 for safety
+    private final double LIFT_ABSOLUTEHIGHESTLIMIT = -102867; //This is rounded to two numeric values > 0 for safety
     private final double LIFT_STARTINGPOSITION = 0;
     private final double LIFT_TOPLAYERPOSITION = 0;
-    private final double LIFT_MIDLAYERPOSITION = 0;
+    private final double LIFT_MIDLAYERPOSITION = 198265.5;
 
     private final HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
-        put(CTRLS_LIFT_STARTINGPOSITION, LIFT_STARTINGPOSITION);
+        put(CTRLS_LIFT_STARTINGPOSITION, LIFT_ABSOLUTELOWESTLIMIT);
         put(CTRLS_LIFT_MIDLAYERPOSITION, LIFT_MIDLAYERPOSITION);
-        put(CTRLS_LIFT_TOPLAYERPOSITION, LIFT_TOPLAYERPOSITION);
+        put(CTRLS_LIFT_TOPLAYERPOSITION, LIFT_ABSOLUTEHIGHESTLIMIT);
     }};
 
     @Override
@@ -57,13 +57,7 @@ public class Lift implements RobotBehaviour {
          * }
          */
 
-        /*
         if(INPUT_DEVICE.getBtn(CTRLS_LIFT_STARTINGPOSITION)) {
-            LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CTRLS_LIFT_STARTINGPOSITION));
-            return;
-        }
-
-        if(INPUT_DEVICE.getBtn(CTRLS_LIFT_MIDLAYERPOSITION)) {
             LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CTRLS_LIFT_STARTINGPOSITION));
             return;
         }
@@ -72,7 +66,16 @@ public class Lift implements RobotBehaviour {
             LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CTRLS_LIFT_TOPLAYERPOSITION));
             return;
         }
-        */
+
+        double motorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+
+        if(motorPosition >= LIFT_ABSOLUTELOWESTLIMIT && input > 0) {
+            input = 0;
+        }
+
+        if(motorPosition <= LIFT_ABSOLUTEHIGHESTLIMIT && input < 0) {
+            input = 0;
+        }
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, input);

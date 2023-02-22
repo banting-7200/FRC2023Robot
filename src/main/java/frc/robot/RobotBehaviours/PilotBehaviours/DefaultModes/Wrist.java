@@ -13,10 +13,7 @@ import frc.robot.RobotBehaviours.RobotBehaviour;
  */
 public class Wrist implements RobotBehaviour {
     private final PWMSparkMax WRIST_MOTOR = new PWMSparkMax(MOTOR_WRISTMOTOR);
-    private final Joystick inputDevice = new Joystick(PORT_JOYSTICK);
-    
-    private final boolean WRIST_CLOCKWISE = inputDevice.getRawButton(3);
-    private final boolean WRIST_CTRCLOCKWISE = inputDevice.getRawButton(5);
+    private final Joystick inputDevice = new Joystick(PORT_COJOYSTICK);
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
@@ -25,7 +22,7 @@ public class Wrist implements RobotBehaviour {
 
     @Override
     public void BehaviourPeriodic() {
-        double output = WRIST_CLOCKWISE ? 1.0 : WRIST_CTRCLOCKWISE ? -1.0 : 0;
+        double output = inputDevice.getX() * 0.4;
         WRIST_MOTOR.set(output);
     }
 }
