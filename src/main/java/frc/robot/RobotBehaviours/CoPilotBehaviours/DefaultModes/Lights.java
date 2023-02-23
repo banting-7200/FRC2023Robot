@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Interfaces.RobotBehaviour;
+import frc.robot.Utility.CoPilotControls;
 
 /*
  * Author: Jonathon
@@ -12,13 +13,9 @@ import frc.robot.Interfaces.RobotBehaviour;
  * Used for control of LEDs behind the kickerplate
  */
 public final class Lights implements RobotBehaviour {
-  private final Joystick INPUTDEVICE = new Joystick(1);
-
-  //lights (move these later im just cracked out rn)
-  int lightToggle = 5;
   private int lightsMode= 0;
 
-  AddressableLED m_led = new AddressableLED(9);
+  AddressableLED m_led = new AddressableLED(7);
   AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 LED = 1 instance
 
   @Override
@@ -29,7 +26,7 @@ public final class Lights implements RobotBehaviour {
 
   @Override
   public void BehaviourPeriodic() {
-      if (INPUTDEVICE.getRawButtonPressed(10)){
+      if (CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(CoPilotControls.LIGHTS_SWITCHMODE)){
         lightsMode++;
         if(lightsMode >= 3){
           lightsMode = 0;

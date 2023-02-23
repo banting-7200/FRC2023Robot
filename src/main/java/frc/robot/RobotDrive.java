@@ -3,10 +3,9 @@ package frc.robot;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.RobotBehaviours.*;
+import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.*;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
-import frc.robot.RobotBehaviours.PilotBehaviours.ManualDrive;
 import frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes.*;
 
 /*

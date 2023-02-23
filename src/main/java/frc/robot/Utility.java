@@ -1,5 +1,8 @@
 package frc.robot;
 
+import java.util.function.Supplier;
+
+import edu.wpi.first.wpilibj.Joystick;
 
 /*
  * Author: Lucas Soliman
@@ -14,6 +17,56 @@ package frc.robot;
  * For further information, refer to comments above and around variables.
  */
 public final class Utility {
+    public static final class PilotControls {
+        public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
+        public static final int DRIVING_CREEPTOGGLE = 1;
+        public static final int DRIVING_FLIPTOGGLE = 2;
+
+        public static final Supplier<Double> PILOT_X = () -> {
+            return JOYSTICK_PILOT.getX();
+        };
+
+        public static final Supplier<Double> PILOT_Y = () -> {
+            return JOYSTICK_PILOT.getY();
+        };
+
+        public static final int DRIVEMODE_MANUAL = 7;
+        public static final int DRIVEMODE_PIXYALIGN = 8;
+        public static final int DRIVEMODE_AUTOBALANCE = 9;
+
+        public static final int SHOULDER_STARTPOSPOV = 90;
+        public static final int SHOULDER_PICKUPPOSPOV = 180;
+        public static final int SHOULDER_SCOREPOSPOV = 270;
+
+        public static final int SHOULDER_DOWN = 4;
+        public static final int SHOULDER_UP = 6;
+    }
+
+    public static final class CoPilotControls {
+        public static final Joystick JOYSTICK_COPILOT = new Joystick(PORT_COJOYSTICK);
+
+        public static final Supplier<Double> WRIST_MOVE = () -> {
+            return JOYSTICK_COPILOT.getX();
+        };
+
+        public static final int LIFT_STARTINGPOSITION = 3;
+        public static final int LIFT_MIDLAYERPOSITION = 4;
+        public static final int LIFT_TOPLAYERPOSITION = 6;
+        public static final Supplier<Double> LIFT_MOVE = () -> {
+            return JOYSTICK_COPILOT.getY();
+        };
+
+        public static final int LIGHTS_SWITCHMODE = 2;
+        public static final int KICKER_KICK = 5;
+        public static final int CLAW_TOGGLE = 1;
+    }
+
+    public static class SmartDashboardIDs {
+        public static final String DRIVEMODEID = "Current Drive Mode: ";
+        public static final String SHOULDERPOSITIONID = "Shoulder Motor Position: ";
+        public static final String LIFTPOSITIONID = "Lift Motor Position: ";
+    }
+    
     /* Utility functions */
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
@@ -62,11 +115,12 @@ public final class Utility {
 
     /* SPEED VALUES */
     //The value that the joystick x/y must surpass in order to register.
-    public static final double JOYSTICK_DEADZONE = 0.25;
+    public static final double JOYSTICK_DEADZONE = 0.1;
 
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1;
+    public static final double DRIVE_CREEPSPEED = 0.6;
 
     // Armspeed referring to the speed at which the arm would rotate
     // Creepspeed referring to a slower speed for finer arm adjustments.

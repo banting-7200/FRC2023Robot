@@ -1,9 +1,12 @@
 package frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes;
 
 import static frc.robot.Utility.*;
+
+import edu.wpi.first.wpilibj.Counter;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
-import frc.robot.RobotBehaviours.RobotBehaviour;
+import frc.robot.Interfaces.RobotBehaviour;
 
 /*
  * Author: Lucas Soliman
@@ -13,7 +16,10 @@ import frc.robot.RobotBehaviours.RobotBehaviour;
  */
 public class Wrist implements RobotBehaviour {
     private final PWMSparkMax WRIST_MOTOR = new PWMSparkMax(MOTOR_WRISTMOTOR);
-    private final Joystick inputDevice = new Joystick(PORT_COJOYSTICK);
+
+    //TODO: Get Channel ID for this digitalInput
+    private final DigitalInput WRIST_COUNTER = new DigitalInput(0);
+    private int wristPosition = 0;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
@@ -22,7 +28,14 @@ public class Wrist implements RobotBehaviour {
 
     @Override
     public void BehaviourPeriodic() {
-        double output = inputDevice.getX() * 0.4;
+        double output = CoPilotControls.WRIST_MOVE.get();
+        setWrist(output);
+    }
+
+    private void setWrist(double output) {
         WRIST_MOTOR.set(output);
+        if(WRIST_COUNTER.get()) {
+            wristPosition += Math.signum(output);
+        }
     }
 }

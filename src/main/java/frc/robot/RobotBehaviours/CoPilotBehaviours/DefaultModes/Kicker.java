@@ -13,10 +13,8 @@ import frc.robot.Interfaces.RobotBehaviour;
  * This class is responsible for managing the states of the solenoids responsible for the kicker system
  */
 public class Kicker implements RobotBehaviour{
-    private final Joystick INPUT_DEVICE = new Joystick(PORT_COJOYSTICK);
     private final Solenoid KICKER_SOLENOID1 = new Solenoid(PneumaticsModuleType.CTREPCM, 2);
     private final Solenoid KICKER_SOLENOID2 = new Solenoid(PneumaticsModuleType.CTREPCM, 3);
-    private final int CTRLS_SOLENOIDTOGGLE = 9;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
@@ -27,7 +25,7 @@ public class Kicker implements RobotBehaviour{
 
     @Override
     public void BehaviourPeriodic() {
-        boolean buttonState = INPUT_DEVICE.getRawButton(CTRLS_SOLENOIDTOGGLE);
+        boolean buttonState = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.KICKER_KICK);
         KICKER_SOLENOID1.set(buttonState);
         KICKER_SOLENOID2.set(!buttonState);
     }

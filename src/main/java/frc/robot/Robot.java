@@ -2,9 +2,10 @@ package frc.robot;
 
 import static frc.robot.Utility.*;
 
+import java.util.HashMap;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman
@@ -13,15 +14,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * The main robot class where all initialisation, and periodic functions are called.
  */
 public class Robot extends TimedRobot {
+  
+  // Delegates all teleoperated functions within RobotBehaviours
   private final RobotDrive driveInstance = new RobotDrive(
     MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
     MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT
   );
 
+  // Pilot Controlled
   private final DriveModeSetter driverModeSetter = new DriveModeSetter(
     driveInstance,
-    new int[] { DRIVEMODE_AUTOBALANCE },
-    new int[] { DRIVEMODE_MANUAL, DRIVEMODE_PIXYALIGN }
+    new int[] { DRIVEMODE_MANUAL, DRIVEMODE_PIXYALIGN, DRIVEMODE_AUTOBALANCE }
   );
 
   @Override

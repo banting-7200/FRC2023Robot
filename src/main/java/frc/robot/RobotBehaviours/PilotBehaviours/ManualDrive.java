@@ -1,11 +1,9 @@
 package frc.robot.RobotBehaviours.PilotBehaviours;
 
 import frc.robot.RobotDrive;
-import frc.robot.InputDevices.Input;
-import frc.robot.RobotBehaviours.RobotBehaviour;
+import frc.robot.Interfaces.RobotBehaviour;
 
 import static frc.robot.Utility.*;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
@@ -18,11 +16,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * This mode is teleOperated
  */
 public final class ManualDrive implements RobotBehaviour {
-
-    private final Input INPUT_DEVICE = new Input(PORT_JOYSTICK);
-    private final double MANUAL_STICKX = INPUT_DEVICE.stickX();
-    private final double MANUAL_STICKY = INPUT_DEVICE.stickY();
-
     private RobotDrive BaseInstance;
     private double speedMultiplier;
     private double currentSpeed;
@@ -35,18 +28,18 @@ public final class ManualDrive implements RobotBehaviour {
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        SmartDashboard.putString("Current Mode: ", "Manual Mode");
+        SmartDashboard.putString(SmartDashboardIDs.DRIVEMODEID, "Manual Mode");
     }
 
     @Override
     public void BehaviourPeriodic() {
         // If the driver is pressing the "creep button", use creepdrive speed. Otherwise, use normal speed.
         // If the driver pressed the "flip button" this periodic cycle, invert speed multiplier.
-        currentSpeed = (-INPUT_DEVICE.joystickInstance.getRawAxis(3) + 1) / 2.0;
-        if(INPUT_DEVICE.getBtnPress(2)) { speedMultiplier *= -1; }
-        
-        double xInput = INPUT_DEVICE.stickX() * currentSpeed;
-        double yInput = INPUT_DEVICE.stickY() * currentSpeed * speedMultiplier;
-        BaseInstance.DriveRobot(xInput, -yInput);
+        if(PilotControls.JOYSTICK_PILOT.getRawButtonPressed(PilotControls.DRIVING_FLIPTOGGLE)) { speedMultiplier *= -1; }
+        currentSpeed = PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE) ? DRIVE_CREEPSPEED : DRIVE_NORMALSPEED;
+
+        double xInput = PilotControls.PILOT_X.get() * currentSpeed;
+        double yInput = PilotControls.PILOT_Y.get() * currentSpeed * speedMultiplier;
+        BaseInstance.DriveRobot(xInput, yInput);
     }
 }
