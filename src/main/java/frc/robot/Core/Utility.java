@@ -16,6 +16,10 @@ import edu.wpi.first.wpilibj.Joystick;
 public final class Utility {
     public static final class PilotControls {
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
+
+        // Controls are utilised in:
+        // - PixyAlignDrive.java
+        // - ManualDrive.java
         public static final int DRIVING_CREEPTOGGLE = 1;
         public static final int DRIVING_FLIPTOGGLE = 2;
 
@@ -27,6 +31,7 @@ public final class Utility {
             return JOYSTICK_PILOT.getY();
         };
 
+        // Controls are utilised in DriveModeSetter.java
         public static final int DRIVEMODE_MANUAL = 7;
         public static final int DRIVEMODE_PIXYALIGN = 9;
         public static final int DRIVEMODE_AUTOBALANCE = 11;
@@ -35,10 +40,12 @@ public final class Utility {
     public static final class CoPilotControls {
         public static final Joystick JOYSTICK_COPILOT = new Joystick(PORT_COJOYSTICK);
 
+        // Controls are utilised in Wrist.java
         public static final Supplier<Double> WRIST_MOVE = () -> {
             return JOYSTICK_COPILOT.getX();
         };
 
+        // Controls are utilised in Lift.java
         public static final int LIFT_STARTINGPOSITION = 11;
         public static final int LIFT_MIDLAYERPOSITION = 9;
         public static final int LIFT_TOPLAYERPOSITION = 7;
@@ -46,12 +53,21 @@ public final class Utility {
             return JOYSTICK_COPILOT.getY();
         };
 
+        // Controls are utilised in Shoulder.java
+        public static final int SHOULDERPOV_PICKUPPOS = 0;
+        public static final int SHOULDERPOV_EXTENDPOS = 180;
+
         public static final int SHOULDER_DOWN = 4;
         public static final int SHOULDER_UP = 6;
 
+        // Controls are utilised in Claw.java
         public static final int CLAW_TOGGLE = 1;
-        public static final int LIGHTS_SWITCHMODE = 12;
+
+        // Controls are utilised in Kicker.java
         public static final int KICKER_KICK = 3;
+
+        // Controls are utilised in Lights.java
+        public static final int LIGHTS_SWITCHMODE = 12;
     }
     //#region Constants
     public static class SmartDashboardIDs {

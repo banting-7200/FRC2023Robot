@@ -24,7 +24,7 @@ public class Shoulder implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-        double input = PilotControls.JOYSTICK_PILOT.getRawButton(CoPilotControls.SHOULDER_UP) ? 1.0 : CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.SHOULDER_DOWN) ? -1.0 : 0.0;
+        double input = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.SHOULDER_UP) ? 1.0 : CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.SHOULDER_DOWN) ? -1.0 : 0.0;
         
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
