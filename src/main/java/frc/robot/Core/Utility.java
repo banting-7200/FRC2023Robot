@@ -1,11 +1,8 @@
 package frc.robot.Core;
-
 import java.util.function.Supplier;
-
 import edu.wpi.first.wpilibj.Joystick;
 
-/*
- * Author: Lucas Soliman
+/* Author: Lucas Soliman
  * Date Created: January 10, 2023
  * 
  * Stores constants that will be used project wide.
@@ -31,8 +28,8 @@ public final class Utility {
         };
 
         public static final int DRIVEMODE_MANUAL = 7;
-        public static final int DRIVEMODE_PIXYALIGN = 8;
-        public static final int DRIVEMODE_AUTOBALANCE = 9;
+        public static final int DRIVEMODE_PIXYALIGN = 9;
+        public static final int DRIVEMODE_AUTOBALANCE = 11;
     }
 
     public static final class CoPilotControls {
@@ -56,7 +53,7 @@ public final class Utility {
         public static final int LIGHTS_SWITCHMODE = 12;
         public static final int KICKER_KICK = 3;
     }
-
+    //#region Constants
     public static class SmartDashboardIDs {
         public static final String DRIVEMODEID = "Current Drive Mode: ";
         public static final String SHOULDERPOSITIONID = "Shoulder Motor Position: ";
@@ -122,4 +119,6 @@ public final class Utility {
     // Creepspeed referring to a slower speed for finer arm adjustments.
     public static final double ARM_SPEED = 0.8;
     public static final double ARM_CREEPSPEED = 0.5;
+
+    //#endregion
 }

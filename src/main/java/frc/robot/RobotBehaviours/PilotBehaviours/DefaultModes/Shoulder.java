@@ -14,26 +14,15 @@ public class Shoulder implements RobotBehaviour {
     //TODO: Get shoulder motor positions for each state
     private final double SHOULDER_MOTOR_PICKUPPOS = 0;
     private final double SHOULDER_MOTOR_SCOREPOS = 0;
-    private Lift liftInstance;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         SmartDashboard.putNumber("Target Shoulder Position", SHOULDER_MOTOR.getMotor().getSelectedSensorPosition());
         System.out.println("Shoulder Init...");
-        for(RobotBehaviour b : defaultBehaviours) {
-            if(b instanceof Lift) {
-                liftInstance = (Lift)b;
-            }
-        }
     }
 
     @Override
     public void BehaviourPeriodic() {
-        if(liftInstance == null) {
-            System.out.println("No Lift reference stored, shoulder not running...");
-            return;
-        }
-
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = PilotControls.JOYSTICK_PILOT.getRawButton(CoPilotControls.SHOULDER_UP) ? 1.0 : CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.SHOULDER_DOWN) ? -1.0 : 0.0;
         

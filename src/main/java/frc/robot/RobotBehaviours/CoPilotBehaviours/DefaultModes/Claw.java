@@ -12,8 +12,7 @@ public class Claw implements RobotBehaviour{
     private boolean open = false;
 
     @Override
-    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-    }
+    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {}
 
     @Override
     public void BehaviourPeriodic() {
