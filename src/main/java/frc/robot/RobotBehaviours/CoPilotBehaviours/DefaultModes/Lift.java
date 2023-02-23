@@ -3,9 +3,9 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.CTRE.TalonMotor;
+import frc.robot.Core.CTRE.TalonMotor;
+import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
-import frc.robot.Utility.CoPilotControls;
 
 /*
  * Author: Lucas Soliman
@@ -16,10 +16,8 @@ import frc.robot.Utility.CoPilotControls;
  */
 public class Lift implements RobotBehaviour {
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
-
     // private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(0);
     // private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(1);
-
 
     //TODO: Get motor positions for each state
     private final double LIFT_ABSOLUTELOWESTLIMIT = 490000; //This is rounded to two numeric values > 0 for safety

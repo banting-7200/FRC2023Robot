@@ -1,12 +1,14 @@
-package frc.robot;
+package frc.robot.Core;
+
+import static frc.robot.Core.Utility.*;
 
 import java.util.HashMap;
+
+import frc.robot.Core.Utility.PilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.PilotBehaviours.BalanceDrive;
 import frc.robot.RobotBehaviours.PilotBehaviours.ManualDrive;
 import frc.robot.RobotBehaviours.PilotBehaviours.PixyalignDrive;
-
-import static frc.robot.Utility.*;
 
 /*
  * Author: Lucas Soliman

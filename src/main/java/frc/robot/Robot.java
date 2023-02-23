@@ -1,11 +1,11 @@
 package frc.robot;
 
-import static frc.robot.Utility.*;
-
-import java.util.HashMap;
+import static frc.robot.Core.Utility.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.Core.DriveModeSetter;
+import frc.robot.Core.RobotDrive;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman

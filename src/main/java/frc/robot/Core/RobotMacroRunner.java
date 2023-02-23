@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Core;
 
 import java.util.HashMap;
 import java.util.function.Supplier;

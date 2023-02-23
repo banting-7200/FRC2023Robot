@@ -1,7 +1,7 @@
 package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
-import static frc.robot.Utility.*;
-import edu.wpi.first.wpilibj.Joystick;
+import static frc.robot.Core.Utility.*;
+
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import frc.robot.Interfaces.RobotBehaviour;

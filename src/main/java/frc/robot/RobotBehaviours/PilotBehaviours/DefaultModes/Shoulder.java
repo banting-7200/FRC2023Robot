@@ -1,9 +1,10 @@
 package frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes;
 
-import static frc.robot.Utility.*;
+import static frc.robot.Core.Utility.*;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.CTRE.TalonMotor;
+import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 
@@ -34,8 +35,7 @@ public class Shoulder implements RobotBehaviour {
         }
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-        double input = PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.SHOULDER_UP) ? 1.0 : PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.SHOULDER_DOWN) ? -1.0 : 0.0;
-        input *= PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE) ? 0.7 : 1;
+        double input = PilotControls.JOYSTICK_PILOT.getRawButton(CoPilotControls.SHOULDER_UP) ? 1.0 : CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.SHOULDER_DOWN) ? -1.0 : 0.0;
         
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);

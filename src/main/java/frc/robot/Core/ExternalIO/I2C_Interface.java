@@ -1,6 +1,6 @@
-package frc.robot.ExternalIO;
+package frc.robot.Core.ExternalIO;
 
-import static frc.robot.Utility.*;
+import static frc.robot.Core.Utility.*;
 
 import java.nio.charset.StandardCharsets;
 

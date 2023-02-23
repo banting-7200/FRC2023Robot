@@ -1,10 +1,9 @@
-package frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes;
+package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
-import static frc.robot.Utility.*;
+import static frc.robot.Core.Utility.*;
 
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import frc.robot.Interfaces.RobotBehaviour;
 

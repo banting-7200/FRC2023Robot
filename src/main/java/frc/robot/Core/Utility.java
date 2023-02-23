@@ -1,4 +1,4 @@
-package frc.robot;
+package frc.robot.Core;
 
 import java.util.function.Supplier;
 
@@ -33,13 +33,6 @@ public final class Utility {
         public static final int DRIVEMODE_MANUAL = 7;
         public static final int DRIVEMODE_PIXYALIGN = 8;
         public static final int DRIVEMODE_AUTOBALANCE = 9;
-
-        public static final int SHOULDER_STARTPOSPOV = 90;
-        public static final int SHOULDER_PICKUPPOSPOV = 180;
-        public static final int SHOULDER_SCOREPOSPOV = 270;
-
-        public static final int SHOULDER_DOWN = 4;
-        public static final int SHOULDER_UP = 6;
     }
 
     public static final class CoPilotControls {
@@ -49,16 +42,19 @@ public final class Utility {
             return JOYSTICK_COPILOT.getX();
         };
 
-        public static final int LIFT_STARTINGPOSITION = 3;
-        public static final int LIFT_MIDLAYERPOSITION = 4;
-        public static final int LIFT_TOPLAYERPOSITION = 6;
+        public static final int LIFT_STARTINGPOSITION = 11;
+        public static final int LIFT_MIDLAYERPOSITION = 9;
+        public static final int LIFT_TOPLAYERPOSITION = 7;
         public static final Supplier<Double> LIFT_MOVE = () -> {
             return JOYSTICK_COPILOT.getY();
         };
 
-        public static final int LIGHTS_SWITCHMODE = 2;
-        public static final int KICKER_KICK = 5;
+        public static final int SHOULDER_DOWN = 4;
+        public static final int SHOULDER_UP = 6;
+
         public static final int CLAW_TOGGLE = 1;
+        public static final int LIGHTS_SWITCHMODE = 12;
+        public static final int KICKER_KICK = 3;
     }
 
     public static class SmartDashboardIDs {
