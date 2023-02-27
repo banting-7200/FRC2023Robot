@@ -49,8 +49,8 @@ public final class BalanceDrive implements RobotBehaviour {
     // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
     // Refer to project notes for desmos representation of function.
     private double evaluateSpeed(double evalPointX) {
-        double exponent = -(evalPointX * evalPointX);
-        double base = 100.0;
+        double exponent = -(Math.pow(evalPointX, 4));
+        double base = 1.01;
         double divisor = 2.5;
         return -(Math.pow(base, exponent) / divisor) + (1.0 / divisor) + 0.5;
     }

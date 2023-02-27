@@ -6,7 +6,6 @@ import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
-import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.*;
 import java.util.HashMap;
 
 public class CoPilotAutoRunner implements RobotBehaviour{
@@ -42,10 +41,8 @@ public class CoPilotAutoRunner implements RobotBehaviour{
         for(int bind : autoMasters.keySet()) {
             if(inputDevice.getRawButton(bind)) {
                 currentMacro = autoMasters.get(bind);
-                
-                if(!currentMacro.isCompleted()) {
-                    currentMacro.runAuto();
-                }
+                if(!currentMacro.isCompleted()) { currentMacro.runAuto(); }
+                break;
             } else {
                 if(currentMacro != null) currentMacro.resetAuto();
             }

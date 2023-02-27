@@ -21,18 +21,18 @@ public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
         //TalonFX Motor Systems
         new Lift(), // Copilot controlled
-        new Shoulder(), // Pilot Controlled
+        //new Shoulder(), // Pilot Controlled
 
         //Pneumatic Systems
-        new Kicker(), // Copilot controlled
-        new Claw(), // Copilot Controlled
+        //new Kicker(), // Copilot controlled
+        //new Claw(), // Copilot Controlled
 
         //PWM Systems
-        new Wrist(), // Pilot Controlled
-        new Lights() // Copilot controlled
+        //new Wrist(), // Pilot Controlled
+        //new Lights() // Copilot controlled
     };
 
-    private final boolean defaultOnly = false;
+    private final boolean defaultOnly = true;
     
     private DifferentialDrive driveInstance;
     private RobotBehaviour currentDriveMode;

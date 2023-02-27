@@ -20,7 +20,8 @@ public class Lift implements RobotBehaviour {
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
     private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
-
+    private final DigitalInput SWITCH_IDK = new DigitalInput(3);
+    
     //TODO: Get motor positions for each state
     private final double LIFT_ABSOLUTELOWESTLIMIT = 490000; //This is rounded to two numeric values > 0 for safety
     private final double LIFT_ABSOLUTEHIGHESTLIMIT = -1002867; //This is rounded to two numeric values > 0 for safety
@@ -81,6 +82,7 @@ public class Lift implements RobotBehaviour {
     private void debugSwitches() {
         SmartDashboard.putBoolean("Lift UpperLimit State:", LIFT_UPPERLIMITER.get());
         SmartDashboard.putBoolean("Lift LowerLimit State", LIFT_LOWERLIMITER.get());
+        SmartDashboard.putBoolean("Other Switch: ", SWITCH_IDK.get());
     }
 
     // Returns whether or not the desired input (i) can safely be applied
@@ -90,11 +92,11 @@ public class Lift implements RobotBehaviour {
     }
 
     public double canMoveLift(double output) {
-        if(LIFT_LOWERLIMITER.get() && output > 0) {
+        if(!LIFT_LOWERLIMITER.get() && output > 0) {
             return 0;
         }
 
-        if(LIFT_UPPERLIMITER.get() && output < 0) {
+        if(!LIFT_UPPERLIMITER.get() && output < 0) {
             return 0;
         }
 
@@ -117,7 +119,6 @@ public class Lift implements RobotBehaviour {
                     return true;
                 }
             }
-
         }
 
         return false;
