@@ -5,7 +5,7 @@ Date Created: January ? 2023
 This takes in pixy2 data to compute the direction of rotation for the robot to align with recognized objects.
 */
 #include <Pixy2.h>
-#include<Wire.h>
+#include <Wire.h>
 
 #define MID_ERROR 50
 
@@ -22,18 +22,18 @@ void setup() {
 
 void loop() {
   camera.ccc.getBlocks();
-  if(camera.ccc.numBlocks == 0) {
+  if (camera.ccc.numBlocks == 0) {
     directionToWrite = 0;
     return;
   }
 
   double avgX = 0;
-  for(int i = 0; i < camera.ccc.numBlocks; i++) {
+  for (int i = 0; i < camera.ccc.numBlocks; i++) {
     avgX += camera.ccc.blocks[i].m_x;
   }
 
-Serial.println(avgX);
-delay(250);
+  Serial.println(avgX);
+  delay(250);
 }
 
 int calculateDirection(int numBlocks, double avgX) {
@@ -46,13 +46,13 @@ int calculateDirection(int numBlocks, double avgX) {
   int avgPoint = (int)(avgX / (camera.ccc.numBlocks));
 
   //Detect whether or not the object position is
-  if(avgPoint > leftError && avgPoint < rightError) {
+  if (avgPoint > leftError && avgPoint < rightError) {
     directionToWrite = 0;
   } else {
     directionToWrite = avgPoint >= midPoint ? 1 : -1;
   }
 }
 
-void onRequest() { 
+void onRequest() {
   Wire.write(directionToWrite);
 }

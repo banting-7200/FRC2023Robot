@@ -26,7 +26,7 @@ public class Kicker implements RobotBehaviour{
     @Override
     public void BehaviourPeriodic() {
         boolean buttonState = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.KICKER_KICK);
-        KICKER_SOLENOID1.set(buttonState);
-        KICKER_SOLENOID2.set(!buttonState);
+        KICKER_SOLENOID1.set(!buttonState);
+        KICKER_SOLENOID2.set(buttonState);
     }
 }

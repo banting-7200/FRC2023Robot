@@ -5,8 +5,8 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 import frc.robot.Interfaces.RobotBehaviour;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.CoPilotAutoRunner;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
-import frc.robot.RobotBehaviours.PilotBehaviours.DefaultModes.*;
 
 /*
  * Author: Lucas Soliman
@@ -33,7 +33,7 @@ public final class RobotDrive {
     };
 
     private final boolean defaultOnly = false;
-
+    
     private DifferentialDrive driveInstance;
     private RobotBehaviour currentDriveMode;
     private boolean isDefaultOnly;

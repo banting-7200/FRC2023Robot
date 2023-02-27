@@ -51,7 +51,7 @@ public final class Lights implements RobotBehaviour {
       private void blueLights() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
           // Sets the specified LED to the RGB values for blue
-          m_ledBuffer.setRGB(i, 0, 0, 255);
+          m_ledBuffer.setRGB(i, 0, 255, 0);
        }
        
        m_led.setData(m_ledBuffer);

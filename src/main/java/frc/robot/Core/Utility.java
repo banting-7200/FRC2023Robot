@@ -1,6 +1,7 @@
 package frc.robot.Core;
 import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.Joystick;
+import frc.robot.Interfaces.RobotBehaviour;
 
 /* Author: Lucas Soliman
  * Date Created: January 10, 2023
@@ -14,6 +15,11 @@ import edu.wpi.first.wpilibj.Joystick;
  * For further information, refer to comments above and around variables.
  */
 public final class Utility {
+
+    //TODO:
+    /*
+     * Move turning to twisting
+     */
     public static final class PilotControls {
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
 
@@ -46,10 +52,16 @@ public final class Utility {
         };
 
         // Controls are utilised in Lift.java
-        public static final int LIFT_STARTINGPOSITION = 11;
-        public static final int LIFT_MIDLAYERPOSITION = 9;
-        public static final int LIFT_TOPLAYERPOSITION = 7;
-        public static final Supplier<Double> LIFT_MOVE = () -> {
+        public static final int MACRO_PICKUP = 11;
+        public static final int MACRO_LEVEL1 = 9;
+        public static final int MACRO_LEVEL2 = 7;
+        public static final int MACRO_LEVEL3 = 8;
+        public static final int MACRO_CARRY = 2;
+
+        // public static final int LIFT_PICKUPPOSITION = 12;
+        // public static final int LIFT_CARRYPOSITION = 2;
+
+        public static final Supplier<Double> SHOULDER_MOVE = () -> {
             return JOYSTICK_COPILOT.getY();
         };
 
@@ -57,8 +69,8 @@ public final class Utility {
         public static final int SHOULDERPOV_PICKUPPOS = 0;
         public static final int SHOULDERPOV_EXTENDPOS = 180;
 
-        public static final int SHOULDER_DOWN = 4;
-        public static final int SHOULDER_UP = 6;
+        public static final int LIFT_DOWN = 4;
+        public static final int LIFT_UP = 6;
 
         // Controls are utilised in Claw.java
         public static final int CLAW_TOGGLE = 1;
@@ -75,7 +87,7 @@ public final class Utility {
         public static final String SHOULDERPOSITIONID = "Shoulder Motor Position: ";
         public static final String LIFTPOSITIONID = "Lift Motor Position: ";
     }
-    
+
     /* Utility functions */
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
@@ -138,3 +150,13 @@ public final class Utility {
 
     //#endregion
 }
+
+// Lift Max Height Position: -996164 || -1006396 (unsafe)
+// Lift Gameplay Maximum: -720173 or 724173
+// Lift Gameplay Minimum: 
+// Lift UpperScore Position: -722173
+// Lift Lower Score Position: -252345
+// Lift Drive Position: -640584
+
+// Get Differences for each position:
+// Shoulder Drop: -1253646 

@@ -2,6 +2,9 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
+
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Core.Utility.CoPilotControls;
@@ -16,20 +19,28 @@ import frc.robot.Interfaces.RobotBehaviour;
  */
 public class Lift implements RobotBehaviour {
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
-    // private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(0);
-    // private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(1);
+    private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
+    private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
 
     //TODO: Get motor positions for each state
     private final double LIFT_ABSOLUTELOWESTLIMIT = 490000; //This is rounded to two numeric values > 0 for safety
-    private final double LIFT_ABSOLUTEHIGHESTLIMIT = -102867; //This is rounded to two numeric values > 0 for safety
-    private final double LIFT_STARTINGPOSITION = 0;
-    private final double LIFT_TOPLAYERPOSITION = 0;
-    private final double LIFT_MIDLAYERPOSITION = 198265.5;
+    private final double LIFT_ABSOLUTEHIGHESTLIMIT = -1002867; //This is rounded to two numeric values > 0 for safety
+
+    private final double LIFT_PICKUP = 0;
+    private final double LIFT_CARRY = 0;
+    private final double LIFT_START = 0;
+
+    private final double LIFT_LEVEL1 = 0;
+    private final double LIFT_LEVEL2 = 0;
+    private final double LIFT_LEVEL3 = 0;
 
     private final HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
-        put(CoPilotControls.LIFT_STARTINGPOSITION, LIFT_ABSOLUTELOWESTLIMIT);
-        put(CoPilotControls.LIFT_MIDLAYERPOSITION, LIFT_MIDLAYERPOSITION);
-        put(CoPilotControls.LIFT_TOPLAYERPOSITION, LIFT_ABSOLUTEHIGHESTLIMIT);
+        put(CoPilotControls.MACRO_PICKUP, LIFT_PICKUP);
+        put(CoPilotControls.MACRO_CARRY, LIFT_CARRY);
+        
+        put(CoPilotControls.MACRO_LEVEL1, LIFT_LEVEL1);
+        put(CoPilotControls.MACRO_LEVEL2, LIFT_LEVEL2);
+        put(CoPilotControls.MACRO_LEVEL3, LIFT_LEVEL3);
     }};
 
     private double nextOverrideInput;
@@ -47,22 +58,12 @@ public class Lift implements RobotBehaviour {
         /*
          * Gathering input information
          */
-        double input = canMoveLift(CoPilotControls.LIFT_MOVE.get());
+        boolean down = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_DOWN);
+        boolean up = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_UP);
+        double input = down ? -0.8 : up ? 0.8 : 0;
+
         if(nextOverrideInput != 0) {
             input = nextOverrideInput;
-        }
-
-        /*
-         * Preset Lift Binds
-         */
-        if(CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_STARTINGPOSITION)) {
-            LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CoPilotControls.LIFT_STARTINGPOSITION));
-            return;
-        }
-
-        if(CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_TOPLAYERPOSITION)) {
-            LIFT_MOTOR.getMotor().set(ControlMode.Position, LIFT_HEIGHTPOSITIONS.get(CoPilotControls.LIFT_TOPLAYERPOSITION));
-            return;
         }
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
@@ -79,16 +80,32 @@ public class Lift implements RobotBehaviour {
     }
 
     public double canMoveLift(double output) {
-        double motorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
-        if(motorPosition >= LIFT_ABSOLUTELOWESTLIMIT && nextOverrideInput > 0) {
+        if(LIFT_LOWERLIMITER.get() && output > 0) {
             return 0;
         }
 
-        if(motorPosition <= LIFT_ABSOLUTEHIGHESTLIMIT && nextOverrideInput < 0) {
+        if(LIFT_UPPERLIMITER.get() && output < 0) {
             return 0;
         }
 
         return output;
+    }
+
+    public boolean moveLiftToPosition(int positionBind, double movementSpeed) {
+        if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
+            LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, movementSpeed);
+
+            double targetPosition = LIFT_HEIGHTPOSITIONS.get(positionBind);
+            double newMotorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+
+            double leftError = targetPosition - 250;
+            double rightError = targetPosition + 250;
+            if(newMotorPosition >= leftError && newMotorPosition <= rightError) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public double getLiftPosition() {
