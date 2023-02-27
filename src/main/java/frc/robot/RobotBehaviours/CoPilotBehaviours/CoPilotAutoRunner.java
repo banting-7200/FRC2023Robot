@@ -28,11 +28,11 @@ public class CoPilotAutoRunner implements RobotBehaviour{
         }
 
         autoMasters = new HashMap<>();
-        autoMasters.put(CoPilotControls.MACRO_PICKUP, new Pickup(liftInstance, shoulderInstance));
-        autoMasters.put(CoPilotControls.MACRO_CARRY, new Carry(liftInstance, shoulderInstance));
-        autoMasters.put(CoPilotControls.MACRO_LEVEL1, new Level1(liftInstance, shoulderInstance));
-        autoMasters.put(CoPilotControls.MACRO_LEVEL2, new Level2(liftInstance, shoulderInstance));
-        autoMasters.put(CoPilotControls.MACRO_LEVEL3, new Level3(liftInstance, shoulderInstance));
+        //autoMasters.put(CoPilotControls.MACRO_PICKUP, new Pickup(liftInstance, shoulderInstance));
+        //autoMasters.put(CoPilotControls.MACRO_CARRY, new Carry(liftInstance, shoulderInstance));
+        //autoMasters.put(CoPilotControls.MACRO_LEVEL1, new Level1(liftInstance, shoulderInstance));
+        //autoMasters.put(CoPilotControls.MACRO_LEVEL2, new Level2(liftInstance, shoulderInstance));
+        //autoMasters.put(CoPilotControls.MACRO_LEVEL3, new Level3(liftInstance, shoulderInstance));
     }
 
     @Override

@@ -4,7 +4,6 @@ import java.util.HashMap;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Core.Utility.CoPilotControls;
@@ -58,6 +57,9 @@ public class Lift implements RobotBehaviour {
         /*
          * Gathering input information
          */
+        debugSwitches();
+
+        /*
         boolean down = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_DOWN);
         boolean up = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_UP);
         double input = down ? -0.8 : up ? 0.8 : 0;
@@ -66,11 +68,19 @@ public class Lift implements RobotBehaviour {
             input = nextOverrideInput;
         }
 
+        input = canMoveLift(input);
+
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
 
         nextOverrideInput = 0;
         input = 0;
+        */
+    }
+
+    private void debugSwitches() {
+        SmartDashboard.putBoolean("Lift UpperLimit State:", LIFT_UPPERLIMITER.get());
+        SmartDashboard.putBoolean("Lift LowerLimit State", LIFT_LOWERLIMITER.get());
     }
 
     // Returns whether or not the desired input (i) can safely be applied
@@ -93,16 +103,21 @@ public class Lift implements RobotBehaviour {
 
     public boolean moveLiftToPosition(int positionBind, double movementSpeed) {
         if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
-            LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, movementSpeed);
-
             double targetPosition = LIFT_HEIGHTPOSITIONS.get(positionBind);
-            double newMotorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+            double direction = targetPosition - LIFT_MOTOR.getMotor().getSelectedSensorPosition();
 
-            double leftError = targetPosition - 250;
-            double rightError = targetPosition + 250;
-            if(newMotorPosition >= leftError && newMotorPosition <= rightError) {
-                return true;
+            if(canMoveLift(Math.signum(direction)) != 0) {
+                LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, movementSpeed);
+                double newMotorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+
+                double leftError = targetPosition - 250;
+                double rightError = targetPosition + 250;
+                if(newMotorPosition >= leftError && newMotorPosition <= rightError) {
+                    LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+                    return true;
+                }
             }
+
         }
 
         return false;
