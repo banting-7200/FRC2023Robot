@@ -6,10 +6,13 @@ import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.TalonFXMoveTo;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.TempMacro;
+
 import java.util.HashMap;
 
 public class CoPilotAutoRunner implements RobotBehaviour{
-
+    public static boolean runningMacro;
     private HashMap<Integer, RobotAutoMaster> autoMasters;
     private RobotAutoMaster currentMacro;
 
@@ -27,11 +30,7 @@ public class CoPilotAutoRunner implements RobotBehaviour{
         }
 
         autoMasters = new HashMap<>();
-        //autoMasters.put(CoPilotControls.MACRO_PICKUP, new Pickup(liftInstance, shoulderInstance));
-        //autoMasters.put(CoPilotControls.MACRO_CARRY, new Carry(liftInstance, shoulderInstance));
-        //autoMasters.put(CoPilotControls.MACRO_LEVEL1, new Level1(liftInstance, shoulderInstance));
-        //autoMasters.put(CoPilotControls.MACRO_LEVEL2, new Level2(liftInstance, shoulderInstance));
-        //autoMasters.put(CoPilotControls.MACRO_LEVEL3, new Level3(liftInstance, shoulderInstance));
+        autoMasters.put(CoPilotControls.MACRO_PICKUP, new TempMacro()); //new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_PICKUP));
     }
 
     @Override
@@ -41,10 +40,20 @@ public class CoPilotAutoRunner implements RobotBehaviour{
         for(int bind : autoMasters.keySet()) {
             if(inputDevice.getRawButton(bind)) {
                 currentMacro = autoMasters.get(bind);
-                if(!currentMacro.isCompleted()) { currentMacro.runAuto(); }
+                if(!currentMacro.isCompleted()) { 
+                    currentMacro.runAuto(); 
+                    runningMacro = true;
+                } else {
+                    runningMacro = false;
+                }
+
                 break;
             } else {
-                if(currentMacro != null) currentMacro.resetAuto();
+                runningMacro = false;
+                if(currentMacro != null) {
+                    currentMacro.resetAuto();
+                    currentMacro = null;
+                }
             }
         }
     }

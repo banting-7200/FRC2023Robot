@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.CoPilotAutoRunner;
 
 /*
  * Author: Lucas Soliman
@@ -20,7 +21,6 @@ public class Lift implements RobotBehaviour {
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
     private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
-    private final DigitalInput SWITCH_IDK = new DigitalInput(3);
     
     //TODO: Get motor positions for each state
     private final double LIFT_ABSOLUTELOWESTLIMIT = 490000; //This is rounded to two numeric values > 0 for safety
@@ -52,37 +52,34 @@ public class Lift implements RobotBehaviour {
 
     @Override
     public void BehaviourPeriodic() {
-        // SmartDashboard.putBoolean("Lift_UpperLimiter Value: ", LIFT_UPPERLIMITER.get());
-        // SmartDashboard.putBoolean("Lift_LowerLimiter Value: ", LIFT_LOWERLIMITER.get());
+        if(CoPilotAutoRunner.runningMacro) {
+            return;
+        }
+
+        debugSwitches();
 
         /*
          * Gathering input information
          */
-        debugSwitches();
-
-        /*
         boolean down = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_DOWN);
         boolean up = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_UP);
         double input = down ? -0.8 : up ? 0.8 : 0;
 
+        input = canMoveLift(input);
         if(nextOverrideInput != 0) {
             input = nextOverrideInput;
         }
-
-        input = canMoveLift(input);
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
 
         nextOverrideInput = 0;
         input = 0;
-        */
     }
 
     private void debugSwitches() {
         SmartDashboard.putBoolean("Lift UpperLimit State:", LIFT_UPPERLIMITER.get());
         SmartDashboard.putBoolean("Lift LowerLimit State", LIFT_LOWERLIMITER.get());
-        SmartDashboard.putBoolean("Other Switch: ", SWITCH_IDK.get());
     }
 
     // Returns whether or not the desired input (i) can safely be applied
@@ -104,7 +101,11 @@ public class Lift implements RobotBehaviour {
         return output;
     }
 
-    public boolean moveLiftToPosition(int positionBind, double movementSpeed) {
+    public void killSpeed() {
+        LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+    }
+
+    public boolean moveLiftToPosition(int positionBind, double movementSpeed) {        
         if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
             double targetPosition = LIFT_HEIGHTPOSITIONS.get(positionBind);
             double direction = targetPosition - LIFT_MOTOR.getMotor().getSelectedSensorPosition();
@@ -113,10 +114,10 @@ public class Lift implements RobotBehaviour {
                 LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, movementSpeed);
                 double newMotorPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
 
-                double leftError = targetPosition - 250;
-                double rightError = targetPosition + 250;
+                double leftError = targetPosition - 500;
+                double rightError = targetPosition + 500;
                 if(newMotorPosition >= leftError && newMotorPosition <= rightError) {
-                    LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+                    killSpeed();
                     return true;
                 }
             }

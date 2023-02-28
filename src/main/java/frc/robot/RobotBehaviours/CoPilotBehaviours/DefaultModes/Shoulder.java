@@ -6,16 +6,13 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Interfaces.RobotBehaviour;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.CoPilotAutoRunner;
+
 import java.util.HashMap;
 
 public class Shoulder implements RobotBehaviour {
     private final TalonMotor SHOULDER_MOTOR = new TalonMotor(1);
 
-    //TODO: Get shoulder motor positions for each state
-    private final double SHOULDER_START = -1584995.0;
-    private final double SHOULDER_PICKUPPOS = -1285999.0;
-    private final double SHOULDER_CARRY = -1413388.0;
-    
     /*
      * Differences
      * PickuPos: 298996
@@ -30,14 +27,10 @@ public class Shoulder implements RobotBehaviour {
      * Level1: 
      * Level2: 
      * Level3: 
-     * 
-     * New Lift Positions)
-     * PickupPos:
-     * CarryPos:
-     * Level1:
-     * Level2:
-     * Level3:
      */
+    private final double SHOULDER_PICKUPPOS = -1285999.0;
+    private final double SHOULDER_CARRY = -1413388.0;
+
     private final double SHOULDER_LEVEL1 = 271197;
     private final double SHOULDER_LEVEL2 = 518836;
     private final double SHOULDER_LEVEL3 = 634550;
@@ -59,6 +52,10 @@ public class Shoulder implements RobotBehaviour {
 
     @Override
     public void BehaviourPeriodic() {
+        if(CoPilotAutoRunner.runningMacro) {
+            return;
+        }
+        
         if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(10)) {
             SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(0);
         }
@@ -75,6 +72,10 @@ public class Shoulder implements RobotBehaviour {
         }
     }
 
+    public void killSpeed() {
+        SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+    }
+
     public boolean moveShoulderToPosition(int positionBind, double moveSpeed) {
         double currPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
@@ -82,9 +83,10 @@ public class Shoulder implements RobotBehaviour {
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
 
         double newMotorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-        double leftError = targetPosition - 250;
-        double rightError = targetPosition + 250;
+        double leftError = targetPosition - 500;
+        double rightError = targetPosition + 500;
         if(newMotorPosition >= leftError && newMotorPosition <= rightError) {
+            killSpeed();
             return true;
         }
 

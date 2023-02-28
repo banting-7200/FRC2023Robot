@@ -39,7 +39,7 @@ public final class BalanceDrive implements RobotBehaviour {
         // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
         // Use the mapped angle in the evaluateSpeed function.
         double angle = Clamp(GYRO.getAngle(), -30, 30);
-        double absoluteSpeed = MapValue(angle, -30, 30, -1, 1);
+        double absoluteSpeed = MapValue(angle, -30, 30, -20, 20);
         double speed = evaluateSpeed(absoluteSpeed) * -Math.signum(angle);
 
         // Finally drive robot with speed.
@@ -49,9 +49,9 @@ public final class BalanceDrive implements RobotBehaviour {
     // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
     // Refer to project notes for desmos representation of function.
     private double evaluateSpeed(double evalPointX) {
-        double exponent = -(Math.pow(evalPointX, 4));
-        double base = 1.01;
+        double exponent = -(Math.pow(evalPointX, 2));
+        double base = 1.002;
         double divisor = 2.5;
-        return -(Math.pow(base, exponent) / divisor) + (1.0 / divisor) + 0.5;
+        return Math.max(0.5, -(Math.pow(base, exponent) / divisor) + (1.0 / divisor) + 0.49);
     }
 }

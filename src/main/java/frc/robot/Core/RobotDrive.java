@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 import frc.robot.Interfaces.RobotBehaviour;
-import frc.robot.RobotBehaviours.CoPilotBehaviours.CoPilotAutoRunner;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
 
 /*
@@ -21,15 +20,16 @@ public final class RobotDrive {
     private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
         //TalonFX Motor Systems
         new Lift(), // Copilot controlled
-        //new Shoulder(), // Pilot Controlled
+        new Shoulder(), // Pilot Controlled
 
         //Pneumatic Systems
         new Kicker(), // Copilot controlled
         new Claw(), // Copilot Controlled
 
         //PWM Systems
-        //new Wrist(), // Pilot Controlled
-        //new Lights() // Copilot controlled
+        new Wrist(), // Pilot Controlled
+        new Lights(), // Copilot controlled
+        //new CoPilotAutoRunner()
     };
 
     private final boolean defaultOnly = true;

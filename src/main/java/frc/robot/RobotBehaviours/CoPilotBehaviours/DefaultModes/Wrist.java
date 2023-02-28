@@ -17,7 +17,7 @@ public class Wrist implements RobotBehaviour {
     private final PWMSparkMax WRIST_MOTOR = new PWMSparkMax(MOTOR_WRISTMOTOR);
 
     //TODO: Get Channel ID for this digitalInput
-    private final DigitalInput WRIST_COUNTER = new DigitalInput(0);
+    private final DigitalInput WRIST_COUNTER = new DigitalInput(3);
     private int wristPosition = 0;
 
     @Override
