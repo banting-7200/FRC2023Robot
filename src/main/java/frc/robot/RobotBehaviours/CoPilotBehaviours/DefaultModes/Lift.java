@@ -97,6 +97,7 @@ public class Lift implements RobotBehaviour {
         }
 
         if(!LIFT_UPPERLIMITER.get() && output < 0) {
+            LIFT_MOTOR.getMotor().setSelectedSensorPosition(0);
             return 0;
         }
 

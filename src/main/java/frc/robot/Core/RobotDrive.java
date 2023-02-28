@@ -24,8 +24,8 @@ public final class RobotDrive {
         //new Shoulder(), // Pilot Controlled
 
         //Pneumatic Systems
-        //new Kicker(), // Copilot controlled
-        //new Claw(), // Copilot Controlled
+        new Kicker(), // Copilot controlled
+        new Claw(), // Copilot Controlled
 
         //PWM Systems
         //new Wrist(), // Pilot Controlled
@@ -79,6 +79,7 @@ public final class RobotDrive {
     // A function called by DriveModeSetter.java to make this class tick specific drive modes.
     public void setDriveMode(RobotBehaviour mode) {
         currentDriveMode = mode;
+        currentDriveMode.BehaviourInit(defaultModes);
     }
 
     // A function for drive modes to interface with DifferentialDrive instance.

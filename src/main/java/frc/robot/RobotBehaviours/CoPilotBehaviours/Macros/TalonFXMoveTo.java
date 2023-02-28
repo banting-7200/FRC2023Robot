@@ -17,13 +17,12 @@ public class TalonFXMoveTo implements RobotAutoMaster{
                 private boolean isComplete;
 
                 @Override
-                public void behaviourInit() {
-                }
+                public void behaviourInit() {}
 
                 @Override
                 public void behaviourPeriodic() {
                     boolean liftFinished = lift.moveLiftToPosition(liftTargetBind, 0.8);
-                    boolean shoulderFinished = shoulder.moveShoulderToPosition(shoulderTargetBind);
+                    boolean shoulderFinished = shoulder.moveShoulderToPosition(shoulderTargetBind, 0.7);
                     isComplete = liftFinished && shoulderFinished;
                 }
 

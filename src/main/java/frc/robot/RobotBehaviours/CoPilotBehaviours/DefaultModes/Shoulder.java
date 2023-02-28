@@ -75,12 +75,13 @@ public class Shoulder implements RobotBehaviour {
         }
     }
 
-    public boolean moveShoulderToPosition(int positionBind) {
-        SHOULDER_MOTOR.getMotor().set(ControlMode.Position, SHOULDER_POSITIONSMAP.get(positionBind));
-
+    public boolean moveShoulderToPosition(int positionBind, double moveSpeed) {
+        double currPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
-        double newMotorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
+        double output = Math.signum(targetPosition - currPosition) * moveSpeed;
+        SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
 
+        double newMotorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double leftError = targetPosition - 250;
         double rightError = targetPosition + 250;
         if(newMotorPosition >= leftError && newMotorPosition <= rightError) {

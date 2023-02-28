@@ -4,6 +4,8 @@ import static frc.robot.Core.Utility.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.DriveModeSetter;
 import frc.robot.Core.RobotDrive;
 
@@ -15,6 +17,10 @@ import frc.robot.Core.RobotDrive;
  */
 public class Robot extends TimedRobot {
   
+  // THis solenoid is being referenced due to weird behavour of always being on.
+  private final Solenoid solenoid5 = new Solenoid(5);
+  private Ultrasonic vexSensor;
+
   // Delegates all teleoperated functions within RobotBehaviours
   private final RobotDrive driveInstance = new RobotDrive(
     MOTOR_DRIVEFWDLEFT, MOTOR_DRIVEBACKLEFT,
@@ -31,6 +37,9 @@ public class Robot extends TimedRobot {
   public void robotInit() {
     CameraServer.startAutomaticCapture(0);
     CameraServer.startAutomaticCapture(1);
+
+    vexSensor = new Ultrasonic(5, 6);
+    vexSensor.setEnabled(true);
   }
 
   @Override
@@ -44,7 +53,9 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopPeriodic() {
-    driverModeSetter.driveModeSetterTeleop();
-    driveInstance.robotDriveTeleop();
+    //driveInstance.robotDriveTeleop();
+
+    vexSensor.ping();
+    SmartDashboard.putNumber("ShoulderCalibratorPing Inches: ", vexSensor.getRangeInches());
   }
 }
