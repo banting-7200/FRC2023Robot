@@ -28,7 +28,7 @@ public final class RobotDrive {
 
         //PWM Systems
         new Wrist(), // Pilot Controlled
-        new Lights(), // Copilot controlled
+        new Lights() // Copilot controlled
         //new CoPilotAutoRunner()
     };
 
