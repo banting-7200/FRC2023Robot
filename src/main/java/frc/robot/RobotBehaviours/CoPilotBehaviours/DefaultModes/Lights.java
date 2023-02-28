@@ -14,6 +14,8 @@ import frc.robot.Interfaces.RobotBehaviour;
 public final class Lights implements RobotBehaviour {
   private int lightsMode= 0;
 
+  public int m_rainbowFirstPixelHue = 0;
+
   AddressableLED m_led = new AddressableLED(7);
   AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 LED = 1 instance
 
@@ -27,7 +29,7 @@ public final class Lights implements RobotBehaviour {
   public void BehaviourPeriodic() {
       if (CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(CoPilotControls.LIGHTS_SWITCHMODE)){
         lightsMode++;
-        if(lightsMode >= 3){
+        if(lightsMode >= 4){
           lightsMode = 0;
         }
       }
@@ -36,6 +38,7 @@ public final class Lights implements RobotBehaviour {
         case 0: lightsOff(); break;
         case 1: redLights(); break;
         case 2: blueLights(); break;
+        case 3: rainbowLights(); break;
       }
     }
 
@@ -57,6 +60,14 @@ public final class Lights implements RobotBehaviour {
        m_led.setData(m_ledBuffer);
       }
     
+      private void rainbowLights() {
+        for (var i = 0; i < m_ledBuffer.getLength(); i++) {
+          final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
+          m_ledBuffer.setHSV(i, hue, 255, 128);
+        }
+       m_led.setData(m_ledBuffer);
+    }
+
       private void lightsOff() {
         for (var i = 0; i < m_ledBuffer.getLength(); i++) {
           m_ledBuffer.setRGB(i, 0, 0, 0);
