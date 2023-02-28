@@ -20,6 +20,8 @@ import frc.robot.Core.RobotDrive;
 public class Robot extends TimedRobot {
   
   // THis solenoid is being referenced due to weird behavour of always being on.
+  // Disable when robot is on but disabled
+  // Enable when robot is enabled
   private final Solenoid solenoid5 = new Solenoid(PneumaticsModuleType.CTREPCM, 5);
 
   // Delegates all teleoperated functions within RobotBehaviours

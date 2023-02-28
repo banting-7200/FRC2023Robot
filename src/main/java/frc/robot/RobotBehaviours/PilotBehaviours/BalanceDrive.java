@@ -35,12 +35,10 @@ public final class BalanceDrive implements RobotBehaviour {
             System.out.println("BalanceDrive: No gyro connected");
             return;
         }
-        
-        // Map the absolute value of the angle (from 0 -> 30 to 0 -> 1)
+
         // Use the mapped angle in the evaluateSpeed function.
-        double angle = Clamp(GYRO.getAngle(), -30, 30);
-        double absoluteSpeed = MapValue(angle, -30, 30, -20, 20);
-        double speed = evaluateSpeed(absoluteSpeed) * -Math.signum(angle);
+        double angle = Clamp(GYRO.getAngle(), -40, 40);
+        double speed = evaluateSpeed(angle) * -Math.signum(angle);
 
         // Finally drive robot with speed.
         baseInstance.DriveRobot(0.0, speed);
