@@ -65,7 +65,10 @@ public final class Lights implements RobotBehaviour {
           final var hue = (m_rainbowFirstPixelHue + (i * 180 / m_ledBuffer.getLength())) % 180;
           m_ledBuffer.setHSV(i, hue, 255, 128);
         }
+        m_rainbowFirstPixelHue += 3;
+      m_rainbowFirstPixelHue %= 180;
        m_led.setData(m_ledBuffer);
+       
     }
 
       private void lightsOff() {
