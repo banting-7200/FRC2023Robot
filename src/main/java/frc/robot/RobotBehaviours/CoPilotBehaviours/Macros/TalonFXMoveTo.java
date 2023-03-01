@@ -21,17 +21,27 @@ public class TalonFXMoveTo implements RobotAutoMaster{
             //Moves motors to positions
             new RobotAutoBehaviour() {
                 private boolean isComplete;
+                private boolean liftComplete;
+                private boolean shoulderComplete;
 
                 @Override
                 public void behaviourInit() {
                     isComplete = false;
+                    liftComplete = false;
+                    shoulderComplete = false;
                 }
 
                 @Override
                 public void behaviourPeriodic() {
-                    boolean liftFinished = lift.moveLiftToPosition(positionBind, 0.8);
-                    boolean shoulderFinished = shoulder.moveShoulderToPosition(positionBind, 0.7);
-                    isComplete = liftFinished && shoulderFinished;
+                    if(!shoulderComplete) {
+                        shoulderComplete = shoulder.moveShoulderToPosition(positionBind, 0.7);
+                    }
+                    if(!liftComplete) {
+                        liftComplete = lift.moveLiftToPosition(positionBind, 0.8);
+                    }
+
+                    System.out.println("Auto State: LIFT::" + liftComplete + " " + "SHOULDER::" + shoulderComplete);
+                    isComplete = liftComplete && shoulderComplete;
                 }
 
                 @Override
@@ -57,6 +67,8 @@ public class TalonFXMoveTo implements RobotAutoMaster{
             } else {
                 autoPtr++;
             }
+
+            return;
         }
     }
 

@@ -34,7 +34,7 @@ public final class RobotDrive {
     };
 
 
-    private final boolean defaultOnly = true;
+    private final boolean defaultOnly = false;
     
     private DifferentialDrive driveInstance;
     private RobotBehaviour currentDriveMode;

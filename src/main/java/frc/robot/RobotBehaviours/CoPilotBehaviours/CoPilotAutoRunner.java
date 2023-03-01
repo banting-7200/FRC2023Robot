@@ -55,7 +55,6 @@ public class CoPilotAutoRunner implements RobotBehaviour{
                 runningMacro = false;
                 if(currentMacro != null) {
                     currentMacro.resetAuto();
-                    currentMacro = null;
                 }
             }
         }

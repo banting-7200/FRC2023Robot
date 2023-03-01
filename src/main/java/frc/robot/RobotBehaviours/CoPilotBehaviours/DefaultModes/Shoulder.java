@@ -61,21 +61,16 @@ public class Shoulder implements RobotBehaviour {
             return;
         }
         
-        if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(10)) {
+        if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(12)) {
             SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(0);
         }
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = CoPilotControls.SHOULDER_MOVE.get();
-        input = input > 0.2 ? input : 0;
-        
+        input = Math.abs(input) > 0.2 ? input : 0;
+
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
-
-        if(input == 0) {
-            double newPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-            SHOULDER_MOTOR.getMotor().set(ControlMode.Position, newPosition);
-        }
     }
 
     public void killSpeed() {
@@ -85,13 +80,14 @@ public class Shoulder implements RobotBehaviour {
     public boolean moveShoulderToPosition(int positionBind, double moveSpeed) {
         double currPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
-        double output = Math.signum(targetPosition - currPosition) * moveSpeed;
+        double difference = targetPosition - currPosition;
+        double percentDifference = Math.abs((difference) / currPosition);
+
+
+        double output = Math.signum(targetPosition - currPosition) * moveSpeed * Clamp(percentDifference, 0, 0.5);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
 
-        double newMotorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-        double leftError = targetPosition - 500;
-        double rightError = targetPosition + 500;
-        if(newMotorPosition >= leftError && newMotorPosition <= rightError) {
+        if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
             killSpeed();
             return true;
         }

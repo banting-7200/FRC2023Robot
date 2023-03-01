@@ -5,6 +5,7 @@ import static frc.robot.Core.Utility.*;
 import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Interfaces.RobotBehaviour;
 
 /*
@@ -28,7 +29,9 @@ public class Wrist implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         double output = CoPilotControls.WRIST_MOVE.get();
-        setWrist(Math.abs(output) > 0.5 ? output : 0);
+        setWrist((Math.abs(output) > 0.5 ? output : 0) * 0.4);
+
+        SmartDashboard.putNumber("Wrist Motor Position: ", wristPosition);
     }
 
     private void setWrist(double output) {
