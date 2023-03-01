@@ -4,6 +4,7 @@ import static frc.robot.Core.Utility.*;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.CoPilotAutoRunner;
@@ -21,19 +22,20 @@ public class Shoulder implements RobotBehaviour {
      * Level2: 531896
      * Level3: 646900
      *  
-     * New Positions (0 At Starting Position)
+     * New Positions (0 At Starting Position) (Shoulder)
      * PickupPos: 
      * CarryPos: 
      * Level1: 
      * Level2: 
      * Level3: 
      */
-    private final double SHOULDER_PICKUPPOS = -1285999.0;
-    private final double SHOULDER_CARRY = -1413388.0;
+    private final double SHOULDER_PICKUPPOS = 123901;
+    private final double SHOULDER_CARRY = 0;
 
-    private final double SHOULDER_LEVEL1 = 271197;
-    private final double SHOULDER_LEVEL2 = 518836;
-    private final double SHOULDER_LEVEL3 = 634550;
+    private final double SHOULDER_STARTINGPOSITION = -175105;
+    private final double SHOULDER_LEVEL1 = 123901;
+    private final double SHOULDER_LEVEL2 = 345598;
+    private final double SHOULDER_LEVEL3 = 469674;
 
     private final HashMap<Integer, Double> SHOULDER_POSITIONSMAP = new HashMap<>() {{
             put(CoPilotControls.MACRO_PICKUP, SHOULDER_PICKUPPOS);
@@ -46,7 +48,10 @@ public class Shoulder implements RobotBehaviour {
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        SmartDashboard.putNumber("Target Shoulder Position", SHOULDER_MOTOR.getMotor().getSelectedSensorPosition());
+        if(Robot.inGameMode) {
+            SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(-175105);
+        }
+
         System.out.println("Shoulder Init...");
     }
 
@@ -62,7 +67,8 @@ public class Shoulder implements RobotBehaviour {
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = CoPilotControls.SHOULDER_MOVE.get();
-
+        input = input > 0.2 ? input : 0;
+        
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
 

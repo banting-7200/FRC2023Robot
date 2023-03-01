@@ -7,7 +7,6 @@ import frc.robot.Interfaces.RobotBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.TalonFXMoveTo;
-import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.TempMacro;
 
 import java.util.HashMap;
 
@@ -30,7 +29,11 @@ public class CoPilotAutoRunner implements RobotBehaviour{
         }
 
         autoMasters = new HashMap<>();
-        autoMasters.put(CoPilotControls.MACRO_PICKUP, new TempMacro()); //new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_PICKUP));
+        autoMasters.put(CoPilotControls.MACRO_PICKUP, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_PICKUP));
+        autoMasters.put(CoPilotControls.MACRO_CARRY, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_CARRY));
+        autoMasters.put(CoPilotControls.MACRO_LEVEL1, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL1));
+        autoMasters.put(CoPilotControls.MACRO_LEVEL2, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL2));
+        autoMasters.put(CoPilotControls.MACRO_LEVEL3, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL3));
     }
 
     @Override

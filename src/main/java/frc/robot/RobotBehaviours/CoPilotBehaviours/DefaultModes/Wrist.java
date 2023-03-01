@@ -28,7 +28,7 @@ public class Wrist implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         double output = CoPilotControls.WRIST_MOVE.get();
-        setWrist(output);
+        setWrist(Math.abs(output) > 0.5 ? output : 0);
     }
 
     private void setWrist(double output) {

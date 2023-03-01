@@ -38,8 +38,8 @@ public final class DriveModeSetter {
         // Initialise all Drive Modes
         DriveModes = new HashMap<Integer, RobotBehaviour>();
         DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_AUTOBALANCE, null); //new BalanceDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, null); //new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary.
+        DriveModes.put(DRIVEMODE_AUTOBALANCE, new ManualDrive(driveInstance)); //new BalanceDrive(driveInstance));
+        DriveModes.put(DRIVEMODE_PIXYALIGN, new ManualDrive(driveInstance)); //new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary.
 
         this.modesToControl = modesToControl;
         currDriveMode = 7;

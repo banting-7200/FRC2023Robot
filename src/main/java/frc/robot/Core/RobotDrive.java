@@ -5,6 +5,7 @@ import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 
 import frc.robot.Interfaces.RobotBehaviour;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.CoPilotAutoRunner;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
 
 /*
@@ -28,9 +29,10 @@ public final class RobotDrive {
 
         //PWM Systems
         new Wrist(), // Pilot Controlled
-        new Lights() // Copilot controlled
-        //new CoPilotAutoRunner()
+        new Lights(), // Copilot controlled
+        new CoPilotAutoRunner()
     };
+
 
     private final boolean defaultOnly = true;
     

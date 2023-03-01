@@ -6,8 +6,6 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Ultrasonic;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.DriveModeSetter;
 import frc.robot.Core.RobotDrive;
 
@@ -19,7 +17,10 @@ import frc.robot.Core.RobotDrive;
  */
 public class Robot extends TimedRobot {
   
-  // THis solenoid is being referenced due to weird behavour of always being on.
+  // Enable this to have motor positions set to starting positions when calibrated to max top on lift/ straight down on shoulder
+  public static final boolean inGameMode = false;
+
+  // This solenoid is being referenced due to weird behavour of always being on.
   // Disable when robot is on but disabled
   // Enable when robot is enabled
   private final Solenoid solenoid5 = new Solenoid(PneumaticsModuleType.CTREPCM, 5);
