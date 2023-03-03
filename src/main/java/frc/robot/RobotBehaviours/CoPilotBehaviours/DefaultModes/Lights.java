@@ -12,12 +12,12 @@ import frc.robot.Interfaces.RobotBehaviour;
  * Used for control of LEDs behind the kickerplate
  */
 public final class Lights implements RobotBehaviour {
-  private int lightsMode= 0;
+  private int lightsMode= 0;//integer used for changing light mode
 
   public int m_rainbowFirstPixelHue = 0;
 
-  AddressableLED m_led = new AddressableLED(7);
-  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 LED = 1 instance
+  AddressableLED m_led = new AddressableLED(7);//where LEDs are plugged in
+  AddressableLEDBuffer m_ledBuffer = new AddressableLEDBuffer(11);//3 real LEDs = 1 instance in code
 
   @Override
   public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
