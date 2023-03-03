@@ -32,7 +32,8 @@ void loop() {
     avgX += camera.ccc.blocks[i].m_x;
   }
 
-  Serial.println(avgX);
+  directionToWrite = calculateDirection(camera.ccc.numBlocks, avgX);
+
   delay(250);
 }
 

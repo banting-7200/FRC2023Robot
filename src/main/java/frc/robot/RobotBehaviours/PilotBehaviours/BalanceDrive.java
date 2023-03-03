@@ -15,7 +15,10 @@ import frc.robot.Interfaces.RobotBehaviour;
  * This drive mode is autonomous
  */
 public final class BalanceDrive implements RobotBehaviour {
-    private final ADXRS450_Gyro GYRO = new ADXRS450_Gyro();
+
+    public boolean isBalanced = false;
+
+    private final ADXRS450_Gyro GYRO = INSTANCE_GYRO;
     private RobotDrive baseInstance;
 
     public BalanceDrive(RobotDrive driveInstance) {
@@ -31,14 +34,23 @@ public final class BalanceDrive implements RobotBehaviour {
 
     @Override
     public void BehaviourPeriodic() {
+        System.out.println("Gyro Angle: " + GYRO.getAngle());
+
         if(!GYRO.isConnected()) {
             System.out.println("BalanceDrive: No gyro connected");
             return;
         }
 
+
         // Use the mapped angle in the evaluateSpeed function.
-        double angle = Clamp(GYRO.getAngle(), -40, 40);
-        double speed = evaluateSpeed(angle) * -Math.signum(angle);
+        double firstAngle = GYRO.getAngle();
+        double angle = MapValue(Math.abs(Clamp(firstAngle, -30, 30)), 0, 30, 0, 4);
+        double speed = evaluateSpeed(angle) * -Math.signum(GYRO.getAngle());
+
+
+        if(Math.abs(angle) <= 3.0) {
+            isBalanced = true;
+        }
 
         // Finally drive robot with speed.
         baseInstance.DriveRobot(0.0, speed);
@@ -47,9 +59,13 @@ public final class BalanceDrive implements RobotBehaviour {
     // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
     // Refer to project notes for desmos representation of function.
     private double evaluateSpeed(double evalPointX) {
-        double exponent = -(Math.pow(evalPointX, 2));
-        double base = 1.002;
-        double divisor = 2.5;
-        return Math.max(0.5, -(Math.pow(base, exponent) / divisor) + (1.0 / divisor) + 0.49);
+        double numerator = Math.pow(1.5, -0.2 * (evalPointX * evalPointX * evalPointX * evalPointX));
+        double denom = 2.5;
+        double t1 = -(numerator / denom);
+        return t1 + 0.85;
+    }
+
+    public double getGyroAngle() {
+        return GYRO.getAngle();
     }
 }

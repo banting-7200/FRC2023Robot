@@ -42,8 +42,8 @@ public final class ManualDrive implements RobotBehaviour {
         double xInput = PilotControls.PILOT_X.get() * currentSpeed;
         double yInput = PilotControls.PILOT_Y.get() * currentSpeed * speedMultiplier;
 
-        if(xInput < 0 && PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE)) {
-            xInput = Clamp(xInput, -0.6, 0.6);
+        if(PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE)) {
+            xInput = Clamp(xInput, -DRIVE_CREEPSPEED, DRIVE_CREEPSPEED);
         }
         
         BaseInstance.DriveRobot(xInput, yInput);

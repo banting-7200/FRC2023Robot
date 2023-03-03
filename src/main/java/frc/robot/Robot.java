@@ -3,11 +3,14 @@ package frc.robot;
 import static frc.robot.Core.Utility.*;
 
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.Core.DriveModeSetter;
 import frc.robot.Core.RobotDrive;
+import frc.robot.RobotBehaviours.AutoBehaviours.AutonomousRunner;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman
@@ -34,8 +37,17 @@ public class Robot extends TimedRobot {
   // Pilot Controlled
   private final DriveModeSetter driverModeSetter = new DriveModeSetter(
     driveInstance,
-    new int[] { DRIVEMODE_MANUAL, DRIVEMODE_PIXYALIGN, DRIVEMODE_AUTOBALANCE }
+    new int[] { DRIVEMODE_MANUAL, DRIVEMODE_AUTOBALANCE },
+    PilotControls.JOYSTICK_PILOT
   );
+
+  private final DriveModeSetter coDriverModeSetter = new DriveModeSetter(
+    driveInstance, 
+    new int[] {DRIVEMODE_PIXYALIGN}, 
+    CoPilotControls.JOYSTICK_COPILOT
+  );
+
+  private final AutonomousRunner autoRunner = new AutonomousRunner(driveInstance);
 
   @Override
   public void robotInit() {
@@ -44,15 +56,19 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
 
-  @Override
-  public void autonomousInit() {
-    solenoid5.set(true);
   }
 
   @Override
-  public void autonomousPeriodic() {}
+  public void autonomousInit() {
+    autoRunner.resetAuto();
+  }
+
+  @Override
+  public void autonomousPeriodic() {
+    autoRunner.runAuto();
+  }
 
   @Override
   public void teleopInit() {
@@ -62,11 +78,15 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     driverModeSetter.driveModeSetterTeleop();
+    coDriverModeSetter.driveModeSetterTeleop();
     driveInstance.robotDriveTeleop();
   }
 
   @Override
-  public void disabledInit() {
+  public void disabledInit() {}
+
+  @Override
+  public void disabledPeriodic() {
     solenoid5.set(false);
   }
 }

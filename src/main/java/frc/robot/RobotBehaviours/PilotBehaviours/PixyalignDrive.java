@@ -32,6 +32,12 @@ public class PixyalignDrive implements RobotBehaviour{
     public void BehaviourPeriodic() {
         //Data returned is a string form of average X-Position of game pieces
         byte[] data = ARDUINO_INTERFACE.readI2C(1);
+
+        if(data == null) {
+            System.out.println("NULL DATA");
+            return;
+        }
+        
         byte direction = data[0];
 
         //The below calculations are partially derived from ManualDrive.java

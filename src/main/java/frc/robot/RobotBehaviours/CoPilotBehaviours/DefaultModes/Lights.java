@@ -3,6 +3,7 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
 import frc.robot.Core.Utility.CoPilotControls;
+import frc.robot.Core.Utility.PilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
 
 /*
@@ -27,7 +28,7 @@ public final class Lights implements RobotBehaviour {
 
   @Override
   public void BehaviourPeriodic() {
-      if (CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(CoPilotControls.LIGHTS_SWITCHMODE)){
+      if (PilotControls.JOYSTICK_PILOT.getRawButtonPressed(PilotControls.LIGHTS_SWITCHMODE)){
         lightsMode++;
         if(lightsMode >= 4){
           lightsMode = 0;
