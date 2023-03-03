@@ -1,6 +1,7 @@
 package frc.robot.RobotBehaviours.AutoBehaviours;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos1Auto;
@@ -18,11 +19,11 @@ public class AutonomousRunner {
         autonomousSelect.addOption("Position 1", "0");
         autonomousSelect.addOption("Position 2", "1");
         autonomousSelect.addOption("Position 3", "2");
-        
+        SmartDashboard.putData("Auto Select", autonomousSelect);
         autonomousBehaviours = new RobotAutoMaster[] {
             new Pos1Auto(driver),
             new Pos2Auto(driver),
-            new Pos3Auto()
+            new Pos3Auto(driver)
         };
     }
 

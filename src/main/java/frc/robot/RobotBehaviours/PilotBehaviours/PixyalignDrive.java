@@ -3,6 +3,7 @@ package frc.robot.RobotBehaviours.PilotBehaviours;
 import static frc.robot.Core.Utility.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Core.DriveModeSetter;
 import frc.robot.Core.RobotDrive;
 import frc.robot.Core.ExternalIO.I2C_Interface;
 import frc.robot.Interfaces.RobotBehaviour;
@@ -30,6 +31,9 @@ public class PixyalignDrive implements RobotBehaviour{
 
     @Override
     public void BehaviourPeriodic() {
+        baseDriveInstance.setDriveMode(DriveModeSetter.DriveModes.get(DRIVEMODE_MANUAL));
+
+        /*
         //Data returned is a string form of average X-Position of game pieces
         byte[] data = ARDUINO_INTERFACE.readI2C(1);
 
@@ -39,6 +43,7 @@ public class PixyalignDrive implements RobotBehaviour{
         }
         
         byte direction = data[0];
+        System.out.println(direction);
 
         //The below calculations are partially derived from ManualDrive.java
         double fwdInput = PilotControls.PILOT_Y.get();
@@ -47,5 +52,6 @@ public class PixyalignDrive implements RobotBehaviour{
 
         //Apply the automated rotation of the pixycam, and the manual input for forward and back
         baseDriveInstance.DriveRobot(direction * 0.6, finalFwdSpeed);
+        */
     }
 }

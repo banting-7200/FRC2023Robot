@@ -44,11 +44,10 @@ public final class BalanceDrive implements RobotBehaviour {
 
         // Use the mapped angle in the evaluateSpeed function.
         double firstAngle = GYRO.getAngle();
-        double angle = MapValue(Math.abs(Clamp(firstAngle, -30, 30)), 0, 30, 0, 4);
-        double speed = evaluateSpeed(angle) * -Math.signum(GYRO.getAngle());
+        double speed = evaluateSpeed(firstAngle) * -Math.signum(GYRO.getAngle());
 
 
-        if(Math.abs(angle) <= 3.0) {
+        if(Math.abs(firstAngle) <= 3.0) {
             isBalanced = true;
         }
 
@@ -59,10 +58,29 @@ public final class BalanceDrive implements RobotBehaviour {
     // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
     // Refer to project notes for desmos representation of function.
     private double evaluateSpeed(double evalPointX) {
-        double numerator = Math.pow(1.5, -0.2 * (evalPointX * evalPointX * evalPointX * evalPointX));
-        double denom = 2.5;
-        double t1 = -(numerator / denom);
-        return t1 + 0.85;
+        double angle = Math.abs(evalPointX);
+
+        if(angle <= 5) {
+            return 0;
+        }
+
+        if(angle < 10) {
+            return 0.55;
+        }
+
+        if(angle >= 10) {
+            return 0.75;
+        }
+
+        if(angle >= 20) {
+            return 0.8;
+        }
+
+        if(angle > 30) {
+            return 1;
+        }
+
+        return 1;
     }
 
     public double getGyroAngle() {

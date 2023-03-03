@@ -19,7 +19,7 @@ import frc.robot.RobotBehaviours.PilotBehaviours.PixyalignDrive;
  * This class depends on RobotDrive.java
  */
 public final class DriveModeSetter {
-    private HashMap<Integer, RobotBehaviour> DriveModes;
+    public static HashMap<Integer, RobotBehaviour> DriveModes;
 
     //Key represents the ID of Drivemode, value represents button on joystick to select mode.
     private final HashMap<Integer, Integer> DriveModeBinds = new HashMap<>() {{

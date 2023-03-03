@@ -129,7 +129,7 @@ public class Lift implements RobotBehaviour {
                 double percentDifference = Math.abs((targetPosition - currentPosition) / currentPosition);
                 moveLift(movementSpeed * Clamp(percentDifference, 0.0, 0.5), -Math.signum(direction));
 
-                if(movementSpeed * Clamp(percentDifference, 0.0, 0.5) <= TALONFXMOVETO_PERCENTERROR) {
+                if(Clamp(percentDifference, 0.0, 0.5) <= TALONFXMOVETO_PERCENTERROR) {
                     killSpeed();
                     return true;
                 }
