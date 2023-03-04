@@ -42,10 +42,44 @@ public final class ManualDrive implements RobotBehaviour {
         double xInput = PilotControls.PILOT_X.get() * currentSpeed;
         double yInput = PilotControls.PILOT_Y.get() * currentSpeed * speedMultiplier;
 
-        if(xInput < 0 && PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE)) {
-            xInput = Clamp(xInput, -0.6, 0.6);
+        if(PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE)) {
+            double creepX = PilotControls.PILOT_X.get();
+            double creepY = PilotControls.PILOT_Y.get();
+
+            double mappedInputX = MapValue(Math.abs(creepX), 0, 1, 0, 0.25);
+            double mappedInputY = MapValue(Math.abs(creepY), 0, 1, 0, 0.25);
+
+            if(Math.abs(creepY) <= 0.2) {
+                mappedInputY = -0.5;
+            }
+
+            if(Math.abs(creepX) <= 0.1) {
+                mappedInputX = -0.5;
+            }
+            
+            xInput = Math.signum(creepX) * (0.5 + mappedInputX);
+            yInput = Math.signum(creepY) * (0.5 + mappedInputY);
+        } 
+        else {
+            double nX = PilotControls.PILOT_X.get();
+            double nY = PilotControls.PILOT_Y.get();
+
+            double mappedInputX = MapValue(Math.abs(nX), 0, 1, 0, 0.5);
+            double mappedInputY = MapValue(Math.abs(nY), 0, 1, 0, 0.6);
+
+            if(Math.abs(nY) <= 0.2) {
+                mappedInputY = -0.5;
+            }
+
+            if(Math.abs(nX) <= 0.1) {
+                mappedInputX = -0.5;
+            }
+
+            xInput = Math.signum(nX) * (0.5 + mappedInputX);
+            yInput = Math.signum(nY) * (0.5 + mappedInputY);
         }
-        
-        BaseInstance.DriveRobot(xInput, yInput);
+
+        SmartDashboard.putString("Driver-Inputs: ", "X: " + xInput + ", Y" + yInput  * speedMultiplier);
+        BaseInstance.DriveRobot(xInput, yInput * speedMultiplier);
     }
 }

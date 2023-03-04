@@ -1,6 +1,7 @@
 package frc.robot.RobotBehaviours.CoPilotBehaviours;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.Interfaces.RobotBehaviour;
@@ -45,18 +46,17 @@ public class CoPilotAutoRunner implements RobotBehaviour{
                 currentMacro = autoMasters.get(bind);
                 if(!currentMacro.isCompleted()) { 
                     currentMacro.runAuto(); 
-                    runningMacro = true;
-                } else {
-                    runningMacro = false;
                 }
 
                 break;
-            } else {
-                runningMacro = false;
-                if(currentMacro != null) {
-                    currentMacro.resetAuto();
-                }
+            }
+
+            if(currentMacro != null) {
+                currentMacro.resetAuto();
+                currentMacro = null;
             }
         }
+
+        runningMacro = currentMacro != null;
     }
 }

@@ -12,7 +12,10 @@ public class Claw implements RobotBehaviour{
     private boolean open = false;
 
     @Override
-    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {}
+    public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
+        CLAW_SOLENOID1.set(true);
+        CLAW_SOLENOID2.set(false);
+    }
 
     @Override
     public void BehaviourPeriodic() {

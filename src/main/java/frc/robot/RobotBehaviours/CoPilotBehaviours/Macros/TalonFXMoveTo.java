@@ -1,7 +1,5 @@
 package frc.robot.RobotBehaviours.CoPilotBehaviours.Macros;
 
-import edu.wpi.first.wpilibj.motorcontrol.Talon;
-import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
@@ -34,10 +32,11 @@ public class TalonFXMoveTo implements RobotAutoMaster{
                 @Override
                 public void behaviourPeriodic() {
                     if(!shoulderComplete) {
-                        shoulderComplete = shoulder.moveShoulderToPosition(positionBind, 0.7);
+                        shoulderComplete = shoulder.moveShoulderToPosition(positionBind, 0.8);
                     }
+
                     if(!liftComplete) {
-                        liftComplete = lift.moveLiftToPosition(positionBind, 0.8);
+                        liftComplete = lift.moveLiftToPosition(positionBind, 0.7);
                     }
 
                     System.out.println("Auto State: LIFT::" + liftComplete + " " + "SHOULDER::" + shoulderComplete);

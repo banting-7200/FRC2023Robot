@@ -44,6 +44,8 @@ public class Shoulder implements RobotBehaviour {
             put(CoPilotControls.MACRO_LEVEL1, SHOULDER_LEVEL1);
             put(CoPilotControls.MACRO_LEVEL2, SHOULDER_LEVEL2);
             put(CoPilotControls.MACRO_LEVEL3, SHOULDER_LEVEL3);
+
+            put(-1, 0.0);
     }};
 
     @Override
@@ -61,7 +63,7 @@ public class Shoulder implements RobotBehaviour {
             return;
         }
         
-        if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(12)) {
+        if(CoPilotControls.JOYSTICK_COPILOT.getPOV() == 0) {
             SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(0);
         }
 
@@ -83,8 +85,12 @@ public class Shoulder implements RobotBehaviour {
         double difference = targetPosition - currPosition;
         double percentDifference = Math.abs((difference) / currPosition);
 
+        double output = Math.signum(targetPosition - currPosition) * moveSpeed;
 
-        double output = Math.signum(targetPosition - currPosition) * moveSpeed * Clamp(percentDifference, 0, 0.5);
+        if(Math.abs(difference) <= 2000) {
+            output = Math.signum(targetPosition - currPosition) * moveSpeed * Clamp(percentDifference, 0, 0.7);
+        }
+
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
 
         if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {

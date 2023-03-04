@@ -15,7 +15,21 @@
   },
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Auto Select": "String Chooser"
+    }
+  },
+  "NetworkTables": {
+    "Persistent Values": {
+      "open": false
+    },
+    "transitory": {
+      "LiveWindow": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "open": true
+      }
     }
   }
 }

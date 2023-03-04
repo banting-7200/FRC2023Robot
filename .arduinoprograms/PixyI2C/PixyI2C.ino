@@ -32,7 +32,20 @@ void loop() {
     avgX += camera.ccc.blocks[i].m_x;
   }
 
-  Serial.println(avgX);
+  directionToWrite = calculateDirection(camera.ccc.numBlocks, avgX);
+
+  if(directionToWrite == 0) {
+    digitalWrite(7, LOW);
+  } else {
+    digitalWrite(7, HIGH);
+  }
+
+  if(directionToWrite < 0) {
+    digitalWrite(6, LOW);
+  } else if(directionToWrite > 0) {
+    digitalWrite(6, HIGH);
+  }
+
   delay(250);
 }
 
@@ -51,8 +64,4 @@ int calculateDirection(int numBlocks, double avgX) {
   } else {
     directionToWrite = avgPoint >= midPoint ? 1 : -1;
   }
-}
-
-void onRequest() {
-  Wire.write(directionToWrite);
 }

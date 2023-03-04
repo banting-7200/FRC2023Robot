@@ -1,7 +1,11 @@
 package frc.robot.Core;
 import java.util.function.Supplier;
+
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Interfaces.RobotBehaviour;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Claw;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
 
 /* Author: Lucas Soliman
  * Date Created: January 10, 2023
@@ -39,8 +43,14 @@ public final class Utility {
 
         // Controls are utilised in DriveModeSetter.java
         public static final int DRIVEMODE_MANUAL = 7;
-        public static final int DRIVEMODE_PIXYALIGN = 9;
         public static final int DRIVEMODE_AUTOBALANCE = 11;
+
+        
+        // Controls are utilised in Kicker.java
+        public static final int KICKER_KICK = 3;
+
+        // Controls are utilised in Lights.java
+        public static final int LIGHTS_SWITCHMODE = 12;
     }
 
     public static final class CoPilotControls {
@@ -74,12 +84,8 @@ public final class Utility {
 
         // Controls are utilised in Claw.java
         public static final int CLAW_TOGGLE = 1;
-
-        // Controls are utilised in Kicker.java
-        public static final int KICKER_KICK = 3;
-
-        // Controls are utilised in Lights.java
-        public static final int LIGHTS_SWITCHMODE = 12;
+        public static final int DRIVEMODE_PIXYALIGN = 10;
+        public static final int SHOULDER_ZEROENCODER = 12;
     }
     //#region Constants
     public static class SmartDashboardIDs {
@@ -149,6 +155,11 @@ public final class Utility {
     public static final double ARM_CREEPSPEED = 0.5;
 
     //#endregion
+
+    //Pneumatics instances since solenoids cannot have mutliple references
+    public static final Kicker INSTANCE_KICKER = new Kicker();
+    public static final Claw INSTANCE_CLAW = new Claw();
+    public static final ADXRS450_Gyro INSTANCE_GYRO = new ADXRS450_Gyro();
 }
 
 // Lift Max Height Position: -996164 || -1006396 (unsafe)
