@@ -74,7 +74,7 @@ public class Lift implements RobotBehaviour {
         SmartDashboard.putNumber("Lift Output: ", finalOutput);
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, finalOutput);
 
-        return finalOutput != 0;
+        return finalOutput == 0 ? false : true;
     }
 
     public double canMoveLift(double output) {
