@@ -15,7 +15,6 @@ import frc.robot.Core.RobotDrive;
  * Meant to align with closest game piece to center (cone/cube)
  */
 public class PixyalignDrive implements RobotBehaviour {
-    //private final I2C_Interface ARDUINO_INTERFACE = new I2C_Interface(1);
     private final DigitalInput shouldRotate = new DigitalInput(5);
     private final DigitalInput leftRight = new DigitalInput(6);
     private RobotDrive baseDriveInstance;
