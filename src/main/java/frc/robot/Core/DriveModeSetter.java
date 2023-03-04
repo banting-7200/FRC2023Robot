@@ -20,7 +20,7 @@ import frc.robot.RobotBehaviours.PilotBehaviours.PixyalignDrive;
  */
 public final class DriveModeSetter {
     public static HashMap<Integer, RobotBehaviour> DriveModes;
-
+    private static boolean isInitDrive = false;
     //Key represents the ID of Drivemode, value represents button on joystick to select mode.
     private final HashMap<Integer, Integer> DriveModeBinds = new HashMap<>() {{
         //MainPilot modes (Buttons on pilot joystick)
@@ -38,12 +38,14 @@ public final class DriveModeSetter {
         this.driveInstance = driveInstance;
         this.controlStick = controlStick;
 
-        // Initialise all Drive Modes
-        DriveModes = new HashMap<Integer, RobotBehaviour>();
-        DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(driveInstance)); //new BalanceDrive(driveInstance));
-        DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance)); //new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary.
-
+        if(!isInitDrive) {
+            DriveModes = new HashMap<Integer, RobotBehaviour>();
+            DriveModes.put(DRIVEMODE_MANUAL, new ManualDrive(driveInstance));
+            DriveModes.put(DRIVEMODE_AUTOBALANCE, new BalanceDrive(driveInstance)); //new BalanceDrive(driveInstance));
+            DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance)); //new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary
+            isInitDrive = true;
+        }
+        
         this.modesToControl = modesToControl;
         currDriveMode = 7;
 

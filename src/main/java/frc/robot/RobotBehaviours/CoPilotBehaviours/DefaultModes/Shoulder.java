@@ -44,6 +44,8 @@ public class Shoulder implements RobotBehaviour {
             put(CoPilotControls.MACRO_LEVEL1, SHOULDER_LEVEL1);
             put(CoPilotControls.MACRO_LEVEL2, SHOULDER_LEVEL2);
             put(CoPilotControls.MACRO_LEVEL3, SHOULDER_LEVEL3);
+
+            put(-1, 0.0);
     }};
 
     @Override

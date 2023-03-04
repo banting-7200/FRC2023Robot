@@ -17,8 +17,8 @@ public class AutonomousRunner {
 
         autonomousSelect.setDefaultOption("No Auto", "-1");
         autonomousSelect.addOption("Position 1", "0");
-        autonomousSelect.addOption("Position 2", "1");
         autonomousSelect.addOption("Position 3", "2");
+        
         SmartDashboard.putData("Auto Select", autonomousSelect);
         autonomousBehaviours = new RobotAutoMaster[] {
             new Pos1Auto(driver),

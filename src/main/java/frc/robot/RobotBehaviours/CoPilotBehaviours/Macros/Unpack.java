@@ -7,6 +7,7 @@ import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
 
 public class Unpack implements RobotAutoMaster{
 
+    private int autoPtr;
     private RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
 
         // Max out lift
@@ -24,36 +25,34 @@ public class Unpack implements RobotAutoMaster{
                 if(!liftComplete) {
                     liftInstance.moveLiftToPosition(-1, 1.0);
                 }
+                
             }
 
             @Override
             public boolean isFinished() {
-                // TODO Auto-generated method stub
-                return false;
+                return liftComplete;
             }
         },
 
         // Move shoulder to 0
         new RobotAutoBehaviour() {
+            private boolean shoulderFinished;
+
             @Override
-            public void behaviourInit() {
-                // TODO Auto-generated method stub
-                
-            }
+            public void behaviourInit() {}
 
             @Override
             public void behaviourPeriodic() {
-                // TODO Auto-generated method stub
-                
+                if(!shoulderFinished) {
+                    shoulderFinished = shoulderInstance.moveShoulderToPosition(-1, 0.9);
+                }
             }
 
             @Override
             public boolean isFinished() {
-                // TODO Auto-generated method stub
-                return false;
+                return shoulderFinished;
             }
-            
-        }
+        },
     };
 
     private Lift liftInstance;
@@ -62,28 +61,37 @@ public class Unpack implements RobotAutoMaster{
     public Unpack(Lift lift, Shoulder shoulder) {
         liftInstance = lift;
         shoulderInstance = shoulder;
+        autoPtr = 0;
     }
     
     @Override
     public void runAuto() {
+        if(autoPtr < autoChain.length) {
+            if(!autoChain[autoPtr].isFinished()) {
+                autoChain[autoPtr].behaviourPeriodic();
+                return;
+            }
 
+            autoPtr++;
+        }
     }
 
     @Override
     public void resetAuto() {
+        autoPtr = 0;
 
+        for(RobotAutoBehaviour behaviour : autoChain) {
+            behaviour.behaviourInit();
+        }
     }
 
     @Override
     public RobotAutoBehaviour[] getBehaviourChain() {
-        // TODO Auto-generated method stub
-        return null;
+        return autoChain;
     }
 
     @Override
     public boolean isCompleted() {
-        // TODO Auto-generated method stub
-        return false;
+        return autoPtr >= autoChain.length;
     }
-    
 }

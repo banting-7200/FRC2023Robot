@@ -93,10 +93,8 @@ public class Lift implements RobotBehaviour {
     }
 
     public double canMoveLift(double output) {
-        double currPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
-
         //Return inverse of direction if the output is attempting to go beyond limit.
-        if((!LIFT_LOWERLIMITER.get() || currPosition >= 255933.0) && output > 0) {
+        if((!LIFT_LOWERLIMITER.get()) && output > 0) {
             System.out.println("LOWER LIMIT REACHED... STOPPING MOTOR");
             return 0;
         }
