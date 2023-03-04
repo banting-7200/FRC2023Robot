@@ -32,7 +32,7 @@ public class PixyalignDrive implements RobotBehaviour {
     @Override
     public void BehaviourPeriodic() {
         if(shouldRotate.get()) {
-            double direction = leftRight.get() ? 1.0 : -1.0;
+            double direction = leftRight.get() ? -1.0 : 1.0;
             double nY = PilotControls.PILOT_Y.get();
 
             boolean creepEnabled = PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE);
