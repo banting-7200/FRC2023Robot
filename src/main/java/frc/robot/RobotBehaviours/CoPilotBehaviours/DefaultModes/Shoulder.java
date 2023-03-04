@@ -13,26 +13,11 @@ import java.util.HashMap;
 
 public class Shoulder implements RobotBehaviour {
     private final TalonMotor SHOULDER_MOTOR = new TalonMotor(1);
+    private final double SHOULDER_STARTINGPOSITION = -175105;
 
-    /*
-     * Differences
-     * PickuPos: 298996
-     * CarryPos: 171607
-     * Level1: 297100
-     * Level2: 531896
-     * Level3: 646900
-     *  
-     * New Positions (0 At Starting Position) (Shoulder)
-     * PickupPos: 
-     * CarryPos: 
-     * Level1: 
-     * Level2: 
-     * Level3: 
-     */
     private final double SHOULDER_PICKUPPOS = 123901;
     private final double SHOULDER_CARRY = 0;
-
-    private final double SHOULDER_STARTINGPOSITION = -175105;
+    
     private final double SHOULDER_LEVEL1 = 123901;
     private final double SHOULDER_LEVEL2 = 345598;
     private final double SHOULDER_LEVEL3 = 469674;
@@ -51,7 +36,7 @@ public class Shoulder implements RobotBehaviour {
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         if(Robot.inGameMode) {
-            SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(-175105);
+            SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(SHOULDER_STARTINGPOSITION);
         }
 
         System.out.println("Shoulder Init...");

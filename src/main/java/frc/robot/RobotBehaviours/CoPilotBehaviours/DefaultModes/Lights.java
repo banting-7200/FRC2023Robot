@@ -2,7 +2,6 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Core.Utility.PilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
 

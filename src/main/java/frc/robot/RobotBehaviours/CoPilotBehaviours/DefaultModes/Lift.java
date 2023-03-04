@@ -5,9 +5,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import static frc.robot.Core.Utility.*;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
@@ -24,14 +22,6 @@ public class Lift implements RobotBehaviour {
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
     private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
-    
-    /* New Positions (0 At Starting Position) (Lift)
-    * PickupPos: 
-    * CarryPos: 
-    * Level1: 
-    * Level2: 
-    * Level3: 
-    */
 
     private final double LIFT_PICKUP = 226488;
     private final double LIFT_CARRY = 113255;
