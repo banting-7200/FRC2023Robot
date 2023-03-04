@@ -5,9 +5,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 
 import static frc.robot.Core.Utility.*;
 import edu.wpi.first.wpilibj.DigitalInput;
-import edu.wpi.first.wpilibj.Threads;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Robot;
 import frc.robot.Core.CTRE.TalonMotor;
 import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
@@ -24,19 +22,9 @@ public class Lift implements RobotBehaviour {
     private final TalonMotor LIFT_MOTOR = new TalonMotor(2);
     private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
-    
-    /* New Positions (0 At Starting Position) (Lift)
-    * PickupPos: 
-    * CarryPos: 
-    * Level1: 
-    * Level2: 
-    * Level3: 
-    */
 
     private final double LIFT_PICKUP = 226488;
     private final double LIFT_CARRY = 113255;
-    private final double LIFT_START = -974830; //Make new
-
     private final double LIFT_LEVEL1 = 226488;
     private final double LIFT_LEVEL2 = 19189;
     private final double LIFT_LEVEL3 = 12903;
@@ -52,11 +40,7 @@ public class Lift implements RobotBehaviour {
 
     @Override
     public void BehaviourInit(RobotBehaviour[] behaviours) {
-        System.out.println("Init Lift...");
-
-        if(Robot.inGameMode) {
-            LIFT_MOTOR.getMotor().setSelectedSensorPosition(-974830);
-        }
+        System.out.println("Lift Init...");
     }
 
     @Override
@@ -75,21 +59,22 @@ public class Lift implements RobotBehaviour {
         double input = down ? -0.8 : up ? 0.8 : 0;
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
-        moveLift(Math.abs(input / 3.0), Math.signum(input));
+        moveLift(Math.abs(0.35), Math.signum(input));
     }
 
     private void debugSwitches() {
-        SmartDashboard.putNumber("Lift Current: ", LIFT_MOTOR.getMotor().getStatorCurrent());
         SmartDashboard.putBoolean("Lift UpperLimit State:", LIFT_UPPERLIMITER.get());
         SmartDashboard.putBoolean("Lift LowerLimit State", LIFT_LOWERLIMITER.get());
     }
 
-    public void moveLift(double output, double direction) {
+    public boolean moveLift(double output, double direction) {
         double percentOutput = output * -direction;
         double finalOutput = canMoveLift(percentOutput);
 
         SmartDashboard.putNumber("Lift Output: ", finalOutput);
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, finalOutput);
+
+        return finalOutput == 0 ? false : true;
     }
 
     public double canMoveLift(double output) {

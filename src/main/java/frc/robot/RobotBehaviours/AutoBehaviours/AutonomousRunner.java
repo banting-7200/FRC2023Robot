@@ -2,6 +2,7 @@ package frc.robot.RobotBehaviours.AutoBehaviours;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Robot;
 import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos1Auto;
@@ -11,6 +12,7 @@ import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos3Auto;
 public class AutonomousRunner {
     private SendableChooser<String> autonomousSelect;
     private RobotAutoMaster[] autonomousBehaviours;
+    private RobotAutoMaster unpackRoutine;
 
     public AutonomousRunner(RobotDrive driver) {
         autonomousSelect = new SendableChooser<>();
@@ -25,6 +27,8 @@ public class AutonomousRunner {
             new Pos2Auto(driver),
             new Pos3Auto(driver)
         };
+
+        System.out.println("AutoRunner Init...");
     }
 
     public void runAuto() {
@@ -35,6 +39,11 @@ public class AutonomousRunner {
 
         if(!autonomousBehaviours[chosenIndex].isCompleted()) {
             autonomousBehaviours[chosenIndex].runAuto();
+        } else {
+            Robot.BREAK.set(false);
+            if(!unpackRoutine.isCompleted()) {
+                unpackRoutine.runAuto();
+            }
         }
     }
 

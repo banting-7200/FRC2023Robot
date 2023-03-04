@@ -1,7 +1,6 @@
 package frc.robot.RobotBehaviours.CoPilotBehaviours;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.Interfaces.RobotBehaviour;

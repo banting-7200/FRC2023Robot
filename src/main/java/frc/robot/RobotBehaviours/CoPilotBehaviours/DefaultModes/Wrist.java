@@ -1,8 +1,6 @@
 package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import static frc.robot.Core.Utility.*;
-
-import edu.wpi.first.wpilibj.Counter;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

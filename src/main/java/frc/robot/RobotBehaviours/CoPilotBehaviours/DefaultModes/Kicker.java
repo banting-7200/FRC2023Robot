@@ -19,8 +19,6 @@ public class Kicker implements RobotBehaviour{
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         System.out.println("Kicker Init...");
-        KICKER_SOLENOID1.set(true);
-        KICKER_SOLENOID2.set(false);
     }
 
     @Override

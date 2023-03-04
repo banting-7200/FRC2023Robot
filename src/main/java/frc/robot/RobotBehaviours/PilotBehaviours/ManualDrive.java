@@ -22,7 +22,7 @@ public final class ManualDrive implements RobotBehaviour {
     private double currentSpeed;
 
     public ManualDrive(RobotDrive baseDrive) {
-        System.out.println("Init ManualDrive...");
+        System.out.println("ManualDrive Init...");
         BaseInstance = baseDrive;
         speedMultiplier = 1;
     }
@@ -67,11 +67,11 @@ public final class ManualDrive implements RobotBehaviour {
             double mappedInputX = MapValue(Math.abs(nX), 0, 1, 0, 0.5);
             double mappedInputY = MapValue(Math.abs(nY), 0, 1, 0, 0.6);
 
-            if(Math.abs(nY) <= 0.2) {
+            if(Math.abs(nY) <= 0.3) {
                 mappedInputY = -0.5;
             }
 
-            if(Math.abs(nX) <= 0.1) {
+            if(Math.abs(nX) <= 0.2) {
                 mappedInputX = -0.5;
             }
 

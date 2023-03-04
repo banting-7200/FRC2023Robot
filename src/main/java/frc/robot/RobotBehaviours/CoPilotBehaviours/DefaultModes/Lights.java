@@ -2,7 +2,6 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import edu.wpi.first.wpilibj.AddressableLED;
 import edu.wpi.first.wpilibj.AddressableLEDBuffer;
-import frc.robot.Core.Utility.CoPilotControls;
 import frc.robot.Core.Utility.PilotControls;
 import frc.robot.Interfaces.RobotBehaviour;
 
@@ -24,6 +23,8 @@ public final class Lights implements RobotBehaviour {
   public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.start();
+
+    System.out.println("Lights Init...");
   }
 
   @Override

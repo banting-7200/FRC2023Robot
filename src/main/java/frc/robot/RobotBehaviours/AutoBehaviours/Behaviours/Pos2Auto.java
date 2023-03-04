@@ -43,7 +43,7 @@ public class Pos2Auto implements RobotAutoMaster{
 
         //Back up into community zone
         new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 250;
+            private final int BACKUP_TICKS = 100;
             private int currentTicks = 0;
 
             @Override
@@ -58,7 +58,7 @@ public class Pos2Auto implements RobotAutoMaster{
                     return;
                 }
 
-                driverInstance.DriveRobot(0.0, 1.0);
+                driverInstance.DriveRobot(0.0, 0.8);
                 currentTicks--;
             }
 
@@ -152,5 +152,4 @@ public class Pos2Auto implements RobotAutoMaster{
     public boolean isCompleted() {
         return autoPtr >= autoChain.length;
     }
-    
 }

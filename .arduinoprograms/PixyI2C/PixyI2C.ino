@@ -5,8 +5,6 @@ Date Created: January ? 2023
 This takes in pixy2 data to compute the direction of rotation for the robot to align with recognized objects.
 */
 #include <Pixy2.h>
-#include <Wire.h>
-
 #define MID_ERROR 50
 
 int xToWrite;
@@ -14,10 +12,7 @@ int directionToWrite;
 Pixy2 camera;
 
 void setup() {
-  Wire.begin(1);
   camera.init();
-  Wire.onRequest(onRequest);
-  Serial.begin(9600);
 }
 
 void loop() {
@@ -46,7 +41,7 @@ void loop() {
     digitalWrite(6, HIGH);
   }
 
-  delay(250);
+  delay(10);
 }
 
 int calculateDirection(int numBlocks, double avgX) {
