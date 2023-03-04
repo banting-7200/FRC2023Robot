@@ -18,11 +18,12 @@ public final class BalanceDrive implements RobotBehaviour {
 
     public boolean isBalanced = false;
 
+    private final double angleBalanceThreshold = 3.0;
     private final ADXRS450_Gyro GYRO = INSTANCE_GYRO;
     private RobotDrive baseInstance;
 
     public BalanceDrive(RobotDrive driveInstance) {
-        System.out.println("Init BalanceDrive...");
+        System.out.println("BalanceDrive Init...");
         baseInstance = driveInstance;
         GYRO.calibrate();
     }
@@ -34,20 +35,16 @@ public final class BalanceDrive implements RobotBehaviour {
 
     @Override
     public void BehaviourPeriodic() {
-        System.out.println("Gyro Angle: " + GYRO.getAngle());
-
         if(!GYRO.isConnected()) {
             System.out.println("BalanceDrive: No gyro connected");
             return;
         }
 
-
         // Use the mapped angle in the evaluateSpeed function.
-        double firstAngle = GYRO.getAngle();
-        double speed = evaluateSpeed(firstAngle) * -Math.signum(GYRO.getAngle());
+        double currAngle = GYRO.getAngle();
+        double speed = evaluateSpeed(currAngle) * -Math.signum(currAngle);
 
-
-        if(Math.abs(firstAngle) <= 3.0) {
+        if(Math.abs(currAngle) <= angleBalanceThreshold) {
             isBalanced = true;
         }
 
@@ -59,17 +56,22 @@ public final class BalanceDrive implements RobotBehaviour {
     // Refer to project notes for desmos representation of function.
     private double evaluateSpeed(double evalPointX) {
         double angle = Math.abs(evalPointX);
+        double numerator = 0.003 * (angle * angle);
+        double denominator = 1.2;
+        double offset = 0.49;
 
-        if(angle <= 5) {
-            return 0;
+        return (numerator / denominator) + offset;
+        /*
+        if(angle <= angleBalanceThreshold) {
+            return 0.4;
         }
 
-        if(angle < 10) {
+        if(angle < 8) {
             return 0.55;
         }
 
-        if(angle >= 10) {
-            return 0.75;
+        if(angle >= 8) {
+            return 0.65;
         }
 
         if(angle >= 20) {
@@ -81,6 +83,7 @@ public final class BalanceDrive implements RobotBehaviour {
         }
 
         return 1;
+        */
     }
 
     public double getGyroAngle() {

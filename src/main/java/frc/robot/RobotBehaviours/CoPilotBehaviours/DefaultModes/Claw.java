@@ -13,8 +13,7 @@ public class Claw implements RobotBehaviour{
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
-        CLAW_SOLENOID1.set(true);
-        CLAW_SOLENOID2.set(false);
+        System.out.println("Claw Init...");
     }
 
     @Override

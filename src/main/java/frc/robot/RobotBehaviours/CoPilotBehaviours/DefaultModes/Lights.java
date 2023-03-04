@@ -24,6 +24,8 @@ public final class Lights implements RobotBehaviour {
   public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.start();
+
+    System.out.println("Lights Init...");
   }
 
   @Override

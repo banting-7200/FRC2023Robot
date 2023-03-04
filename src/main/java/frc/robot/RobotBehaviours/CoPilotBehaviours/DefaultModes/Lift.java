@@ -35,8 +35,6 @@ public class Lift implements RobotBehaviour {
 
     private final double LIFT_PICKUP = 226488;
     private final double LIFT_CARRY = 113255;
-    private final double LIFT_START = -974830; //Make new
-
     private final double LIFT_LEVEL1 = 226488;
     private final double LIFT_LEVEL2 = 19189;
     private final double LIFT_LEVEL3 = 12903;
@@ -52,11 +50,7 @@ public class Lift implements RobotBehaviour {
 
     @Override
     public void BehaviourInit(RobotBehaviour[] behaviours) {
-        System.out.println("Init Lift...");
-
-        if(Robot.inGameMode) {
-            LIFT_MOTOR.getMotor().setSelectedSensorPosition(-974830);
-        }
+        System.out.println("Lift Init...");
     }
 
     @Override
@@ -79,17 +73,18 @@ public class Lift implements RobotBehaviour {
     }
 
     private void debugSwitches() {
-        SmartDashboard.putNumber("Lift Current: ", LIFT_MOTOR.getMotor().getStatorCurrent());
         SmartDashboard.putBoolean("Lift UpperLimit State:", LIFT_UPPERLIMITER.get());
         SmartDashboard.putBoolean("Lift LowerLimit State", LIFT_LOWERLIMITER.get());
     }
 
-    public void moveLift(double output, double direction) {
+    public boolean moveLift(double output, double direction) {
         double percentOutput = output * -direction;
         double finalOutput = canMoveLift(percentOutput);
 
         SmartDashboard.putNumber("Lift Output: ", finalOutput);
         LIFT_MOTOR.getMotor().set(ControlMode.PercentOutput, finalOutput);
+
+        return finalOutput != 0;
     }
 
     public double canMoveLift(double output) {

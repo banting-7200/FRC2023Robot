@@ -40,7 +40,7 @@ public class Pos1Auto implements RobotAutoMaster{
 
         //Back up into community zone
         new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 100;
+            private final int BACKUP_TICKS = 200;
             private int currentTicks = 0;
 
             @Override
