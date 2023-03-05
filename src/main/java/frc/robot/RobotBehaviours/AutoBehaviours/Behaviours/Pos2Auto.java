@@ -1,6 +1,8 @@
 package frc.robot.RobotBehaviours.AutoBehaviours.Behaviours;
 
 import static frc.robot.Core.Utility.*;
+
+import frc.robot.Robot;
 import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.Interfaces.RobotAutoMaster;
@@ -41,70 +43,58 @@ public class Pos2Auto implements RobotAutoMaster{
             }
         },
 
-        //Back up into community zone
+        //Back up onto ramp
         new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 100;
-            private int currentTicks = 0;
-
+            private final int backupTicks = 113;
+            private int backupLeft = backupTicks;
             @Override
             public void behaviourInit() {
-                currentTicks = BACKUP_TICKS;
+                backupLeft = backupTicks;
             }
 
             @Override
             public void behaviourPeriodic() {
-                if(currentTicks <= 0) {
-                    driverInstance.DriveRobot(0, 0);
+                if(backupLeft > 0) {
+                    driverInstance.DriveRobot(0, 1);
+                    backupLeft--;
                     return;
                 }
 
-                driverInstance.DriveRobot(0.0, 0.8);
-                currentTicks--;
+                driverInstance.DriveRobot(0, 0);
             }
 
             @Override
             public boolean isFinished() {
-                return currentTicks <= 0;
+                return backupLeft <= 0;
             }
+
         },
 
         //Go onto charge station
         new RobotAutoBehaviour() {
-            @Override
-            public void behaviourInit() {}
+            private final int autoTicks = 100;
+            private int ticksLeft = autoTicks;
 
             @Override
-            public void behaviourPeriodic() {
-                if(balanceDriver.isBalanced) {
-                    driverInstance.DriveRobot(0, 1);
-                }
+            public void behaviourInit() {
+                ticksLeft = autoTicks;
             }
 
             @Override
-            public boolean isFinished() {
-                return balanceDriver.isBalanced == false;
-            }
-        },
-
-        //Once angle on gyro is not balanced, run balanceDrive until balanced
-        new RobotAutoBehaviour() {
-            @Override
-            public void behaviourInit() {}
-
-            @Override
             public void behaviourPeriodic() {
-                if(!balanceDriver.isBalanced) {
+                if(ticksLeft > 0) {
                     balanceDriver.BehaviourPeriodic();
+                    ticksLeft--;
+                    return;
                 }
 
-                if(balanceDriver.isBalanced) {
-                    driverInstance.DriveRobot(0, 0);
-                }
+                Robot.BREAK.set(false);
+                driverInstance.DriveRobot(0, 0);
             }
 
             @Override
             public boolean isFinished() {
-                return balanceDriver.isBalanced;
+                return ticksLeft <= 0;
             }
         }
     };
@@ -117,6 +107,8 @@ public class Pos2Auto implements RobotAutoMaster{
     public Pos2Auto(RobotDrive drive) {
         driverInstance = drive;
         balanceDriver = new BalanceDrive(drive);
+        balanceDriver.BehaviourInit(null);
+
         kickerInstance = INSTANCE_KICKER;
     }
 
