@@ -42,6 +42,7 @@ public class Pos2Auto implements RobotAutoMaster{
                 return isCompleted;
             }
         },
+<<<<<<< HEAD
         //Kick ball
         new RobotAutoBehaviour() {
             private int tickCounts = 113;
@@ -52,10 +53,21 @@ public class Pos2Auto implements RobotAutoMaster{
             public void behaviourInit() {
                 tickCounts = 113;
                 tickTimes = 0;
+=======
+
+        //Back up onto ramp
+        new RobotAutoBehaviour() {
+            private final int backupTicks = 113;
+            private int backupLeft = backupTicks;
+            @Override
+            public void behaviourInit() {
+                backupLeft = backupTicks;
+>>>>>>> f45c22609ca8d948d7a96b88068d4a4551526e8f
             }
 
             @Override
             public void behaviourPeriodic() {
+<<<<<<< HEAD
                 if(tickTimes % 5 == 0) {
                     rotSpeed *= -1;
                 }
@@ -63,6 +75,11 @@ public class Pos2Auto implements RobotAutoMaster{
                 if(tickCounts > 0) {
                     driverInstance.DriveRobot(rotSpeed, 1);
                     tickCounts--;
+=======
+                if(backupLeft > 0) {
+                    driverInstance.DriveRobot(0, 1);
+                    backupLeft--;
+>>>>>>> f45c22609ca8d948d7a96b88068d4a4551526e8f
                     return;
                 }
 
@@ -71,6 +88,7 @@ public class Pos2Auto implements RobotAutoMaster{
 
             @Override
             public boolean isFinished() {
+<<<<<<< HEAD
                 return tickCounts <= 0;
             }
         },
@@ -81,10 +99,26 @@ public class Pos2Auto implements RobotAutoMaster{
             @Override
             public void behaviourInit() {
                 balanceTime = 350;
+=======
+                return backupLeft <= 0;
+            }
+
+        },
+
+        //Go onto charge station
+        new RobotAutoBehaviour() {
+            private final int autoTicks = 100;
+            private int ticksLeft = autoTicks;
+
+            @Override
+            public void behaviourInit() {
+                ticksLeft = autoTicks;
+>>>>>>> f45c22609ca8d948d7a96b88068d4a4551526e8f
             }
 
             @Override
             public void behaviourPeriodic() {
+<<<<<<< HEAD
                 if(balanceTime > 0) {
                     balanceDriver.BehaviourPeriodic();
                     balanceTime--;
@@ -93,11 +127,25 @@ public class Pos2Auto implements RobotAutoMaster{
 
                 driverInstance.DriveRobot(0, 0);
                 Robot.BREAK.set(false);
+=======
+                if(ticksLeft > 0) {
+                    balanceDriver.BehaviourPeriodic();
+                    ticksLeft--;
+                    return;
+                }
+
+                Robot.BREAK.set(false);
+                driverInstance.DriveRobot(0, 0);
+>>>>>>> f45c22609ca8d948d7a96b88068d4a4551526e8f
             }
 
             @Override
             public boolean isFinished() {
+<<<<<<< HEAD
                 return balanceTime <= 0;
+=======
+                return ticksLeft <= 0;
+>>>>>>> f45c22609ca8d948d7a96b88068d4a4551526e8f
             }
         }
     };
@@ -110,6 +158,8 @@ public class Pos2Auto implements RobotAutoMaster{
     public Pos2Auto(RobotDrive drive) {
         driverInstance = drive;
         balanceDriver = new BalanceDrive(drive);
+        balanceDriver.BehaviourInit(null);
+
         kickerInstance = INSTANCE_KICKER;
     }
 
