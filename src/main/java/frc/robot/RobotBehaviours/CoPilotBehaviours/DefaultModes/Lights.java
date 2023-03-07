@@ -24,6 +24,7 @@ public final class Lights implements RobotBehaviour {
     m_led.setLength(m_ledBuffer.getLength());
     m_led.start();
 
+    lightsMode = 3;
     System.out.println("Lights Init...");
   }
 

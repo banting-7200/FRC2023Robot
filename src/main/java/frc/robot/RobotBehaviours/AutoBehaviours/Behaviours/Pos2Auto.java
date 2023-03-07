@@ -1,6 +1,8 @@
 package frc.robot.RobotBehaviours.AutoBehaviours.Behaviours;
 
 import static frc.robot.Core.Utility.*;
+
+import frc.robot.Robot;
 import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.Interfaces.RobotAutoMaster;
@@ -9,9 +11,9 @@ import frc.robot.RobotBehaviours.PilotBehaviours.BalanceDrive;
 
 
 //TODO: TEST AND TWEAK VALUES
+// Make kicker side face charge station
 public class Pos2Auto implements RobotAutoMaster{
     private final RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
-        //Kick ball
         new RobotAutoBehaviour() {
             private boolean isCompleted = false;
             private int delayCount = 25;
@@ -40,78 +42,69 @@ public class Pos2Auto implements RobotAutoMaster{
                 return isCompleted;
             }
         },
-
-        //Back up into community zone
+        //Kick ball
         new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 100;
-            private int currentTicks = 0;
-
+            private int tickCounts = 113;
+            private int tickTimes = 0;
+            private double rotSpeed = 0.6;
+            
             @Override
             public void behaviourInit() {
-                currentTicks = BACKUP_TICKS;
+                tickCounts = 113;
+                tickTimes = 0;
             }
 
             @Override
             public void behaviourPeriodic() {
-                if(currentTicks <= 0) {
-                    driverInstance.DriveRobot(0, 0);
+                if(tickTimes % 5 == 0) {
+                    rotSpeed *= -1;
+                }
+
+                if(tickCounts > 0) {
+                    driverInstance.DriveRobot(rotSpeed, 1);
+                    tickCounts--;
                     return;
                 }
 
-                driverInstance.DriveRobot(0.0, 0.8);
-                currentTicks--;
+                driverInstance.DriveRobot(0, 0);
             }
 
             @Override
             public boolean isFinished() {
-                return currentTicks <= 0;
-            }
-        },
-
-        //Go onto charge station
-        new RobotAutoBehaviour() {
-            @Override
-            public void behaviourInit() {}
-
-            @Override
-            public void behaviourPeriodic() {
-                if(balanceDriver.isBalanced) {
-                    driverInstance.DriveRobot(0, 1);
-                }
-            }
-
-            @Override
-            public boolean isFinished() {
-                return balanceDriver.isBalanced == false;
+                return tickCounts <= 0;
             }
         },
 
         //Once angle on gyro is not balanced, run balanceDrive until balanced
         new RobotAutoBehaviour() {
+            private int balanceTime = 350;
             @Override
-            public void behaviourInit() {}
+            public void behaviourInit() {
+                balanceTime = 350;
+            }
 
             @Override
             public void behaviourPeriodic() {
-                if(!balanceDriver.isBalanced) {
+                if(balanceTime > 0) {
                     balanceDriver.BehaviourPeriodic();
+                    balanceTime--;
+                    return;
                 }
 
-                if(balanceDriver.isBalanced) {
-                    driverInstance.DriveRobot(0, 0);
-                }
+                driverInstance.DriveRobot(0, 0);
+                Robot.BREAK.set(false);
             }
 
             @Override
             public boolean isFinished() {
-                return balanceDriver.isBalanced;
+                return balanceTime <= 0;
             }
         }
     };
 
     private BalanceDrive balanceDriver;
-    private Kicker kickerInstance;
     private RobotDrive driverInstance;
+    private Kicker kickerInstance;
     private int autoPtr;
 
     public Pos2Auto(RobotDrive drive) {

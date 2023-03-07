@@ -6,9 +6,11 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Core.DriveModeSetter;
 import frc.robot.Core.RobotDrive;
 import frc.robot.RobotBehaviours.AutoBehaviours.AutonomousRunner;
+import frc.robot.RobotBehaviours.PilotBehaviours.BalanceDrive;
 
 /*
  * Author: WPILib Project-Generator, Lucas Soliman
@@ -51,10 +53,18 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void robotPeriodic() {}
+  public void robotPeriodic() {
+    SmartDashboard.putNumber("Autobalance Input: ", INSTANCE_GYRO.getAngle());
+    
+    if(PilotControls.JOYSTICK_PILOT.getRawButtonPressed(10)) {
+      BREAK.set(!BREAK.get());
+      SmartDashboard.putBoolean("Break State:", BREAK.get());
+    }
+  }
 
   @Override
   public void autonomousInit() {
+    BREAK.set(true);
     autoRunner.resetAuto();
   }
 

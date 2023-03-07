@@ -1,5 +1,6 @@
 package frc.robot.RobotBehaviours.PilotBehaviours;
 
+import frc.robot.Robot;
 import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotBehaviour;
 
@@ -30,6 +31,7 @@ public final class ManualDrive implements RobotBehaviour {
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         SmartDashboard.putString(SmartDashboardIDs.DRIVEMODEID, "Manual Mode");
+        Robot.BREAK.set(true);
     }
 
     @Override
@@ -53,7 +55,7 @@ public final class ManualDrive implements RobotBehaviour {
                 mappedInputY = -0.5;
             }
 
-            if(Math.abs(creepX) <= 0.1) {
+            if(Math.abs(creepX) <= 0.3) {
                 mappedInputX = -0.5;
             }
             
@@ -71,7 +73,7 @@ public final class ManualDrive implements RobotBehaviour {
                 mappedInputY = -0.5;
             }
 
-            if(Math.abs(nX) <= 0.2) {
+            if(Math.abs(nX) <= 0.3) {
                 mappedInputX = -0.5;
             }
 

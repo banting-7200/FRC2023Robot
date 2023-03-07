@@ -20,7 +20,7 @@ import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.*;
  * This class depends on DriveModeSetter.java
  */
 public final class RobotDrive {
-    private final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
+    public static final RobotBehaviour[] defaultModes = new RobotBehaviour[] {
         //TalonFX Motor Systems
         new Lift(), // Copilot controlled
         new Shoulder(), // Pilot Controlled
@@ -90,6 +90,12 @@ public final class RobotDrive {
     public void DriveRobot(double motorPower, double zRotation) {
         if(!isDefaultOnly) {
             driveInstance.arcadeDrive(motorPower, zRotation);
+        }
+    }
+
+    public void reinitDefaults() {
+        for(RobotBehaviour b : defaultModes) {
+            b.BehaviourInit(defaultModes);
         }
     }
 }

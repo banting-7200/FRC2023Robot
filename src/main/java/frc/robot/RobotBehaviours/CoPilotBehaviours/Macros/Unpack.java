@@ -23,9 +23,8 @@ public class Unpack implements RobotAutoMaster{
             @Override
             public void behaviourPeriodic() {
                 if(!liftComplete) {
-                    liftInstance.moveLiftToPosition(-1, 1.0);
+                    liftComplete = liftInstance.moveLift(0.8, 1) == false;
                 }
-                
             }
 
             @Override

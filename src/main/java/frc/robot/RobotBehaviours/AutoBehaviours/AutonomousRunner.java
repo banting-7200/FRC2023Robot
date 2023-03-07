@@ -8,6 +8,9 @@ import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos1Auto;
 import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos2Auto;
 import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos3Auto;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.Unpack;
 
 public class AutonomousRunner {
     private SendableChooser<String> autonomousSelect;
@@ -19,6 +22,7 @@ public class AutonomousRunner {
 
         autonomousSelect.setDefaultOption("No Auto", "-1");
         autonomousSelect.addOption("Position 1", "0");
+        autonomousSelect.addOption("Position 2", "1");
         autonomousSelect.addOption("Position 3", "2");
         
         SmartDashboard.putData("Auto Select", autonomousSelect);
@@ -28,6 +32,7 @@ public class AutonomousRunner {
             new Pos3Auto(driver)
         };
 
+        unpackRoutine = new Unpack((Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1]);
         System.out.println("AutoRunner Init...");
     }
 
@@ -41,6 +46,7 @@ public class AutonomousRunner {
             autonomousBehaviours[chosenIndex].runAuto();
         } else {
             Robot.BREAK.set(false);
+            
             if(!unpackRoutine.isCompleted()) {
                 unpackRoutine.runAuto();
             }

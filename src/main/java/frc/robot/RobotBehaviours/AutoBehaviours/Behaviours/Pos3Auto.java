@@ -41,7 +41,7 @@ public class Pos3Auto implements RobotAutoMaster{
 
         //Back up into community zone
         new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 200;
+            private final int BACKUP_TICKS = 150;
             private int currentTicks = 0;
 
             @Override
@@ -53,7 +53,8 @@ public class Pos3Auto implements RobotAutoMaster{
             public void behaviourPeriodic() {
                 if(currentTicks <= 0) {
                     driverInstance.DriveRobot(0, 0);
-                    return;
+                    return;     
+                    
                 }
 
                 driverInstance.DriveRobot(0.0, 0.75);

@@ -15,8 +15,8 @@ import frc.robot.Core.RobotDrive;
  * Meant to align with closest game piece to center (cone/cube)
  */
 public class PixyalignDrive implements RobotBehaviour {
-    private final DigitalInput shouldRotate = new DigitalInput(5);
-    private final DigitalInput leftRight = new DigitalInput(6);
+    private final DigitalInput shouldRotate = new DigitalInput(4);
+    private final DigitalInput leftRight = new DigitalInput(5);
     private RobotDrive baseDriveInstance;
 
     public PixyalignDrive(RobotDrive baseInstance) {

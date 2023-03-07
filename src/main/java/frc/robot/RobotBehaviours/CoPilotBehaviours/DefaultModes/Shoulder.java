@@ -54,7 +54,7 @@ public class Shoulder implements RobotBehaviour {
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = CoPilotControls.SHOULDER_MOVE.get();
-        input = Math.abs(input) > 0.2 ? input : 0;
+        input = Math.abs(input) > 0.4 ? input : 0;
 
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
@@ -72,7 +72,7 @@ public class Shoulder implements RobotBehaviour {
 
         double output = Math.signum(targetPosition - currPosition) * moveSpeed;
 
-        if(Math.abs(difference) <= 2000) {
+        if(Math.abs(difference) <= 3000) {
             output = Math.signum(targetPosition - currPosition) * moveSpeed * Clamp(percentDifference, 0, 0.7);
         }
 

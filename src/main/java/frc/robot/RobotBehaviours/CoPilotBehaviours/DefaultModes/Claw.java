@@ -2,8 +2,10 @@ package frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes;
 
 import static frc.robot.Core.Utility.*;
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Interfaces.RobotBehaviour;
 
 public class Claw implements RobotBehaviour{
@@ -20,8 +22,8 @@ public class Claw implements RobotBehaviour{
     public void BehaviourPeriodic() {
         if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(CoPilotControls.CLAW_TOGGLE)) {
             open = !open;
-        }  
-
+        }
+        
         if(open) {
             CLAW_SOLENOID1.set(false);
             CLAW_SOLENOID2.set(true);
@@ -29,6 +31,9 @@ public class Claw implements RobotBehaviour{
             CLAW_SOLENOID1.set(true);
             CLAW_SOLENOID2.set(false);
         }
+
+        SmartDashboard.putBoolean(
+            "Claw State", open);
     }
 
     public void setClaw(boolean open) {

@@ -59,7 +59,7 @@ public class Lift implements RobotBehaviour {
         double input = down ? -0.8 : up ? 0.8 : 0;
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
-        moveLift(Math.abs(0.35), Math.signum(input));
+        moveLift(Math.abs(0.6), Math.signum(input));
     }
 
     private void debugSwitches() {

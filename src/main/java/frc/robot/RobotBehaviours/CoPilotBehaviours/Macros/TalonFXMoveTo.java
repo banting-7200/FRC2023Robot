@@ -32,7 +32,7 @@ public class TalonFXMoveTo implements RobotAutoMaster{
                 @Override
                 public void behaviourPeriodic() {
                     if(!shoulderComplete) {
-                        shoulderComplete = shoulder.moveShoulderToPosition(positionBind, 0.8);
+                        shoulderComplete = shoulder.moveShoulderToPosition(positionBind, 0.85);
                     }
 
                     if(!liftComplete) {
