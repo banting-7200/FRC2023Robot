@@ -37,8 +37,9 @@ public final class RobotDrive {
 
 
     private final boolean defaultOnly = false;
-    
-    private DifferentialDrive driveInstance;
+    public PWMSparkMax[] leftMotors;
+    public PWMSparkMax[] rightMotors;
+
     private RobotBehaviour currentDriveMode;
     private boolean isDefaultOnly;
 
@@ -55,17 +56,25 @@ public final class RobotDrive {
         //Create instances of left motors
         PWMSparkMax tl = new PWMSparkMax(topLeft);
         PWMSparkMax bl = new PWMSparkMax(bottomLeft);
-        
+        leftMotors = new PWMSparkMax[] {
+            tl, bl
+        };
+
         //Create instances of right motors
         PWMSparkMax tr = new PWMSparkMax(topRight);
         PWMSparkMax br = new PWMSparkMax(bottomRight);
+        rightMotors = new PWMSparkMax[] {
+            tr, br
+        };
 
+        /*
         //Group the left and right motors
         MotorControllerGroup leftGroup = new MotorControllerGroup(tl, bl);
         MotorControllerGroup rightGroup = new MotorControllerGroup(tr, br);
 
         //Create new DifferentialDrive instance with motor groups.
         driveInstance = new DifferentialDrive(leftGroup, rightGroup);
+        */
     }
 
     //Run this function in teleopPeriodic
@@ -87,9 +96,11 @@ public final class RobotDrive {
 
     // A function for drive modes to interface with DifferentialDrive instance.
     // All parameters are in deltas, and not a set positikon/rotation.
-    public void DriveRobot(double motorPower, double zRotation) {
+    public void DriveRobot(double x, double y) {
         if(!isDefaultOnly) {
-            driveInstance.arcadeDrive(motorPower, zRotation);
+            for(PWMSparkMax motor : leftMotors) { motor.set(y + x); }
+            for(PWMSparkMax motor : rightMotors) { motor.set(y - x); }
+            //driveInstance.arcadeDrive(y, x);
         }
     }
 

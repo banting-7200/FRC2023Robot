@@ -6,6 +6,7 @@ import frc.robot.Interfaces.RobotBehaviour;
 
 import static frc.robot.Core.Utility.*;
 
+import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /*
