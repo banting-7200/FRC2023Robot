@@ -2,6 +2,10 @@ package frc.robot;
 
 import static frc.robot.Core.Utility.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
+
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -37,16 +41,19 @@ public class Robot extends TimedRobot {
       MOTOR_DRIVEFWDRIGHT, MOTOR_DRIVEBACKRIGHT
     );
 
+    List<Supplier<Integer>> pilotModeControls = new ArrayList<Supplier<Integer>>();
+    pilotModeControls.add(PilotControls.MANUALDRIVE);
+    pilotModeControls.add(PilotControls.BALANCEDRIVE);
+
     driverModeSetter = new DriveModeSetter(
-      driveInstance,
-      new int[] { DRIVEMODE_MANUAL, DRIVEMODE_AUTOBALANCE },
-      PilotControls.JOYSTICK_PILOT
+      driveInstance, pilotModeControls
     );
 
+    List<Supplier<Integer>> coPilotModeControls = new ArrayList<Supplier<Integer>>();
+    coPilotModeControls.add(CoPilotControls.PIXYALIGNDRIVE);
+  
     coDriverModeSetter = new DriveModeSetter(
-      driveInstance, 
-      new int[] {DRIVEMODE_PIXYALIGN}, 
-      CoPilotControls.JOYSTICK_COPILOT
+      driveInstance, coPilotModeControls
     );
 
     autoRunner = new AutonomousRunner(driveInstance);
@@ -56,7 +63,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     SmartDashboard.putNumber("Autobalance Input: ", INSTANCE_GYRO.getAngle());
     
-    if(PilotControls.JOYSTICK_PILOT.getRawButtonPressed(10)) {
+    if(PilotControls.BREAKTOGGLE.get()) {
       BREAK.set(!BREAK.get());
       SmartDashboard.putBoolean("Break State:", BREAK.get());
     }

@@ -3,6 +3,8 @@ package frc.robot.Core;
 import static frc.robot.Core.Utility.*;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 import edu.wpi.first.wpilibj.Joystick;
 import frc.robot.Core.Utility.PilotControls;
@@ -21,22 +23,14 @@ import frc.robot.RobotBehaviours.PilotBehaviours.PixyalignDrive;
 public final class DriveModeSetter {
     public static HashMap<Integer, RobotBehaviour> DriveModes;
     private static boolean isInitDrive = false;
-    //Key represents the ID of Drivemode, value represents button on joystick to select mode.
-    private final HashMap<Integer, Integer> DriveModeBinds = new HashMap<>() {{
-        //MainPilot modes (Buttons on pilot joystick)
-        put(DRIVEMODE_MANUAL, PilotControls.DRIVEMODE_MANUAL);
-        put(DRIVEMODE_PIXYALIGN, CoPilotControls.DRIVEMODE_PIXYALIGN);
-        put(DRIVEMODE_AUTOBALANCE, PilotControls.DRIVEMODE_AUTOBALANCE);
-    }};
-
-    private int currDriveMode;
-    private Joystick controlStick;
+   
+    private List<Supplier<Integer>> modeSuppliers;
     private RobotDrive driveInstance;
-    private int[] modesToControl;
+    private int currDriveMode;
 
-    public DriveModeSetter(RobotDrive driveInstance, int[] modesToControl, Joystick controlStick) {
+    public DriveModeSetter(RobotDrive driveInstance, List<Supplier<Integer>> modeSuppliers) {
         this.driveInstance = driveInstance;
-        this.controlStick = controlStick;
+        this.modeSuppliers = modeSuppliers;
 
         if(!isInitDrive) {
             DriveModes = new HashMap<Integer, RobotBehaviour>();
@@ -45,26 +39,26 @@ public final class DriveModeSetter {
             DriveModes.put(DRIVEMODE_PIXYALIGN, new PixyalignDrive(driveInstance)); //new PixyalignDrive(driveInstance)); // PIXYALIGN being a manualDrive is temporary
             isInitDrive = true;
         }
-        
-        this.modesToControl = modesToControl;
-        currDriveMode = 7;
 
+        currDriveMode = 7;
         driveInstance.setDriveMode(DriveModes.get(currDriveMode));
     }
 
     public void driveModeSetterTeleop() {
-        boolean pressedButton = false;
+        boolean supplyToggled = false;
+
         // Iterates over each drive mode that is in array form
         // Checks if the joystick is being pressed at the given drive mode
         // Sets the mode if required button is pressed, and prints the current drive mode.
-        for(int mode : modesToControl) {
-            if(controlStick.getRawButton(DriveModeBinds.get(mode))) {
-                currDriveMode = mode;
-                pressedButton = true;
+        for(Supplier<Integer> modeSupply : modeSuppliers) {
+            int supply = modeSupply.get();
+            if(supply == -1) {
+                currDriveMode = supply;
+                supplyToggled = true;
             }
         }
 
-        if(pressedButton) {
+        if(supplyToggled) {
             // Run the current mode's periodic function.
             driveInstance.setDriveMode(DriveModes.get(currDriveMode));
         }

@@ -23,7 +23,7 @@ public class Kicker implements RobotBehaviour{
 
     @Override
     public void BehaviourPeriodic() {
-        boolean buttonState = PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.KICKER_KICK);
+        boolean buttonState = PilotControls.KICK.get();
         KICKER_SOLENOID1.set(!buttonState);
         KICKER_SOLENOID2.set(buttonState);
     }

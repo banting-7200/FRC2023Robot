@@ -35,7 +35,7 @@ public class PixyalignDrive implements RobotBehaviour {
             double direction = leftRight.get() ? -1.0 : 1.0;
             double nY = PilotControls.PILOT_Y.get();
 
-            boolean creepEnabled = PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE);
+            boolean creepEnabled = PilotControls.CREEP.get();
             double mappedInputY = MapValue(Math.abs(nY), 0, 1, 0, creepEnabled ? 0.25 : 0.5);
 
             if(Math.abs(nY) <= 0.3) {

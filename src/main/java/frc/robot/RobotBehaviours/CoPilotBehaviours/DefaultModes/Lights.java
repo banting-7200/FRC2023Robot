@@ -30,9 +30,9 @@ public final class Lights implements RobotBehaviour {
 
   @Override
   public void BehaviourPeriodic() {
-      if (PilotControls.JOYSTICK_PILOT.getRawButtonPressed(PilotControls.LIGHTS_SWITCHMODE)){
+      if (PilotControls.KICKLIGHTSSWITCH.get()){
         lightsMode++;
-        if(lightsMode >= 4){
+        if(lightsMode >= 4) {
           lightsMode = 0;
         }
       }

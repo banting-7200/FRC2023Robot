@@ -15,22 +15,22 @@ public class Shoulder implements RobotBehaviour {
     private final TalonMotor SHOULDER_MOTOR = new TalonMotor(1);
     private final double SHOULDER_STARTINGPOSITION = -175105;
 
-    private final double SHOULDER_PICKUPPOS = 123901;
+    private final double SHOULDER_PICKUPPOS = 147584;
     private final double SHOULDER_CARRY = 0;
     
-    private final double SHOULDER_LEVEL1 = 123901;
-    private final double SHOULDER_LEVEL2 = 345598;
-    private final double SHOULDER_LEVEL3 = 469674;
+    private final double SHOULDER_LEVEL1 = 147584;
+    private final double SHOULDER_LEVEL2 = 375066;
+    private final double SHOULDER_LEVEL3 = 454030;
 
     private final HashMap<Integer, Double> SHOULDER_POSITIONSMAP = new HashMap<>() {{
-            put(CoPilotControls.MACRO_PICKUP, SHOULDER_PICKUPPOS);
-            put(CoPilotControls.MACRO_CARRY, SHOULDER_CARRY);
-
-            put(CoPilotControls.MACRO_LEVEL1, SHOULDER_LEVEL1);
-            put(CoPilotControls.MACRO_LEVEL2, SHOULDER_LEVEL2);
-            put(CoPilotControls.MACRO_LEVEL3, SHOULDER_LEVEL3);
-
-            put(-1, 0.0);
+        put(CoPilotControls.MACRO_PICKUP, SHOULDER_PICKUPPOS);
+        put(CoPilotControls.MACRO_CARRY, SHOULDER_CARRY);
+        
+        put(CoPilotControls.MACRO_LEVEL1, SHOULDER_LEVEL1);
+        put(CoPilotControls.MACRO_LEVEL2, SHOULDER_LEVEL2);
+        put(CoPilotControls.MACRO_LEVEL3, SHOULDER_LEVEL3);
+        
+        put(-1, 0.0);
     }};
 
     @Override

@@ -13,44 +13,59 @@ import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
  * Stores constants that will be used project wide.
  * Will be updated by everyone working on project.
  * 
- * Variables/Functions in PascalCase are variables that are read/write
+ * Variables/Functions in Pa    scalCase are variables that are read/write
  * Variables in ALL_CAPS_SNAKE_CASE are variables that are read only
  * 
  * For further information, refer to comments above and around variables.
  */
 public final class Utility {
-
-    //TODO:
-    /*
-     * Move turning to twisting
-     */
+    //The below values are also button mappings on the joystick
+    public static final int DRIVEMODE_MANUAL = 7;
+    public static final int DRIVEMODE_AUTOBALANCE = 8;
+    public static final int DRIVEMODE_PIXYALIGN = 9;
+    
     public static final class PilotControls {
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
+        public static final XboxController JOYSTICK_PILOT1 = new XboxController(PORT_JOYSTICK);
 
         // Controls are utilised in:
         // - PixyAlignDrive.java
         // - ManualDrive.java
-        public static final int DRIVING_CREEPTOGGLE = 1;
-        public static final int DRIVING_FLIPTOGGLE = 2;
+        public static final Supplier<Integer> MANUALDRIVE = () -> {
+            return JOYSTICK_PILOT1.getPOV() == 180 ? DRIVEMODE_MANUAL : -1;
+        };
+
+        public static final Supplier<Integer> BALANCEDRIVE = () -> {
+            return JOYSTICK_PILOT1.getPOV() == 0 ? DRIVEMODE_AUTOBALANCE : -1;
+        };
+
+        public static final Supplier<Boolean> FLIP = () -> {
+            return JOYSTICK_PILOT1.getRightBumperPressed();
+        };
+
+        public static final Supplier<Boolean> CREEP = () -> {
+            return JOYSTICK_PILOT1.getLeftTriggerAxis() > 0.5;
+        };
 
         public static final Supplier<Double> PILOT_X = () -> {
-            return JOYSTICK_PILOT.getX();
+            return JOYSTICK_PILOT1.getRightX();
         };
 
         public static final Supplier<Double> PILOT_Y = () -> {
-            return JOYSTICK_PILOT.getY();
+            return JOYSTICK_PILOT1.getLeftY();
+        };
+        
+        public static final Supplier<Boolean> KICK = () -> {
+            return JOYSTICK_PILOT1.getXButton();
         };
 
-        // Controls are utilised in DriveModeSetter.java
-        public static final int DRIVEMODE_MANUAL = 7;
-        public static final int DRIVEMODE_AUTOBALANCE = 11;
+        public static final Supplier<Boolean> KICKLIGHTSSWITCH = () -> {
+            return JOYSTICK_PILOT1.getYButtonPressed();
+        };
 
-        
-        // Controls are utilised in Kicker.java
-        public static final int KICKER_KICK = 3;
-
-        // Controls are utilised in Lights.java
-        public static final int LIGHTS_SWITCHMODE = 12;
+        public static final Supplier<Boolean> BREAKTOGGLE = () -> {
+            return JOYSTICK_PILOT1.getBButtonPressed();
+        };
     }
 
     public static final class CoPilotControls {
@@ -84,7 +99,11 @@ public final class Utility {
 
         // Controls are utilised in Claw.java
         public static final int CLAW_TOGGLE = 1;
-        public static final int DRIVEMODE_PIXYALIGN = 10;
+        
+        public static final Supplier<Integer> PIXYALIGNDRIVE = () -> {
+            return JOYSTICK_COPILOT.getRawButton(10) ? DRIVEMODE_PIXYALIGN : -1;
+        };
+
         public static final int SHOULDER_ZEROENCODER = 12;
     }
     //#region Constants
@@ -125,16 +144,6 @@ public final class Utility {
     //Integers that resemble different states for classes
     /* STATES */
     public static int STATE_CURRDRIVEMODE = 7;
-
-    //The below values are also button mappings on the joystick
-    public static final int DRIVEMODE_MANUAL = 7;
-    public static final int DRIVEMODE_AUTOBALANCE = 8;
-    public static final int DRIVEMODE_PIXYALIGN = 9;
-    public static final int[] DRIVEMODE_MODEARRAY = new int[] {
-        DRIVEMODE_MANUAL,
-        DRIVEMODE_AUTOBALANCE,
-        DRIVEMODE_PIXYALIGN
-    };
     
     /* CONSTANT PARAMETERS */
     public static final int I2C_MAXBYTESREAD = 2;

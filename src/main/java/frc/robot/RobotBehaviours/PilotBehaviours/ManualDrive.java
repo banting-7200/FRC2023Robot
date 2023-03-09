@@ -39,13 +39,13 @@ public final class ManualDrive implements RobotBehaviour {
     public void BehaviourPeriodic() {
         // If the driver is pressing the "creep button", use creepdrive speed. Otherwise, use normal speed.
         // If the driver pressed the "flip button" this periodic cycle, invert speed multiplier.
-        if(PilotControls.JOYSTICK_PILOT.getRawButtonPressed(PilotControls.DRIVING_FLIPTOGGLE)) { speedMultiplier *= -1; }
-        currentSpeed = PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE) ? DRIVE_CREEPSPEED : DRIVE_NORMALSPEED;
+        if(PilotControls.FLIP.get()) { speedMultiplier *= -1; }
+        currentSpeed = PilotControls.CREEP.get() ? DRIVE_CREEPSPEED : DRIVE_NORMALSPEED;
 
         double xInput = PilotControls.PILOT_X.get() * currentSpeed;
         double yInput = PilotControls.PILOT_Y.get() * currentSpeed * speedMultiplier;
 
-        if(PilotControls.JOYSTICK_PILOT.getRawButton(PilotControls.DRIVING_CREEPTOGGLE)) {
+        if(PilotControls.CREEP.get()) {
             double creepX = PilotControls.PILOT_X.get();
             double creepY = PilotControls.PILOT_Y.get();
 
@@ -62,8 +62,7 @@ public final class ManualDrive implements RobotBehaviour {
             
             xInput = Math.signum(creepX) * (0.5 + mappedInputX);
             yInput = Math.signum(creepY) * (0.5 + mappedInputY);
-        } 
-        else {
+        } else {
             double nX = PilotControls.PILOT_X.get();
             double nY = PilotControls.PILOT_Y.get();
 

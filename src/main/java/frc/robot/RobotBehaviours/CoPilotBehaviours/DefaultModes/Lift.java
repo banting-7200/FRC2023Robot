@@ -23,11 +23,11 @@ public class Lift implements RobotBehaviour {
     private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
 
-    private final double LIFT_PICKUP = 226488;
+    private final double LIFT_PICKUP = 311798;
     private final double LIFT_CARRY = 113255;
-    private final double LIFT_LEVEL1 = 226488;
-    private final double LIFT_LEVEL2 = 19189;
-    private final double LIFT_LEVEL3 = 12903;
+    private final double LIFT_LEVEL1 = 311798;
+    private final double LIFT_LEVEL2 = 311798;
+    private final double LIFT_LEVEL3 = 287048;
 
     private final HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
         put(CoPilotControls.MACRO_PICKUP, LIFT_PICKUP);
@@ -80,7 +80,7 @@ public class Lift implements RobotBehaviour {
     public double canMoveLift(double output) {
         //Return inverse of direction if the output is attempting to go beyond limit.
         if((!LIFT_LOWERLIMITER.get()) && output > 0) {
-            System.out.println("LOWER LIMIT REACHED... STOPPING MOTOR");
+            System.out.println("LOWER LIMIT REACHED... c44 STOPPING MOTOR");
             return 0;
         }
 
@@ -110,7 +110,10 @@ public class Lift implements RobotBehaviour {
 
             if(canMoveLift(moveDir) == moveDir) {
                 double percentDifference = Math.abs((targetPosition - currentPosition) / currentPosition);
-                moveLift(movementSpeed * Clamp(percentDifference, 0.0, 0.5), -Math.signum(direction));
+                double speed = movementSpeed * percentDifference;
+                speed = Clamp(speed, -0.6, 0.6);
+
+                moveLift(speed, -Math.signum(direction));
 
                 if(Clamp(percentDifference, 0.0, 0.5) <= TALONFXMOVETO_PERCENTERROR) {
                     killSpeed();

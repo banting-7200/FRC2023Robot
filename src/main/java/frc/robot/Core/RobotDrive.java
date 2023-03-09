@@ -90,6 +90,11 @@ public final class RobotDrive {
 
     // A function called by DriveModeSetter.java to make this class tick specific drive modes.
     public void setDriveMode(RobotBehaviour mode) {
+        if(mode == null) {
+            System.out.println("Drive Mode Given is Null");
+            return;
+        }
+
         currentDriveMode = mode;
         currentDriveMode.BehaviourInit(defaultModes);
     }
@@ -98,9 +103,11 @@ public final class RobotDrive {
     // All parameters are in deltas, and not a set positikon/rotation.
     public void DriveRobot(double x, double y) {
         if(!isDefaultOnly) {
-            for(PWMSparkMax motor : leftMotors) { motor.set(y + x); }
-            for(PWMSparkMax motor : rightMotors) { motor.set(y - x); }
-            //driveInstance.arcadeDrive(y, x);
+            leftMotors[0].set(x + y); //top left
+            leftMotors[1].set(x + y); //bottom left
+
+            rightMotors[2].set(x - y); //top left
+            rightMotors[3].set(x - y); //bottom left
         }
     }
 
