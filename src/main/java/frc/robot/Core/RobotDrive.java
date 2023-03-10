@@ -106,8 +106,8 @@ public final class RobotDrive {
             leftMotors[0].set(x + y); //top left
             leftMotors[1].set(x + y); //bottom left
 
-            rightMotors[2].set(x - y); //top left
-            rightMotors[3].set(x - y); //bottom left
+            rightMotors[0].set(x - y); //top left
+            rightMotors[1].set(x - y); //bottom left
         }
     }
 
