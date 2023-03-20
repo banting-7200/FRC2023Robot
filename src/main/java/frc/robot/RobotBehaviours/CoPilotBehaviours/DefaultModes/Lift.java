@@ -110,6 +110,8 @@ public class Lift implements RobotBehaviour {
 
             if(canMoveLift(moveDir) == moveDir) {
                 double percentDifference = Math.abs((targetPosition - currentPosition) / currentPosition);
+
+                //double speed = error * kP;
                 double speed = movementSpeed * percentDifference;
                 speed = Clamp(speed, -0.6, 0.6);
 
@@ -119,6 +121,26 @@ public class Lift implements RobotBehaviour {
                     killSpeed();
                     return true;
                 }
+            }
+        }
+
+        return false;
+    }
+
+    private final double kP = 0.25;
+    private final double kI = 0.0; //TODO: Research influence of integral
+    private final double kD = 0.0; //TODO: Research influence of derivative
+    public boolean moveLiftToPositionPID(int positionBind, double maxSpeed) {
+        if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
+            double currentPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+            double targetPosition = LIFT_HEIGHTPOSITIONS.get(positionBind);
+            double error = targetPosition - currentPosition;
+            double output = error * kP;
+
+            output = roundHundredth(output);
+            output = Clamp(output, -maxSpeed, maxSpeed);
+            if(canMoveLift(output) == output) {
+                LIFT_MOTOR.set(ControlMode.PercentOutput, output);
             }
         }
 

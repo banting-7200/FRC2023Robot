@@ -19,7 +19,7 @@ public final class BalanceDrive implements RobotBehaviour {
 
     public boolean isBalanced = false;
 
-    private final double angleBalanceThreshold = 3.0;
+    private final double angleBalanceThreshold = 4.0;
     private final ADXRS450_Gyro GYRO = INSTANCE_GYRO;
     private RobotDrive baseInstance;
 
@@ -43,9 +43,10 @@ public final class BalanceDrive implements RobotBehaviour {
         }
 
         // Use the mapped angle in the evaluateSpeed function.
-        double currAngle = GYRO.getAngle();
-
-        double speed = evaluateSpeed(currAngle) * Math.signum(currAngle);
+        double currAngle = getGyroAngle();
+        double mappedAngle = MapValue(currAngle, -30.0, 30.0, -1.0, 1.0);
+        double speed = speedFunction(mappedAngle);
+        speed = roundHundredth(speed);
 
         if(Math.abs(currAngle) <= angleBalanceThreshold) {
             Robot.BREAK.set(false);
@@ -54,33 +55,17 @@ public final class BalanceDrive implements RobotBehaviour {
         }
 
         // Finally drive robot with speed.
-        baseInstance.DriveRobot(0.0, -speed);
+        baseInstance.DriveRobot(0.0, speed);
+    }
+
+    private double roundHundredth(double x) {
+        return Math.round(x * 100.0) / 100.0;
     }
 
     // Sole purpose of this function is to smooth the speed values appropriately based on different angles.
     // Refer to project notes for desmos representation of function.
-    private double evaluateSpeed(double angle) {
-        if(angle <= angleBalanceThreshold) {
-            return 0.4;
-        }
-
-        if(angle < 10) {
-            return 0.7;
-        }
-
-        if(angle >= 20) {
-            return 0.7;
-        }
-
-        if(angle >= 30) {
-            return 0.8;
-        }
-
-        if(angle > 40) {
-            return 0.9;
-        }
-
-        return 0.9;
+    private double speedFunction(double x) {
+        return Math.pow(1.25 * x, 3.0);
     }
 
     public double getGyroAngle() {

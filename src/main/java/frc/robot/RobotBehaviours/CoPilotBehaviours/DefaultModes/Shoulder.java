@@ -16,6 +16,7 @@ public class Shoulder implements RobotBehaviour {
     private final double SHOULDER_STARTINGPOSITION = -175105;
 
     private final double SHOULDER_PICKUPPOS = 147584;
+    private final double SHOULDER_MAXPOSITION = 500000; //TODO: Determine value via testing
     private final double SHOULDER_CARRY = 0;
     
     private final double SHOULDER_LEVEL1 = 147584;
@@ -60,6 +61,16 @@ public class Shoulder implements RobotBehaviour {
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
     }
 
+    //TODO: Test implementation
+    public double canMoveShoulder(double output) {
+        double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
+        if(motorPosition >= SHOULDER_MAXPOSITION && output < 0) {
+            return 0;
+        }
+
+        return output;
+    }
+
     public void killSpeed() {
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
     }
@@ -83,6 +94,22 @@ public class Shoulder implements RobotBehaviour {
             return true;
         }
 
+        return false;
+    }
+
+    private final double kP = 0.25;
+    private final double kI = 0.0;
+    private final double kD = 0.0;
+    public boolean moveShoulderToPositionPID(int positionBind, double maxSpeed) {
+        if(SHOULDER_POSITIONSMAP.get(positionBind) != null) {
+            double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
+            double currentPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
+            double error = targetPosition - currentPosition;
+
+            double output = error * kP;
+            output = Clamp(output, -maxSpeed, maxSpeed);
+        }
+        
         return false;
     }
 }

@@ -4,6 +4,8 @@ import java.util.function.Supplier;
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Claw;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
 
@@ -27,6 +29,11 @@ public final class Utility {
     public static final class PilotControls {
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
         public static final XboxController JOYSTICK_PILOT1 = new XboxController(PORT_JOYSTICK);
+        public static final SendableChooser<Integer> DRIVE_STICKCHOOSER = new SendableChooser<>() {{
+            addOption("Single-stick Drive", 0);
+            addOption("Double-stick Drive", 1);
+            SmartDashboard.putData("Drive Joystick Settings", DRIVE_STICKCHOOSER);
+        }};
 
         // Controls are utilised in:
         // - PixyAlignDrive.java
@@ -52,7 +59,11 @@ public final class Utility {
         };
 
         public static final Supplier<Double> PILOT_Y = () -> {
-            return JOYSTICK_PILOT1.getLeftY();
+            if(DRIVE_STICKCHOOSER.getSelected() == 1) {
+                return JOYSTICK_PILOT1.getLeftY();
+            }
+
+            return JOYSTICK_PILOT1.getRightY();
         };
         
         public static final Supplier<Boolean> KICK = () -> {
@@ -114,6 +125,10 @@ public final class Utility {
     }
 
     /* Utility functions */
+    public static double roundHundredth(double x) {
+        return Math.round(x * 100.0) / 100.0;
+    }
+    
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
@@ -148,11 +163,13 @@ public final class Utility {
     /* CONSTANT PARAMETERS */
     public static final int I2C_MAXBYTESREAD = 2;
     public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
-    public static final double TALONFXMOVETO_PERCENTERROR = 0.2;
+    public static final double TALONFXMOVETO_PERCENTERROR = 0.05;
     /* SPEED VALUES */
     //The value that the joystick x/y must surpass in order to register.
     public static final double JOYSTICK_DEADZONE = 0.1;
-
+    public static final double SHOULDER_kP = 0.25;
+    public static final double SHOULDER_kI = 0;
+    public static final double SHOULER_kD = 0;
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1;
