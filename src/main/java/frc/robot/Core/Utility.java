@@ -54,7 +54,7 @@ public final class Utility {
         };
 
         public static final Supplier<Double> PILOT_Y = () -> {
-            return JOYSTICK_PILOT1.getRightY();
+            return JOYSTICK_PILOT1.getLeftY();
         };
         
         public static final Supplier<Boolean> KICK = () -> {
@@ -154,7 +154,7 @@ public final class Utility {
     /* CONSTANT PARAMETERS */
     public static final int I2C_MAXBYTESREAD = 2;
     public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
-    public static final double TALONFXMOVETO_PERCENTERROR = 0.05;
+    public static final double TALONFXMOVETO_PERCENTERROR = 0.2;
     /* SPEED VALUES */
     //The value that the joystick x/y must surpass in order to register.
     public static final double JOYSTICK_DEADZONE = 0.1;

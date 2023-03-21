@@ -44,7 +44,16 @@ public final class ManualDrive implements RobotBehaviour {
 
         double xInput = PilotControls.PILOT_X.get() * currentSpeed;
         double yInput = PilotControls.PILOT_Y.get() * currentSpeed * speedMultiplier;
-        SmartDashboard.putString("Driver-Inputs: ", "X: " + xInput + ", Y" + yInput  * speedMultiplier);
-        BaseInstance.DriveRobot(xInput, -yInput * speedMultiplier);
+
+        if(Math.abs(xInput) < 0.1) {
+            xInput = 0;
+        }
+
+        if(Math.abs(yInput) < 0.1) {
+            yInput = 0;
+        }
+
+        SmartDashboard.putString("Driver-Inputs: ", "X: " + xInput + ", Y" + yInput);
+        BaseInstance.DriveRobot(xInput, yInput);
     }
 }
