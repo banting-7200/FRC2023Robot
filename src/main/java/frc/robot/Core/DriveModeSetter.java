@@ -52,7 +52,7 @@ public final class DriveModeSetter {
         // Sets the mode if required button is pressed, and prints the current drive mode.
         for(Supplier<Integer> modeSupply : modeSuppliers) {
             int supply = modeSupply.get();
-            if(supply == -1) {
+            if(supply != -1) {
                 currDriveMode = supply;
                 supplyToggled = true;
             }

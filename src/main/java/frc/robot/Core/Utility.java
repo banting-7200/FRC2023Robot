@@ -29,11 +29,6 @@ public final class Utility {
     public static final class PilotControls {
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
         public static final XboxController JOYSTICK_PILOT1 = new XboxController(PORT_JOYSTICK);
-        public static final SendableChooser<Integer> DRIVE_STICKCHOOSER = new SendableChooser<>() {{
-            addOption("Single-stick Drive", 0);
-            addOption("Double-stick Drive", 1);
-            SmartDashboard.putData("Drive Joystick Settings", DRIVE_STICKCHOOSER);
-        }};
 
         // Controls are utilised in:
         // - PixyAlignDrive.java
@@ -59,10 +54,6 @@ public final class Utility {
         };
 
         public static final Supplier<Double> PILOT_Y = () -> {
-            if(DRIVE_STICKCHOOSER.getSelected() == 1) {
-                return JOYSTICK_PILOT1.getLeftY();
-            }
-
             return JOYSTICK_PILOT1.getRightY();
         };
         
@@ -150,10 +141,10 @@ public final class Utility {
     public static final int PORT_COJOYSTICK = 1;
 
     // Integers storing ports that drive motors are connected to on RoboRIO
-    public static final int MOTOR_DRIVEFWDLEFT = 4;
-    public static final int MOTOR_DRIVEBACKLEFT = 3;
+    public static final int MOTOR_DRIVEFWDLEFT = 0;
+    public static final int MOTOR_DRIVEBACKLEFT = 1;
     public static final int MOTOR_DRIVEFWDRIGHT = 2;
-    public static final int MOTOR_DRIVEBACKRIGHT = 1;
+    public static final int MOTOR_DRIVEBACKRIGHT = 3;
     public static final int MOTOR_WRISTMOTOR = 5;
 
     //Integers that resemble different states for classes

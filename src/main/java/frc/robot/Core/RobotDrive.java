@@ -103,11 +103,11 @@ public final class RobotDrive {
     // All parameters are in deltas, and not a set positikon/rotation.
     public void DriveRobot(double x, double y) {
         if(!isDefaultOnly) {
-            leftMotors[0].set(x + y); //top left
-            leftMotors[1].set(x + y); //bottom left
+            leftMotors[0].set(y + x); //top left
+            leftMotors[1].set(y + x); //bottom left
 
-            rightMotors[0].set(x - y); //top left
-            rightMotors[1].set(x - y); //bottom left
+            rightMotors[0].set(-(y - x)); //top left
+            rightMotors[1].set(-(y - x)); //bottom left
         }
     }
 
