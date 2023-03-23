@@ -105,42 +105,33 @@ public class Lift implements RobotBehaviour {
         if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
             double targetPosition = LIFT_HEIGHTPOSITIONS.get(positionBind);
             double currentPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
+
+            //This prevents the dividebyzero exception
             if(currentPosition == 0) {
                 currentPosition = 1;
             }
 
+            //Determine error and direction of motion relative to number signs, not motor output
             double error = targetPosition - currentPosition;
             double moveDir = movementSpeed * Math.signum(error);
 
             if(canMoveLift(moveDir) == moveDir) {
+                //Calculate percentage difference and speed using the P section of PID control
                 double percentDifference = Math.abs((targetPosition - currentPosition) / currentPosition);
                 double speed = error * kP;
 
-                speed = Clamp(speed, -movementSpeed, movementSpeed);
-                moveLift(speed, -Math.signum(error));
-
-                if(Clamp(percentDifference, 0.0, 0.5) <= TALONFXMOVETO_PERCENTERROR) {
+                //Check if percent difference between target and current position is negligible.
+                if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
                     killSpeed();
                     return true;
                 }
+
+                //Apply speed with clamped speeds to allow for control over lift speed
+                speed = Clamp(speed, -movementSpeed, movementSpeed);
+                moveLift(speed, -Math.signum(error));
             }
-        }
-
-        return false;
-    }
-
-    public boolean moveLiftToPositionPID(int positionBind, double maxSpeed) {
-        if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
-            double currentPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
-            double targetPosition = LIFT_HEIGHTPOSITIONS.get(positionBind);
-            double error = targetPosition - currentPosition;
-            double output = error * kP;
-
-            output = roundHundredth(output);
-            output = Clamp(output, -maxSpeed, maxSpeed);
-            if(canMoveLift(output) == output) {
-                LIFT_MOTOR.set(ControlMode.PercentOutput, output);
-            }
+        } else {
+            return true;
         }
 
         return false;

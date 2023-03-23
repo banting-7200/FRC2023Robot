@@ -36,10 +36,9 @@ public class TalonFXMoveTo implements RobotAutoMaster{
                     }
 
                     if(!liftComplete) {
-                        liftComplete = lift.moveLiftToPosition(positionBind, 0.7);
+                        liftComplete = lift.moveLiftToPosition(positionBind, 0.5);
                     }
 
-                    System.out.println("Auto State: LIFT::" + liftComplete + " " + "SHOULDER::" + shoulderComplete);
                     isComplete = liftComplete && shoulderComplete;
                 }
 

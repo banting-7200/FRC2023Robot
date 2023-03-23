@@ -96,20 +96,4 @@ public class Shoulder implements RobotBehaviour {
 
         return false;
     }
-
-    private final double kP = 0.25;
-    private final double kI = 0.0;
-    private final double kD = 0.0;
-    public boolean moveShoulderToPositionPID(int positionBind, double maxSpeed) {
-        if(SHOULDER_POSITIONSMAP.get(positionBind) != null) {
-            double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
-            double currentPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-            double error = targetPosition - currentPosition;
-
-            double output = error * kP;
-            output = Clamp(output, -maxSpeed, maxSpeed);
-        }
-        
-        return false;
-    }
 }
