@@ -86,6 +86,16 @@ public final class Utility {
     }
 
     public static final class CoPilotControls {
+        private static SendableChooser<String> CONTROLMAP_PREF;
+
+        public static void initCoPilot() {
+            CONTROLMAP_PREF = new SendableChooser<>();
+            CONTROLMAP_PREF.addOption("Copilot: Button-Board", "Button-Board");
+            CONTROLMAP_PREF.addOption("Copilot: Joystick", "Joystick");
+            CONTROLMAP_PREF.setDefaultOption("Copilot: Joystick", "Joystick");
+            SmartDashboard.putData(CONTROLMAP_PREF);
+        }
+
         public static final Joystick JOYSTICK_COPILOT = new Joystick(PORT_COJOYSTICK);
 
         // Controls are utilised in Wrist.java
@@ -94,16 +104,42 @@ public final class Utility {
         };
 
         // Controls are utilised in Lift.java
-        public static final int MACRO_PICKUP = 11;
-        public static final int MACRO_LEVEL1 = 9;
-        public static final int MACRO_LEVEL2 = 7;
-        public static final int MACRO_LEVEL3 = 8;
-        public static final int MACRO_CARRY = 2;
+        public static final Supplier<Integer> MACRO_PICKUP = () -> {    
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 4 : 11;
+        };
+
+        public static final Supplier<Integer> MACRO_LEVEL1 = () -> {
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 10 : 9;
+        };
+
+        public static final Supplier<Integer> MACRO_LEVEL2 = () -> {
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 9 : 7;
+        };
+
+        public static final Supplier<Integer> MACRO_LEVEL3 = () -> {
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 8 : 8;
+        };
+
+        public static final Supplier<Integer> MACRO_CARRY = () -> {
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 5 : 2;
+        };
 
         // public static final int LIFT_PICKUPPOSITION = 12;
         // public static final int LIFT_CARRYPOSITION = 2;
 
         public static final Supplier<Double> SHOULDER_MOVE = () -> {
+            if(CONTROLMAP_PREF.getSelected().equals("Button-Board")) {
+                if(JOYSTICK_COPILOT.getRawButton(1)) {
+                    return -1.0;
+                }
+
+                if(JOYSTICK_COPILOT.getRawButton(2)) {
+                    return 1.0;
+                }
+
+                return 0.0;
+            }
+
             return JOYSTICK_COPILOT.getY();
         };
 
@@ -111,8 +147,13 @@ public final class Utility {
         public static final int SHOULDERPOV_PICKUPPOS = 0;
         public static final int SHOULDERPOV_EXTENDPOS = 180;
 
-        public static final int LIFT_DOWN = 4;
-        public static final int LIFT_UP = 6;
+        public static final Supplier<Integer> LIFT_DOWN = () -> {
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 12 : 4; 
+        };
+
+        public static final Supplier<Integer> LIFT_UP = () -> {
+            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 11 : 6; 
+        };
 
         // Controls are utilised in Claw.java
         public static final int CLAW_TOGGLE = 1;
@@ -179,7 +220,7 @@ public final class Utility {
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1;
-    public static final double DRIVE_CREEPSPEED = 0.6;
+    public static final double DRIVE_CREEPSPEED = 0.4;
 
     // Armspeed referring to the speed at which the arm would rotate
     // Creepspeed referring to a slower speed for finer arm adjustments.

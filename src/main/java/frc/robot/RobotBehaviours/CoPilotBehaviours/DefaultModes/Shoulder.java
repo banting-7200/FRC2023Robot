@@ -24,12 +24,12 @@ public class Shoulder implements RobotBehaviour {
     private final double SHOULDER_LEVEL3 = 454030;
 
     private final HashMap<Integer, Double> SHOULDER_POSITIONSMAP = new HashMap<>() {{
-        put(CoPilotControls.MACRO_PICKUP, SHOULDER_PICKUPPOS);
-        put(CoPilotControls.MACRO_CARRY, SHOULDER_CARRY);
+        put(CoPilotControls.MACRO_PICKUP.get(), SHOULDER_PICKUPPOS);
+        put(CoPilotControls.MACRO_CARRY.get(), SHOULDER_CARRY);
         
-        put(CoPilotControls.MACRO_LEVEL1, SHOULDER_LEVEL1);
-        put(CoPilotControls.MACRO_LEVEL2, SHOULDER_LEVEL2);
-        put(CoPilotControls.MACRO_LEVEL3, SHOULDER_LEVEL3);
+        put(CoPilotControls.MACRO_LEVEL1.get(), SHOULDER_LEVEL1);
+        put(CoPilotControls.MACRO_LEVEL2.get(), SHOULDER_LEVEL2);
+        put(CoPilotControls.MACRO_LEVEL3.get(), SHOULDER_LEVEL3);
         
         put(-1, 0.0);
     }};

@@ -29,11 +29,11 @@ public class CoPilotAutoRunner implements RobotBehaviour{
         }
 
         autoMasters = new HashMap<>();
-        autoMasters.put(CoPilotControls.MACRO_PICKUP, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_PICKUP));
-        autoMasters.put(CoPilotControls.MACRO_CARRY, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_CARRY));
-        autoMasters.put(CoPilotControls.MACRO_LEVEL1, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL1));
-        autoMasters.put(CoPilotControls.MACRO_LEVEL2, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL2));
-        autoMasters.put(CoPilotControls.MACRO_LEVEL3, new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL3));
+        autoMasters.put(CoPilotControls.MACRO_PICKUP.get(), new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_PICKUP.get()));
+        autoMasters.put(CoPilotControls.MACRO_CARRY.get(), new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_CARRY.get()));
+        autoMasters.put(CoPilotControls.MACRO_LEVEL1.get(), new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL1.get()));
+        autoMasters.put(CoPilotControls.MACRO_LEVEL2.get(), new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL2.get()));
+        autoMasters.put(CoPilotControls.MACRO_LEVEL3.get(), new TalonFXMoveTo(liftInstance, shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()));
     }
 
     @Override

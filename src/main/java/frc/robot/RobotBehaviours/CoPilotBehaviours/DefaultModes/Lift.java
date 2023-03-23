@@ -30,12 +30,12 @@ public class Lift implements RobotBehaviour {
     private final double LIFT_LEVEL3 = 287048;
 
     private final HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
-        put(CoPilotControls.MACRO_PICKUP, LIFT_PICKUP);
-        put(CoPilotControls.MACRO_CARRY, LIFT_CARRY);
+        put(CoPilotControls.MACRO_PICKUP.get(), LIFT_PICKUP);
+        put(CoPilotControls.MACRO_CARRY.get(), LIFT_CARRY);
         
-        put(CoPilotControls.MACRO_LEVEL1, LIFT_LEVEL1);
-        put(CoPilotControls.MACRO_LEVEL2, LIFT_LEVEL2);
-        put(CoPilotControls.MACRO_LEVEL3, LIFT_LEVEL3);
+        put(CoPilotControls.MACRO_LEVEL1.get(), LIFT_LEVEL1);
+        put(CoPilotControls.MACRO_LEVEL2.get(), LIFT_LEVEL2);
+        put(CoPilotControls.MACRO_LEVEL3.get(), LIFT_LEVEL3);
     }};
 
     @Override
@@ -54,8 +54,8 @@ public class Lift implements RobotBehaviour {
         /*
          * Gathering input information
          */
-        boolean down = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_DOWN);
-        boolean up = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_UP);
+        boolean down = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_DOWN.get());
+        boolean up = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_UP.get());
         double input = down ? -0.8 : up ? 0.8 : 0;
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
