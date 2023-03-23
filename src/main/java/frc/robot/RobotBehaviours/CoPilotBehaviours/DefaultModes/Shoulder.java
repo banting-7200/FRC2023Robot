@@ -64,21 +64,10 @@ public class Shoulder implements RobotBehaviour {
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
     }
 
-    //TODO: Test implementation
-    public double canMoveShoulder(double output) {
-        double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-        if(motorPosition >= SHOULDER_MAXPOSITION && output < 0) {
-            return 0;
-        }
-
-        return output;
-    }
-
     public void killSpeed() {
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
     }
 
-    private final double kP = 0.0;
     public boolean moveShoulderToPosition(int positionBind, double moveSpeed) {
         double currPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
@@ -98,45 +87,21 @@ public class Shoulder implements RobotBehaviour {
                 SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
                 return true;
             }
-    
-            /*
-            if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
-                output = 0;
-                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
-                return true;
-            }
-             */
-    
+
             SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
         } else if(difference < 0) { //Going down
             double output = difference / 30000.0;
 
             output = Clamp(output, -moveSpeed, moveSpeed);
-            System.out.println("Shoulder Auto Speed: " + output);
-            //7 degrees = ~30000 rotations
-            if(difference <= 80000 && difference >= -80000) {
-                output *= 0.5;
-            }
+            output *= Math.abs(difference) <= 80000 ? 0.5 : 1.0;
+            output *= Math.abs(difference) <= 50000 ? 0.5 : 1.0;
 
-            if(difference <= 50000 && difference >= -50000) {
-                output *= 0.5;
-            }
-
-            if(difference <= 30000 && difference >= -30000) {
-                output = 0;
-                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
-                return true;
-            }
-    
-            /*
-            if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
-                output = 0;
-                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
-                return true;
-            }
-             */
-    
+            output = Math.abs(difference) <= 30000 ? 0.0 : output;
             SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
+
+            if(output == 0) {
+                return true;
+            }
         }
 
         return false;

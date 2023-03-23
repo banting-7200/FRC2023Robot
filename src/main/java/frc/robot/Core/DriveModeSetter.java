@@ -40,8 +40,8 @@ public final class DriveModeSetter {
             isInitDrive = true;
         }
 
-        currDriveMode = 7;
-        driveInstance.setDriveMode(DriveModes.get(currDriveMode));
+        currDriveMode = DRIVEMODE_MANUAL;
+        driveInstance.setDriveMode(DriveModes.get(DRIVEMODE_MANUAL));
     }
 
     public void driveModeSetterTeleop() {

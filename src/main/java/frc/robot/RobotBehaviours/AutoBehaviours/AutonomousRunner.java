@@ -46,10 +46,6 @@ public class AutonomousRunner {
             autonomousBehaviours[chosenIndex].runAuto();
         } else {
             Robot.BREAK.set(false);
-            
-            if(!unpackRoutine.isCompleted()) {
-                unpackRoutine.runAuto();
-            }
         }
     }
 
