@@ -2,80 +2,37 @@ package frc.robot.RobotBehaviours.AutoBehaviours.Behaviours;
 
 import static frc.robot.Core.Utility.*;
 import frc.robot.Core.RobotDrive;
+import frc.robot.RobotBehaviours.AutoBehaviours.SubBehaviour.*;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
 
 public class Pos1Auto implements RobotAutoMaster{
-    private final RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
-        //Kick ball
-        new RobotAutoBehaviour() {
-            private boolean isCompleted = false;
-            private int delayCount = 25;
-
-            @Override
-            public void behaviourInit() {
-                isCompleted = false;
-                delayCount = 25;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                kickerInstance.setKickerState(true);
-
-                if(delayCount > 0) {
-                    delayCount--;
-                    return;
-                }
-
-                kickerInstance.setKickerState(false);
-                isCompleted = true;
-            }
-
-            @Override
-            public boolean isFinished() {
-                return isCompleted;
-            }
-        },
-
-        //Back up into community zone
-        new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 150;
-            private int currentTicks = 0;
-
-            @Override
-            public void behaviourInit() {
-                currentTicks = BACKUP_TICKS;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                if(currentTicks <= 0) {
-                    driverInstance.DriveRobot(0, 0);
-                    return;
-                }
-
-                driverInstance.DriveRobot(0.0, 0.75);
-                currentTicks--;
-            }
-
-            @Override
-            public boolean isFinished() {
-                return currentTicks <= 0;
-            }
-        }
-    };
-
     private RobotDrive driverInstance;
-    private Kicker kickerInstance;
+    private Shoulder shoulderInstance;
+    private Lift liftInstance;
     private int autoPtr;
 
-    public Pos1Auto(RobotDrive drive) {
+    //TODO: Test each autonomous section individually when given the chance
+    private final RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
+        new AutoClaw(false, 0.1),
+        new AutoDrive(driverInstance, 0.5, 0, -0.6),
+        new AutoLift(liftInstance, 100, 0.6), //Move up until maxed. This allows shoulder movement AND zero's lift
+        new AutoShoulderPos(shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()),
+        new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
+        new AutoClaw(true, 1),
+        new AutoClaw(false, 0.5)
+    };
+
+    public Pos1Auto(RobotDrive drive, Lift lift, Shoulder shoulder) {
+        shoulderInstance = shoulder;
         driverInstance = drive;
-        kickerInstance = INSTANCE_KICKER;
+        liftInstance = lift;
+
         autoPtr = 0;
     }
-
 
     @Override
     public void runAuto() {

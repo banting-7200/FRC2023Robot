@@ -15,7 +15,6 @@ import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.Unpack;
 public class AutonomousRunner {
     private SendableChooser<String> autonomousSelect;
     private RobotAutoMaster[] autonomousBehaviours;
-    private RobotAutoMaster unpackRoutine;
 
     public AutonomousRunner(RobotDrive driver) {
         autonomousSelect = new SendableChooser<>();
@@ -27,12 +26,11 @@ public class AutonomousRunner {
         
         SmartDashboard.putData("Auto Select", autonomousSelect);
         autonomousBehaviours = new RobotAutoMaster[] {
-            new Pos1Auto(driver),
+            new Pos1Auto(driver, (Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1]),
             new Pos2Auto(driver),
             new Pos3Auto(driver)
         };
 
-        unpackRoutine = new Unpack((Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1]);
         System.out.println("AutoRunner Init...");
     }
 
