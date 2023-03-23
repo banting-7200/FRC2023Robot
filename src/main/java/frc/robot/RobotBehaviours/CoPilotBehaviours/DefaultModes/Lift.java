@@ -29,6 +29,10 @@ public class Lift implements RobotBehaviour {
     private final double LIFT_LEVEL2 = 311798;
     private final double LIFT_LEVEL3 = 287048;
 
+    private final double kP = 0.1;
+    private final double kI = 0.0; //TODO: Research influence of integral
+    private final double kD = 0.0; //TODO: Research influence of derivative
+
     private final HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
         put(CoPilotControls.MACRO_PICKUP.get(), LIFT_PICKUP);
         put(CoPilotControls.MACRO_CARRY.get(), LIFT_CARRY);
@@ -105,17 +109,15 @@ public class Lift implements RobotBehaviour {
                 currentPosition = 1;
             }
 
-            double direction = targetPosition - currentPosition;
-            double moveDir = movementSpeed * Math.signum(direction);
+            double error = targetPosition - currentPosition;
+            double moveDir = movementSpeed * Math.signum(error);
 
             if(canMoveLift(moveDir) == moveDir) {
                 double percentDifference = Math.abs((targetPosition - currentPosition) / currentPosition);
+                double speed = error * kP;
 
-                //double speed = error * kP;
-                double speed = movementSpeed * percentDifference;
-                speed = Clamp(speed, -0.6, 0.6);
-
-                moveLift(speed, -Math.signum(direction));
+                speed = Clamp(speed, -movementSpeed, movementSpeed);
+                moveLift(speed, -Math.signum(error));
 
                 if(Clamp(percentDifference, 0.0, 0.5) <= TALONFXMOVETO_PERCENTERROR) {
                     killSpeed();
@@ -127,9 +129,6 @@ public class Lift implements RobotBehaviour {
         return false;
     }
 
-    private final double kP = 0.25;
-    private final double kI = 0.0; //TODO: Research influence of integral
-    private final double kD = 0.0; //TODO: Research influence of derivative
     public boolean moveLiftToPositionPID(int positionBind, double maxSpeed) {
         if(LIFT_HEIGHTPOSITIONS.get(positionBind) != null) {
             double currentPosition = LIFT_MOTOR.getMotor().getSelectedSensorPosition();
