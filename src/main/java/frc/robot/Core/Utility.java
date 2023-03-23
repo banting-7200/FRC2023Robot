@@ -1,5 +1,5 @@
 package frc.robot.Core;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Joystick;
@@ -85,17 +85,7 @@ public final class Utility {
         };
     }
 
-    public static final class CoPilotControls {
-        private static SendableChooser<String> CONTROLMAP_PREF;
-
-        public static void initCoPilot() {
-            CONTROLMAP_PREF = new SendableChooser<>();
-            CONTROLMAP_PREF.addOption("Copilot: Button-Board", "Button-Board");
-            CONTROLMAP_PREF.addOption("Copilot: Joystick", "Joystick");
-            CONTROLMAP_PREF.setDefaultOption("Copilot: Joystick", "Joystick");
-            SmartDashboard.putData(CONTROLMAP_PREF);
-        }
-
+    public static final class CoPilotControls {        
         public static final Joystick JOYSTICK_COPILOT = new Joystick(PORT_COJOYSTICK);
 
         // Controls are utilised in Wrist.java
@@ -105,42 +95,38 @@ public final class Utility {
 
         // Controls are utilised in Lift.java
         public static final Supplier<Integer> MACRO_PICKUP = () -> {    
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 4 : 11;
+            return 4;
         };
 
         public static final Supplier<Integer> MACRO_LEVEL1 = () -> {
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 10 : 9;
+            return 10;
         };
 
         public static final Supplier<Integer> MACRO_LEVEL2 = () -> {
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 9 : 7;
+            return 9;
         };
 
         public static final Supplier<Integer> MACRO_LEVEL3 = () -> {
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 8 : 8;
+            return 8;
         };
 
         public static final Supplier<Integer> MACRO_CARRY = () -> {
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 5 : 2;
+            return 5;
         };
 
         // public static final int LIFT_PICKUPPOSITION = 12;
         // public static final int LIFT_CARRYPOSITION = 2;
 
         public static final Supplier<Double> SHOULDER_MOVE = () -> {
-            if(CONTROLMAP_PREF.getSelected().equals("Button-Board")) {
-                if(JOYSTICK_COPILOT.getRawButton(1)) {
-                    return -1.0;
-                }
-
-                if(JOYSTICK_COPILOT.getRawButton(2)) {
-                    return 1.0;
-                }
-
-                return 0.0;
+            if(JOYSTICK_COPILOT.getRawButton(1)) {
+                return 1.0;
             }
 
-            return JOYSTICK_COPILOT.getY();
+            if(JOYSTICK_COPILOT.getRawButton(2)) {
+                return -1.0;
+            }
+
+            return 0.0;
         };
 
         // Controls are utilised in Shoulder.java
@@ -148,21 +134,25 @@ public final class Utility {
         public static final int SHOULDERPOV_EXTENDPOS = 180;
 
         public static final Supplier<Integer> LIFT_DOWN = () -> {
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 12 : 4; 
+            return 12; 
         };
 
         public static final Supplier<Integer> LIFT_UP = () -> {
-            return CONTROLMAP_PREF.getSelected().equals("Button-Board") ? 11 : 6; 
+            return 11; 
         };
 
         // Controls are utilised in Claw.java
-        public static final int CLAW_TOGGLE = 1;
+        public static final Supplier<Integer> CLAW_TOGGLE = () -> {
+            return 3;
+        };
         
         public static final Supplier<Integer> PIXYALIGNDRIVE = () -> {
-            return JOYSTICK_COPILOT.getRawButton(10) ? DRIVEMODE_PIXYALIGN : -1;
+            return JOYSTICK_COPILOT.getRawButton(7) ? DRIVEMODE_PIXYALIGN : -1;
         };
 
-        public static final int SHOULDER_ZEROENCODER = 12;
+        public static final Supplier<Boolean> SHOULDER_ZERO = () -> {
+            return JOYSTICK_COPILOT.getRawButton(6);
+        };
     }
     //#region Constants
     public static class SmartDashboardIDs {
@@ -211,12 +201,14 @@ public final class Utility {
     public static final int I2C_MAXBYTESREAD = 2;
     public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
     public static final double TALONFXMOVETO_PERCENTERROR = 0.2;
+
     /* SPEED VALUES */
     //The value that the joystick x/y must surpass in order to register.
     public static final double JOYSTICK_DEADZONE = 0.1;
     public static final double SHOULDER_kP = 0.25;
     public static final double SHOULDER_kI = 0;
     public static final double SHOULER_kD = 0;
+    
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1;
@@ -224,9 +216,10 @@ public final class Utility {
 
     // Armspeed referring to the speed at which the arm would rotate
     // Creepspeed referring to a slower speed for finer arm adjustments.
-    public static final double ARM_SPEED = 0.8;
+    public static final double ARM_SPEED = 0.4;
     public static final double ARM_CREEPSPEED = 0.5;
 
+    public static final double LIFT_SPEED = 0.3;
     //#endregion
 
     //Pneumatics instances since solenoids cannot have mutliple references

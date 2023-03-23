@@ -17,28 +17,30 @@ public class Shoulder implements RobotBehaviour {
 
     private final double SHOULDER_PICKUPPOS = 147584;
     private final double SHOULDER_MAXPOSITION = 500000; //TODO: Determine value via testing
-    private final double SHOULDER_CARRY = 0;
+    private final double SHOULDER_CARRY = 34516.000000;
     
     private final double SHOULDER_LEVEL1 = 147584;
     private final double SHOULDER_LEVEL2 = 375066;
     private final double SHOULDER_LEVEL3 = 454030;
 
-    private final HashMap<Integer, Double> SHOULDER_POSITIONSMAP = new HashMap<>() {{
-        put(CoPilotControls.MACRO_PICKUP.get(), SHOULDER_PICKUPPOS);
-        put(CoPilotControls.MACRO_CARRY.get(), SHOULDER_CARRY);
-        
-        put(CoPilotControls.MACRO_LEVEL1.get(), SHOULDER_LEVEL1);
-        put(CoPilotControls.MACRO_LEVEL2.get(), SHOULDER_LEVEL2);
-        put(CoPilotControls.MACRO_LEVEL3.get(), SHOULDER_LEVEL3);
-        
-        put(-1, 0.0);
-    }};
+    private HashMap<Integer, Double> SHOULDER_POSITIONSMAP;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] defaultBehaviours) {
         if(Robot.inGameMode) {
             SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(SHOULDER_STARTINGPOSITION);
         }
+
+        SHOULDER_POSITIONSMAP = new HashMap<>() {{
+            put(CoPilotControls.MACRO_PICKUP.get(), SHOULDER_PICKUPPOS);
+            put(CoPilotControls.MACRO_CARRY.get(), SHOULDER_CARRY);
+            
+            put(CoPilotControls.MACRO_LEVEL1.get(), SHOULDER_LEVEL1);
+            put(CoPilotControls.MACRO_LEVEL2.get(), SHOULDER_LEVEL2);
+            put(CoPilotControls.MACRO_LEVEL3.get(), SHOULDER_LEVEL3);
+            
+            put(-1, 0.0);
+        }};
 
         System.out.println("Shoulder Init...");
     }
@@ -49,13 +51,14 @@ public class Shoulder implements RobotBehaviour {
             return;
         }
         
-        if(CoPilotControls.JOYSTICK_COPILOT.getPOV() == 0) {
+        if(CoPilotControls.SHOULDER_ZERO.get()) {
             SHOULDER_MOTOR.getMotor().setSelectedSensorPosition(0);
         }
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double input = CoPilotControls.SHOULDER_MOVE.get();
         input = Math.abs(input) > 0.4 ? input : 0;
+        input *= ARM_SPEED;
 
         SmartDashboard.putNumber("ShoulderPosition", motorPosition);
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, input);
@@ -75,23 +78,65 @@ public class Shoulder implements RobotBehaviour {
         SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
     }
 
+    private final double kP = 0.0;
     public boolean moveShoulderToPosition(int positionBind, double moveSpeed) {
         double currPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
         double targetPosition = SHOULDER_POSITIONSMAP.get(positionBind);
-        double difference = targetPosition - currPosition;
-        double percentDifference = Math.abs((difference) / currPosition);
 
-        double output = Math.signum(targetPosition - currPosition) * moveSpeed;
+        //double percentDifference = Math.abs((targetPosition - currPosition) / currPosition);
+        double difference = (targetPosition - currPosition);
 
-        if(Math.abs(difference) <= 3000) {
-            output = Math.signum(targetPosition - currPosition) * moveSpeed * Clamp(percentDifference, 0, 0.7);
-        }
 
-        SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
+        if(difference > 0) { //Going up
+            double output = difference / 30000.0;
 
-        if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
-            killSpeed();
-            return true;
+            output = Clamp(output, -moveSpeed, moveSpeed);
+            System.out.println("Shoulder Auto Speed: " + output);
+            //7 degrees = ~30000 rotations
+            if(difference <= 60000 && difference >= -60000) {
+                output = 0;
+                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+                return true;
+            }
+    
+            /*
+            if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
+                output = 0;
+                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+                return true;
+            }
+             */
+    
+            SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
+        } else if(difference < 0) { //Going down
+            double output = difference / 30000.0;
+
+            output = Clamp(output, -moveSpeed, moveSpeed);
+            System.out.println("Shoulder Auto Speed: " + output);
+            //7 degrees = ~30000 rotations
+            if(difference <= 80000 && difference >= -80000) {
+                output *= 0.5;
+            }
+
+            if(difference <= 50000 && difference >= -50000) {
+                output *= 0.5;
+            }
+
+            if(difference <= 30000 && difference >= -30000) {
+                output = 0;
+                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+                return true;
+            }
+    
+            /*
+            if(percentDifference <= TALONFXMOVETO_PERCENTERROR) {
+                output = 0;
+                SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, 0);
+                return true;
+            }
+             */
+    
+            SHOULDER_MOTOR.getMotor().set(ControlMode.PercentOutput, output);
         }
 
         return false;

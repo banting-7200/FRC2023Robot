@@ -24,26 +24,27 @@ public class Lift implements RobotBehaviour {
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
 
     private final double LIFT_PICKUP = 311798;
-    private final double LIFT_CARRY = 113255;
+    private final double LIFT_CARRY = 155371;
     private final double LIFT_LEVEL1 = 311798;
     private final double LIFT_LEVEL2 = 311798;
     private final double LIFT_LEVEL3 = 287048;
 
-    private final double kP = 0.1;
+    private final double kP = 0.25;
     private final double kI = 0.0; //TODO: Research influence of integral
     private final double kD = 0.0; //TODO: Research influence of derivative
-
-    private final HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
-        put(CoPilotControls.MACRO_PICKUP.get(), LIFT_PICKUP);
-        put(CoPilotControls.MACRO_CARRY.get(), LIFT_CARRY);
-        
-        put(CoPilotControls.MACRO_LEVEL1.get(), LIFT_LEVEL1);
-        put(CoPilotControls.MACRO_LEVEL2.get(), LIFT_LEVEL2);
-        put(CoPilotControls.MACRO_LEVEL3.get(), LIFT_LEVEL3);
-    }};
+    private HashMap<Integer, Double> LIFT_HEIGHTPOSITIONS;
 
     @Override
     public void BehaviourInit(RobotBehaviour[] behaviours) {
+        LIFT_HEIGHTPOSITIONS = new HashMap<>() {{
+            put(CoPilotControls.MACRO_PICKUP.get(), LIFT_PICKUP);
+            put(CoPilotControls.MACRO_CARRY.get(), LIFT_CARRY);
+            
+            put(CoPilotControls.MACRO_LEVEL1.get(), LIFT_LEVEL1);
+            put(CoPilotControls.MACRO_LEVEL2.get(), LIFT_LEVEL2);
+            put(CoPilotControls.MACRO_LEVEL3.get(), LIFT_LEVEL3);
+        }};
+
         System.out.println("Lift Init...");
     }
 
@@ -63,7 +64,7 @@ public class Lift implements RobotBehaviour {
         double input = down ? -0.8 : up ? 0.8 : 0;
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
-        moveLift(Math.abs(0.6), Math.signum(input));
+        moveLift(LIFT_SPEED, Math.signum(input));
     }
 
     private void debugSwitches() {
@@ -128,7 +129,7 @@ public class Lift implements RobotBehaviour {
 
                 //Apply speed with clamped speeds to allow for control over lift speed
                 speed = Clamp(speed, -movementSpeed, movementSpeed);
-                moveLift(speed, -Math.signum(error));
+                moveLift(Math.abs(speed), -Math.signum(error));
             }
         } else {
             return true;

@@ -34,7 +34,7 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     PilotControls.initPilot();
-    
+
     CameraServer.startAutomaticCapture(0);
     CameraServer.startAutomaticCapture(1);
 

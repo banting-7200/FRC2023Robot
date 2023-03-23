@@ -20,7 +20,7 @@ public class Claw implements RobotBehaviour{
 
     @Override
     public void BehaviourPeriodic() {
-        if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(CoPilotControls.CLAW_TOGGLE)) {
+        if(CoPilotControls.JOYSTICK_COPILOT.getRawButtonPressed(CoPilotControls.CLAW_TOGGLE.get())) {
             open = !open;
         }
         

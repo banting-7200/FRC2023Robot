@@ -2,6 +2,8 @@ package frc.robot.Core;
 
 import static frc.robot.Core.Utility.*;
 
+import java.util.function.*;
+
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj.motorcontrol.PWMSparkMax;
