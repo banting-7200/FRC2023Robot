@@ -27,10 +27,21 @@ public final class Utility {
     public static final int DRIVEMODE_PIXYALIGN = 9;
     
     public static final class PilotControls {
+
+        private static SendableChooser<String> stickDriveMode;
+        public static void initPilot() {
+            stickDriveMode = new SendableChooser<>();
+            stickDriveMode.addOption("Single-Stick Drive", "Single-Stick");
+            stickDriveMode.addOption("Double-Stick Drive", "Double-Stick");
+            stickDriveMode.setDefaultOption("Double-Stick Drive", "Double-Stick");
+
+            SmartDashboard.putData(stickDriveMode);
+        }
+
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
         public static final XboxController JOYSTICK_PILOT1 = new XboxController(PORT_JOYSTICK);
 
-        // Controls are utilised in:
+        //Controls are utilised in:
         // - PixyAlignDrive.java
         // - ManualDrive.java
         public static final Supplier<Integer> MANUALDRIVE = () -> {
@@ -54,7 +65,11 @@ public final class Utility {
         };
 
         public static final Supplier<Double> PILOT_Y = () -> {
-            return JOYSTICK_PILOT1.getLeftY();
+            if(stickDriveMode.getSelected().equals("Double-Stick")) {
+                return JOYSTICK_PILOT1.getLeftY();
+            }
+
+            return JOYSTICK_PILOT1.getRightY();
         };
         
         public static final Supplier<Boolean> KICK = () -> {
