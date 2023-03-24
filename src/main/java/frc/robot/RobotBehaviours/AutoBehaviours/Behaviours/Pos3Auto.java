@@ -54,7 +54,6 @@ public class Pos3Auto implements RobotAutoMaster{
                 if(currentTicks <= 0) {
                     driverInstance.DriveRobot(0, 0);
                     return;     
-                    
                 }
 
                 driverInstance.DriveRobot(0.0, 0.75);

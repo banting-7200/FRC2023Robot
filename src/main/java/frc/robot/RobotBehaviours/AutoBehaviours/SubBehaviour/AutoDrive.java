@@ -11,8 +11,8 @@ public class AutoDrive implements RobotAutoBehaviour{
     private final double DRIVE_FWD;
     private int backupTime;
 
-    public AutoDrive(RobotDrive driveInstance, double backupSeconds, double turn, double fwd) {
-        BACKUP_TICKS = (int)((backupSeconds * 1000.0) / 20.0);
+    public AutoDrive(RobotDrive driveInstance, double runSeconds, double turn, double fwd) {
+        BACKUP_TICKS = (int)((runSeconds * 1000.0) / 20.0);
         DRIVE = driveInstance;
         DRIVE_TURN = turn;
         DRIVE_FWD = fwd;

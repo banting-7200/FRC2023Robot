@@ -28,8 +28,7 @@ public class Pos1Auto implements RobotAutoMaster{
         autoChain = new RobotAutoBehaviour[] {
             //Ensure claw is closed
             new AutoClaw(false, 0.1),
-        
-            /* SCARY PART */
+
             //Max lift for pre-calibration
             new AutoLift(liftInstance, 100, 0.6),
 
@@ -41,12 +40,21 @@ public class Pos1Auto implements RobotAutoMaster{
             new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
     
             //Drive back one nudge (15 inches)
-            new AutoDrive(driverInstance, 0.5, 0, 0.25),
+            new AutoDrive(driverInstance, 1.5, 0, 0.25),
             new AutoWrist(wristInstance, 1.0, 0.4),
 
             //Open and close claw
             new AutoClaw(true, 1),
-            new AutoClaw(false, 0.5)
+            new AutoClaw(false, 0.5),
+
+            //Backup into community zone (close to next game piece)
+            new AutoDrive(drive, 3, 0, -0.6),
+
+            //Move to pickup position
+            new AutoParallel(new RobotAutoBehaviour[] {
+                new AutoLiftPos(lift, CoPilotControls.MACRO_PICKUP.get(), 0.6),
+                new AutoShoulderPos(shoulder, CoPilotControls.MACRO_PICKUP.get())
+            })
         };
 
         autoPtr = 0;
