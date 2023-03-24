@@ -21,7 +21,9 @@ public class Shoulder implements RobotBehaviour {
     
     private final double SHOULDER_LEVEL1 = 147584;
     private final double SHOULDER_LEVEL2 = 375066;
-    private final double SHOULDER_LEVEL3 = 420030; //Pre-Adjustment: 454030
+    private final double SHOULDER_LEVEL3 = 454030;
+
+    
 
     private HashMap<Integer, Double> SHOULDER_POSITIONSMAP;
 

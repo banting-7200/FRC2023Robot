@@ -47,6 +47,7 @@ public class Pos1Auto implements RobotAutoMaster{
             new AutoClaw(true, 1),
             new AutoClaw(false, 0.5),
 
+            /*
             //Backup into community zone (close to next game piece)
             new AutoDrive(drive, 3, 0, -0.6),
 
@@ -55,6 +56,7 @@ public class Pos1Auto implements RobotAutoMaster{
                 new AutoLiftPos(lift, CoPilotControls.MACRO_PICKUP.get(), 0.6),
                 new AutoShoulderPos(shoulder, CoPilotControls.MACRO_PICKUP.get())
             })
+            */
         };
 
         autoPtr = 0;
