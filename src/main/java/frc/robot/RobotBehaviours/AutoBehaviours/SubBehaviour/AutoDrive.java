@@ -6,7 +6,7 @@ import frc.robot.Interfaces.RobotAutoBehaviour;
 public class AutoDrive implements RobotAutoBehaviour{
     private final int BACKUP_TICKS;
 
-    private final RobotDrive DRIVE;
+    private RobotDrive DRIVE;
     private final double DRIVE_TURN;
     private final double DRIVE_FWD;
     private int backupTime;
@@ -30,10 +30,11 @@ public class AutoDrive implements RobotAutoBehaviour{
         if(backupTime > 0) {
             DRIVE.DriveRobot(DRIVE_TURN, DRIVE_FWD);
             backupTime--;
-            return;
         }
 
-        DRIVE.DriveRobot(0, 0);
+        if(backupTime <= 0) {
+            DRIVE.DriveRobot(0, 0);
+        }
     }
 
     @Override

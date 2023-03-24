@@ -4,7 +4,7 @@ import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 
 public class AutoLiftPos implements RobotAutoBehaviour {
-    private final Lift LIFT;
+    private Lift LIFT;
     private final int LIFT_POSBIND;
     private final double SPEED;
 

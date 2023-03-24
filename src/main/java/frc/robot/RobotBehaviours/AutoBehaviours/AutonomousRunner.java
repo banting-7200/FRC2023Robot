@@ -10,6 +10,7 @@ import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos2Auto;
 import frc.robot.RobotBehaviours.AutoBehaviours.Behaviours.Pos3Auto;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Wrist;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.Macros.Unpack;
 
 public class AutonomousRunner {
@@ -26,11 +27,12 @@ public class AutonomousRunner {
         
         SmartDashboard.putData("Auto Select", autonomousSelect);
         autonomousBehaviours = new RobotAutoMaster[] {
-            new Pos1Auto(driver, (Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1]),
+            new Pos1Auto(driver, (Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1], (Wrist)RobotDrive.defaultModes[4]),
             new Pos2Auto(driver),
             new Pos3Auto(driver)
         };
 
+        System.out.println("DRIVEINSTANCE NULL:  " + driver == null);
         System.out.println("AutoRunner Init...");
     }
 

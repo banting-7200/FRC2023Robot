@@ -4,7 +4,7 @@ import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 
 public class AutoLift implements RobotAutoBehaviour{
-    private final Lift LIFT;
+    private Lift LIFT;
     private final int MOVETIME;
     private final double SPEED;
 
@@ -27,11 +27,10 @@ public class AutoLift implements RobotAutoBehaviour{
 
     @Override
     public void behaviourPeriodic() {
-        double out = LIFT.canMoveLift(-SPEED);
-        LIFT.moveLift(out, Math.signum(out));
+        boolean canMove = LIFT.moveLift(SPEED, Math.signum(SPEED));
         moveTicks--;
         
-        if(out == 0 || moveTicks <= 0) {
+        if(moveTicks <= 0 || canMove == false) {
             isFinished = true;
         }
     }

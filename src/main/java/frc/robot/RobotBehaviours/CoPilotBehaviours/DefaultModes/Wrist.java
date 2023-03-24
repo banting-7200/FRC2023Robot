@@ -32,7 +32,7 @@ public class Wrist implements RobotBehaviour {
         SmartDashboard.putNumber("Wrist Motor Position: ", wristPosition);
     }
 
-    private void setWrist(double output) {
+    public void setWrist(double output) {
         WRIST_MOTOR.set(output);
         if(WRIST_COUNTER.get()) {
             wristPosition += Math.signum(output);

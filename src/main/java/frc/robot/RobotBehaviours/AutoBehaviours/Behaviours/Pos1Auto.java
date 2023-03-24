@@ -8,28 +8,46 @@ import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Wrist;
 
 public class Pos1Auto implements RobotAutoMaster{
     private RobotDrive driverInstance;
     private Shoulder shoulderInstance;
+    private Wrist wristInstance;
     private Lift liftInstance;
     private int autoPtr;
 
-    //TODO: Test each autonomous section individually when given the chance
-    private final RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
-        new AutoClaw(false, 0.1),
-        new AutoDrive(driverInstance, 0.5, 0, -0.6),
-        new AutoLift(liftInstance, 100, 0.6), //Move up until maxed. This allows shoulder movement AND zero's lift
-        new AutoShoulderPos(shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()),
-        new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
-        new AutoClaw(true, 1),
-        new AutoClaw(false, 0.5)
-    };
+    private final RobotAutoBehaviour[] autoChain;
 
-    public Pos1Auto(RobotDrive drive, Lift lift, Shoulder shoulder) {
+    public Pos1Auto(RobotDrive drive, Lift lift, Shoulder shoulder, Wrist wristInstance) {
+        this.wristInstance = wristInstance;
         shoulderInstance = shoulder;
         driverInstance = drive;
         liftInstance = lift;
+
+        autoChain = new RobotAutoBehaviour[] {
+            //Ensure claw is closed
+            new AutoClaw(false, 0.1),
+        
+            /* SCARY PART */
+            //Max lift for pre-calibration
+            new AutoLift(liftInstance, 100, 0.6),
+
+            new AutoWrist(wristInstance, 1.0, 0.4),
+            //Move shoulder to level 3 position
+            new AutoShoulderPos(shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()),
+    
+            //Move lift to level 3 position
+            new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
+    
+            //Drive back one nudge (15 inches)
+            new AutoDrive(driverInstance, 0.5, 0, 0.25),
+            new AutoWrist(wristInstance, 1.0, 0.4),
+
+            //Open and close claw
+            new AutoClaw(true, 1),
+            new AutoClaw(false, 0.5)
+        };
 
         autoPtr = 0;
     }
