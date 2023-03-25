@@ -32,7 +32,7 @@ public class Pos1Auto implements RobotAutoMaster{
             //Max lift for pre-calibration
             new AutoLift(liftInstance, 100, 0.6),
 
-            new AutoWrist(wristInstance, 0.85, 0.4),
+            new AutoWrist(wristInstance, 0.425, 0.8),
             //Move shoulder to level 3 position
             new AutoShoulderPos(shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()),
     
@@ -41,19 +41,17 @@ public class Pos1Auto implements RobotAutoMaster{
     
             //Drive back one nudge (15 inches)
             new AutoDrive(driverInstance, 1.25, 0, 0.25),
-            new AutoWrist(wristInstance, 1.0, 0.4),
+            new AutoWrist(wristInstance, 0.425, 0.8),
 
             //Open and close claw
-            new AutoClaw(true, 1),
+            new AutoClaw(true, 0.5),
             new AutoClaw(false, 0.5),
-            new AutoDrive(drive, 3.5, 0, -0.4)
+            new AutoDrive(drive, 1.25, 0, 0.25)
 
             /*
-            //Backup into community zone (close to next game piece)
-            new AutoDrive(drive, 3, 0, -0.6),
-
-            //Move to pickup position
+            //Move to pickup position and backup at the same time
             new AutoParallel(new RobotAutoBehaviour[] {
+                new AutoDrive(drive, 3.5, 0, -0.4)
                 new AutoLiftPos(lift, CoPilotControls.MACRO_PICKUP.get(), 0.6),
                 new AutoShoulderPos(shoulder, CoPilotControls.MACRO_PICKUP.get())
             })
