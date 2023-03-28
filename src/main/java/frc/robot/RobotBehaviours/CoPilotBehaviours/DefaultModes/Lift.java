@@ -23,10 +23,11 @@ public class Lift implements RobotBehaviour {
     private final DigitalInput LIFT_UPPERLIMITER = new DigitalInput(1);
     private final DigitalInput LIFT_LOWERLIMITER = new DigitalInput(2);
 
-    private final double LIFT_PICKUP = 311798;
+    //Previous Pickup, Level`, and Level 3: 311428
+    private final double LIFT_PICKUP = 311428;
     private final double LIFT_CARRY = 155371;
-    private final double LIFT_LEVEL1 = 311798;
-    private final double LIFT_LEVEL2 = 311798;
+    private final double LIFT_LEVEL1 = 311428;
+    private final double LIFT_LEVEL2 = 311428;
     private final double LIFT_LEVEL3 = 287048;
 
     private final double kP = 0.25;

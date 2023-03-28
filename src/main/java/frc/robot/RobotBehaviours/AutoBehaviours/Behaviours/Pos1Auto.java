@@ -49,10 +49,10 @@ public class Pos1Auto implements RobotAutoMaster{
             new AutoClaw(true, 0.5),
             new AutoClaw(false, 0.5),
             new AutoDrive(driverInstance, 3.5, 0.0, -0.4),
-            new AutoDrive(driverInstance, 1.1, -0.5, 0),
-
+            
             //Move to pickup position and backup at the same time
             new AutoParallel(new RobotAutoBehaviour[] {
+                new AutoDrive(driverInstance, 1, -0.5, 0),
                 new AutoLiftPos(lift, CoPilotControls.MACRO_PICKUP.get(), 0.6),
                 new AutoShoulderPos(shoulder, CoPilotControls.MACRO_PICKUP.get())
             })
