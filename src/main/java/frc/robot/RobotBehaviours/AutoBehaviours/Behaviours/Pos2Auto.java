@@ -7,109 +7,43 @@ import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
 import frc.robot.RobotBehaviours.PilotBehaviours.BalanceDrive;
-
+import frc.robot.RobotBehaviours.AutoBehaviours.SubBehaviour.*;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Wrist;
 
 //TODO: TEST AND TWEAK VALUES
 // Make kicker side face charge station
 public class Pos2Auto implements RobotAutoMaster{
-    private final RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
-        new RobotAutoBehaviour() {
-            private boolean isCompleted = false;
-            private int delayCount = 25;
-
-            @Override
-            public void behaviourInit() {
-                isCompleted = false;
-                delayCount = 25;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                kickerInstance.setKickerState(true);
-
-                if(delayCount > 0) {
-                    delayCount--;
-                    return;
-                }
-
-                kickerInstance.setKickerState(false);
-                isCompleted = true;
-            }
-
-            @Override
-            public boolean isFinished() {
-                return isCompleted;
-            }
-        },
-
-        //Back up onto ramp
-        new RobotAutoBehaviour() {
-            private final int backupTicks = 113;
-            private int backupLeft = backupTicks;
-            @Override
-            public void behaviourInit() {
-                backupLeft = backupTicks;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                if(backupLeft > 0) {
-                    driverInstance.DriveRobot(0, 1);
-                    backupLeft--;
-                    return;
-                }
-
-                driverInstance.DriveRobot(0, 0);
-            }
-
-            @Override
-            public boolean isFinished() {
-                return backupLeft <= 0;
-            }
-
-        },
-
-        //Go onto charge station
-        new RobotAutoBehaviour() {
-            private final int autoTicks = 100;
-            private int ticksLeft = autoTicks;
-
-            @Override
-            public void behaviourInit() {
-                ticksLeft = autoTicks;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                if(ticksLeft > 0) {
-                    balanceDriver.BehaviourPeriodic();
-                    ticksLeft--;
-                    return;
-                }
-
-                Robot.BREAK.set(false);
-                driverInstance.DriveRobot(0, 0);
-            }
-
-            @Override
-            public boolean isFinished() {
-                return ticksLeft <= 0;
-            }
-        }
-    };
-
-    private BalanceDrive balanceDriver;
+    private final RobotAutoBehaviour[] autoChain;
     private RobotDrive driverInstance;
-    private Kicker kickerInstance;
     private int autoPtr;
 
-    public Pos2Auto(RobotDrive drive) {
+    public Pos2Auto(RobotDrive drive, Lift liftInstance, Shoulder shoulderInstance, Wrist wristInstance) {
         driverInstance = drive;
-        balanceDriver = new BalanceDrive(drive);
-        balanceDriver.BehaviourInit(null);
 
-        kickerInstance = INSTANCE_KICKER;
+        autoChain = new RobotAutoBehaviour[] {
+            //Ensure claw is closed
+            new AutoClaw(false, 0.1),
+
+            //Max lift for pre-calibration
+            new AutoLift(liftInstance, 100, 0.6),
+            new AutoWrist(wristInstance, 0.425, 0.8),
+
+            //Move shoulder to level 3 position
+            new AutoShoulderPos(shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()),
+    
+            //Move lift to level 3 position
+            new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
+    
+            //Drive fwd to get game piece above level 3
+            new AutoDrive(driverInstance, 1.25, 0, 0.25),
+
+            //Rotate wrist to dropping position
+            new AutoWrist(wristInstance, 0.35, 0.8),
+        };
     }
 
     @Override

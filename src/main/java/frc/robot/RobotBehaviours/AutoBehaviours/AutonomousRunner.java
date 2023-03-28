@@ -28,8 +28,8 @@ public class AutonomousRunner {
         SmartDashboard.putData("Auto Select", autonomousSelect);
         autonomousBehaviours = new RobotAutoMaster[] {
             new Pos1Auto(driver, (Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1], (Wrist)RobotDrive.defaultModes[4]),
-            new Pos2Auto(driver),
-            new Pos3Auto(driver)
+            new Pos2Auto(driver, (Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1], (Wrist)RobotDrive.defaultModes[4]),
+            new Pos3Auto(driver, (Lift)RobotDrive.defaultModes[0], (Shoulder)RobotDrive.defaultModes[1], (Wrist)RobotDrive.defaultModes[4])
         };
 
         System.out.println("DRIVEINSTANCE NULL:  " + driver == null);

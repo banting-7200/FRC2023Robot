@@ -90,7 +90,7 @@ public final class Utility {
 
         // Controls are utilised in Wrist.java
         public static final Supplier<Double> WRIST_MOVE = () -> {
-            return JOYSTICK_COPILOT.getX();
+            return JOYSTICK_COPILOT.getY();
         };
 
         // Controls are utilised in Lift.java

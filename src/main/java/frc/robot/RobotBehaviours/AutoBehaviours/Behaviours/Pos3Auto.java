@@ -5,75 +5,52 @@ import frc.robot.Core.RobotDrive;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 import frc.robot.Interfaces.RobotAutoMaster;
 import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Lift;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Shoulder;
+import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Wrist;
+import frc.robot.RobotBehaviours.AutoBehaviours.SubBehaviour.*;
 
 public class Pos3Auto implements RobotAutoMaster{
 
-    private final RobotAutoBehaviour[] autoChain = new RobotAutoBehaviour[] {
-        //Kick ball
-        new RobotAutoBehaviour() {
-            private boolean isCompleted = false;
-            private int delayCount = 25;
-
-            @Override
-            public void behaviourInit() {
-                isCompleted = false;
-                delayCount = 25;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                kickerInstance.setKickerState(true);
-
-                if(delayCount > 0) {
-                    delayCount--;
-                    return;
-                }
-
-                kickerInstance.setKickerState(false);
-                isCompleted = true;
-            }
-
-            @Override
-            public boolean isFinished() {
-                return isCompleted;
-            }
-        },
-
-        //Back up into community zone
-        new RobotAutoBehaviour() {
-            private final int BACKUP_TICKS = 150;
-            private int currentTicks = 0;
-
-            @Override
-            public void behaviourInit() {
-                currentTicks = BACKUP_TICKS;
-            }
-
-            @Override
-            public void behaviourPeriodic() {
-                if(currentTicks <= 0) {
-                    driverInstance.DriveRobot(0, 0);
-                    return;     
-                }
-
-                driverInstance.DriveRobot(0.0, 0.75);
-                currentTicks--;
-            }
-
-            @Override
-            public boolean isFinished() {
-                return currentTicks <= 0;
-            }
-        }
-    };
-
+    private final RobotAutoBehaviour[] autoChain;
     private RobotDrive driverInstance;
-    private Kicker kickerInstance;
+    private Shoulder shoulderInstance;
+    private Wrist wristInstance;
+    private Lift liftInstance;
     private int autoPtr;
 
-    public Pos3Auto(RobotDrive drive) {
-        kickerInstance = INSTANCE_KICKER;
+    public Pos3Auto(RobotDrive drive, Lift lift, Shoulder shoulder, Wrist wrist) {
         driverInstance = drive;
+        shoulderInstance = shoulder;
+        wristInstance = wrist;
+        liftInstance = lift;
+
+        autoChain = new RobotAutoBehaviour[] {
+            //Ensure claw is closed
+            new AutoClaw(false, 0.1),
+
+            //Max lift for pre-calibration
+            new AutoLift(liftInstance, 100, 0.6),
+            new AutoWrist(wristInstance, 0.425, 0.8),
+
+            //Move shoulder to level 3 position
+            new AutoShoulderPos(shoulderInstance, CoPilotControls.MACRO_LEVEL3.get()),
+    
+            //Move lift to level 3 position
+            new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
+    
+            //Drive fwd to get game piece above level 3
+            new AutoDrive(driverInstance, 1.25, 0, 0.25),
+
+            //Rotate wrist to dropping position
+            new AutoWrist(wristInstance, 0.35, 0.8),
+
+            //Open and close claw
+            new AutoClaw(true, 0.5),
+            new AutoClaw(false, 0.5),
+            new AutoDrive(driverInstance, 3.5, 0.0, -0.4),
+            new AutoDrive(driverInstance, 1.1, 0.5, 0),
+        };
     }
 
     @Override
