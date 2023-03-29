@@ -40,7 +40,7 @@ public class Pos3Auto implements RobotAutoMaster{
             new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
     
             //Drive fwd to get game piece above level 3
-            new AutoDrive(driverInstance, 1.25, 0, 0.25),
+            new AutoDrive(driverInstance, 1.05, 0, 0.25),
 
             //Rotate wrist to dropping position
             new AutoWrist(wristInstance, 0.35, 0.8),

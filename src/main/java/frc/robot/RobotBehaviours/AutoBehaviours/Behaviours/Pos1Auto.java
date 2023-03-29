@@ -39,20 +39,21 @@ public class Pos1Auto implements RobotAutoMaster{
             //Move lift to level 3 position
             new AutoLiftPos(liftInstance, CoPilotControls.MACRO_LEVEL3.get(), 0.6),
     
-            //Drive fwd to get game piece above level 3
-            new AutoDrive(driverInstance, 1.25, 0, 0.25),
-
             //Rotate wrist to dropping position
             new AutoWrist(wristInstance, 0.35, 0.8),
+
+            //Drive fwd to get game piece above level 3
+            // Previous Number 1.25
+            new AutoDrive(driverInstance, 1.05, 0, 0.25),
 
             //Open and close claw
             new AutoClaw(true, 0.5),
             new AutoClaw(false, 0.5),
-            new AutoDrive(driverInstance, 3.5, 0.0, -0.4),
-            
+            new AutoDrive(driverInstance, 2.4, 0.0, -0.6),
+        
             //Move to pickup position and backup at the same time
             new AutoParallel(new RobotAutoBehaviour[] {
-                new AutoDrive(driverInstance, 1, -0.5, 0),
+                new AutoDrive(driverInstance, 1.075, -0.5, 0),
                 new AutoLiftPos(lift, CoPilotControls.MACRO_PICKUP.get(), 0.6),
                 new AutoShoulderPos(shoulder, CoPilotControls.MACRO_PICKUP.get())
             })
