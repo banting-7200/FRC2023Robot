@@ -53,6 +53,12 @@ public final class ManualDrive implements RobotBehaviour {
             yInput = 0;
         }
 
+        /*
+        if(currentSpeed == DRIVE_CREEPSPEED) {
+            xInput /= 2.0;
+        }
+        */
+
         SmartDashboard.putString("Driver-Inputs: ", "X: " + xInput + ", Y" + yInput);
         SmartDashboard.putString("FLIPDRIVE MODE", speedMultiplier == -1 ? "1111111111111111" : "000000000000");
         BaseInstance.DriveRobot(xInput, yInput);

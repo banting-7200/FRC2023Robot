@@ -3,6 +3,9 @@ package frc.robot.RobotBehaviours.AutoBehaviours.SubBehaviour;
 import static frc.robot.Core.Utility.*;
 import frc.robot.Interfaces.RobotAutoBehaviour;
 
+/*
+ * This is an autobehaviour that toggles a claw to a given state and delays for a specified amount of ticks
+ */
 public class AutoClaw implements RobotAutoBehaviour{
     private final boolean CLAW_STATE;
     private final int WAIT_TICKS;
@@ -29,5 +32,7 @@ public class AutoClaw implements RobotAutoBehaviour{
     }
 
     @Override
-    public boolean isFinished() { return ticksLeft <= 0; }
+    public boolean isFinished() { 
+        return ticksLeft <= 0;
+    }
 }
