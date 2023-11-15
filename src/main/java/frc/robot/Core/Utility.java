@@ -1,4 +1,5 @@
 package frc.robot.Core;
+
 import java.util.function.*;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
@@ -21,14 +22,15 @@ import frc.robot.RobotBehaviours.CoPilotBehaviours.DefaultModes.Kicker;
  * For further information, refer to comments above and around variables.
  */
 public final class Utility {
-    //The below values are also button mappings on the joystick
+    // The below values are also button mappings on the joystick
     public static final int DRIVEMODE_MANUAL = 7;
     public static final int DRIVEMODE_AUTOBALANCE = 8;
     public static final int DRIVEMODE_PIXYALIGN = 9;
-    
+
     public static final class PilotControls {
 
         private static SendableChooser<String> stickDriveMode;
+
         public static void initPilot() {
             stickDriveMode = new SendableChooser<>();
             stickDriveMode.addOption("Single-Stick Drive", "Single-Stick");
@@ -41,7 +43,7 @@ public final class Utility {
         public static final Joystick JOYSTICK_PILOT = new Joystick(PORT_JOYSTICK);
         public static final XboxController JOYSTICK_PILOT1 = new XboxController(PORT_JOYSTICK);
 
-        //Controls are utilised in:
+        // Controls are utilised in:
         // - PixyAlignDrive.java
         // - ManualDrive.java
         public static final Supplier<Integer> MANUALDRIVE = () -> {
@@ -71,30 +73,57 @@ public final class Utility {
 
             return JOYSTICK_PILOT1.getRightY();
         };
-        
+
         public static final Supplier<Boolean> KICK = () -> {
-            return JOYSTICK_PILOT1.getXButton();
+            return JOYSTICK_PILOT1.getLeftStickButtonPressed();
         };
 
         public static final Supplier<Boolean> KICKLIGHTSSWITCH = () -> {
-            return JOYSTICK_PILOT1.getYButtonPressed();
+            return JOYSTICK_PILOT1.getLeftStickButtonPressed();
         };
 
         public static final Supplier<Boolean> BREAKTOGGLE = () -> {
-            return JOYSTICK_PILOT1.getBButtonPressed();
+            return JOYSTICK_PILOT1.getLeftStickButtonPressed();
         };
+        public static final Supplier<Double> WRIST_MOVE = () -> {
+            if (JOYSTICK_PILOT1.getBButton()) {
+                return 1.0; // right with x
+            }
+            if (JOYSTICK_PILOT1.getXButton()) {
+                return -1.0; // left with b
+            }
+
+            return 0.0;
+
+        };
+        public static final Supplier<Double> SHOULDER_MOVE = () -> {
+            if (JOYSTICK_PILOT1.getRightTriggerAxis() > 0.3) {
+                return 1.0;
+            }
+
+            if (JOYSTICK_PILOT1.getRightBumper() == true) {
+                return -1.0;
+            }
+
+            return 0.0;
+        };
+        public static final Supplier<Integer> LIFT_DOWN = () -> {
+            return 1;
+        };
+
+        public static final Supplier<Integer> LIFT_UP = () -> {
+            return 4;
+        };
+
     }
 
-    public static final class CoPilotControls {        
+    public static final class CoPilotControls {
         public static final Joystick JOYSTICK_COPILOT = new Joystick(PORT_COJOYSTICK);
 
         // Controls are utilised in Wrist.java
-        public static final Supplier<Double> WRIST_MOVE = () -> {
-            return JOYSTICK_COPILOT.getY();
-        };
 
         // Controls are utilised in Lift.java
-        public static final Supplier<Integer> MACRO_PICKUP = () -> {    
+        public static final Supplier<Integer> MACRO_PICKUP = () -> {
             return 4;
         };
 
@@ -117,35 +146,15 @@ public final class Utility {
         // public static final int LIFT_PICKUPPOSITION = 12;
         // public static final int LIFT_CARRYPOSITION = 2;
 
-        public static final Supplier<Double> SHOULDER_MOVE = () -> {
-            if(JOYSTICK_COPILOT.getRawButton(1)) {
-                return 1.0;
-            }
-
-            if(JOYSTICK_COPILOT.getRawButton(2)) {
-                return -1.0;
-            }
-
-            return 0.0;
-        };
-
         // Controls are utilised in Shoulder.java
         public static final int SHOULDERPOV_PICKUPPOS = 0;
         public static final int SHOULDERPOV_EXTENDPOS = 180;
-
-        public static final Supplier<Integer> LIFT_DOWN = () -> {
-            return 12; 
-        };
-
-        public static final Supplier<Integer> LIFT_UP = () -> {
-            return 11; 
-        };
 
         // Controls are utilised in Claw.java
         public static final Supplier<Integer> CLAW_TOGGLE = () -> {
             return 3;
         };
-        
+
         public static final Supplier<Integer> PIXYALIGNDRIVE = () -> {
             return JOYSTICK_COPILOT.getRawButton(7) ? DRIVEMODE_PIXYALIGN : -1;
         };
@@ -154,7 +163,8 @@ public final class Utility {
             return JOYSTICK_COPILOT.getRawButton(6);
         };
     }
-    //#region Constants
+
+    // #region Constants
     public static class SmartDashboardIDs {
         public static final String DRIVEMODEID = "Current Drive Mode: ";
         public static final String SHOULDERPOSITIONID = "Shoulder Motor Position: ";
@@ -165,16 +175,16 @@ public final class Utility {
     public static double roundHundredth(double x) {
         return Math.round(x * 100.0) / 100.0;
     }
-    
+
     public static double MapValue(double x, double a1, double b1, double a2, double b2) {
         return ((x - a1) * (b2 - a2) / (b1 - a1)) + a2;
     }
 
     public static double Clamp(double x, double min, double max) {
         double val = x;
-        if(val < min) {
+        if (val < min) {
             val = min;
-        } else if(val > max) {
+        } else if (val > max) {
             val = max;
         }
 
@@ -182,7 +192,8 @@ public final class Utility {
     }
 
     /* PORTS */
-    // Integers storing ports that external drive devices are connected to on computer (USB)
+    // Integers storing ports that external drive devices are connected to on
+    // computer (USB)
     public static final int PORT_JOYSTICK = 0;
     public static final int PORT_COJOYSTICK = 1;
 
@@ -193,22 +204,22 @@ public final class Utility {
     public static final int MOTOR_DRIVEBACKRIGHT = 3;
     public static final int MOTOR_WRISTMOTOR = 5;
 
-    //Integers that resemble different states for classes
+    // Integers that resemble different states for classes
     /* STATES */
     public static int STATE_CURRDRIVEMODE = 7;
-    
+
     /* CONSTANT PARAMETERS */
     public static final int I2C_MAXBYTESREAD = 2;
-    public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; //Degrees
+    public static final double BALANCEDRIVE_ANGLETHRESHOLD = 2; // Degrees
     public static final double TALONFXMOVETO_PERCENTERROR = 0.2;
 
     /* SPEED VALUES */
-    //The value that the joystick x/y must surpass in order to register.
+    // The value that the joystick x/y must surpass in order to register.
     public static final double JOYSTICK_DEADZONE = 0.1;
     public static final double SHOULDER_kP = 0.25;
     public static final double SHOULDER_kI = 0;
     public static final double SHOULER_kD = 0;
-    
+
     // Drivespeed being the speed of drive motors.
     // Creepspeed referring to a slower speed for finer drive adjustments.
     public static final double DRIVE_NORMALSPEED = 1;
@@ -220,9 +231,9 @@ public final class Utility {
     public static final double ARM_CREEPSPEED = 0.5;
 
     public static final double LIFT_SPEED = 0.3;
-    //#endregion
+    // #endregion
 
-    //Pneumatics instances since solenoids cannot have mutliple references
+    // Pneumatics instances since solenoids cannot have mutliple references
     public static final Kicker INSTANCE_KICKER = new Kicker();
     public static final Claw INSTANCE_CLAW = new Claw();
     public static final ADXRS450_Gyro INSTANCE_GYRO = new ADXRS450_Gyro();
@@ -230,10 +241,10 @@ public final class Utility {
 
 // Lift Max Height Position: -996164 || -1006396 (unsafe)
 // Lift Gameplay Maximum: -720173 or 724173
-// Lift Gameplay Minimum: 
+// Lift Gameplay Minimum:
 // Lift UpperScore Position: -722173
 // Lift Lower Score Position: -252345
 // Lift Drive Position: -640584
 
 // Get Differences for each position:
-// Shoulder Drop: -1253646 
+// Shoulder Drop: -1253646

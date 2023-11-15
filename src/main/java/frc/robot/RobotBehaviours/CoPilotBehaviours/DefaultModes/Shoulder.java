@@ -58,7 +58,7 @@ public class Shoulder implements RobotBehaviour {
         }
 
         double motorPosition = SHOULDER_MOTOR.getMotor().getSelectedSensorPosition();
-        double input = CoPilotControls.SHOULDER_MOVE.get();
+        double input = PilotControls.SHOULDER_MOVE.get();
         input = Math.abs(input) > 0.4 ? input : 0;
         input *= ARM_SPEED;
 

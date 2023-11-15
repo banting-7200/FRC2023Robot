@@ -60,8 +60,10 @@ public class Lift implements RobotBehaviour {
         /*
          * Gathering input information
          */
-        boolean down = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_DOWN.get());
-        boolean up = CoPilotControls.JOYSTICK_COPILOT.getRawButton(CoPilotControls.LIFT_UP.get());
+        boolean down = PilotControls.JOYSTICK_PILOT1.getRawButton(PilotControls.LIFT_DOWN.get());
+        boolean up = PilotControls.JOYSTICK_PILOT1.getRawButton(PilotControls.LIFT_UP.get());
+        System.out.println(PilotControls.LIFT_UP.get());
+        System.out.println(PilotControls.LIFT_DOWN.get());
         double input = down ? -0.8 : up ? 0.8 : 0;
 
         SmartDashboard.putNumber("LiftPosition", LIFT_MOTOR.getMotor().getSelectedSensorPosition());
